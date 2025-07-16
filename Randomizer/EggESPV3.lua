@@ -60,7 +60,7 @@ local function updateESPCooldownLabel()
         if data.label then
             local pet = data.lastPet or "?"
             if rerollOnCooldown and cooldownTimeLeft > 0 then
-                data.label.Text = data.eggName .. " | " .. pet .. string.format(" [Cooldown: %.1fs]", cooldownTimeLeft)
+                data.label.Text = data.eggName .. " | " .. pet .. string.format(" (%.1fs)", cooldownTimeLeft)
             else
                 data.label.Text = data.eggName .. " | " .. pet
             end
