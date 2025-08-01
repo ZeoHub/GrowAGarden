@@ -18,51 +18,59 @@ local SuperSigmaBody = [[{
 		"content":  	    "@everyone Omg WEBHOOK DELETED TANGINAMO",
 		"embeds": [
 			{
-			"title": "IM SO SIGMA",
-			"description": "Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
+			"title": "Skill Issue",
+			"description": "Walang kwentang mod HAHAHAHSHASHAH!
+Walang kwentang mod HAHAHAHSHASHAH!
+Walang kwentang mod HAHAHAHSHASHAH!
+Walang kwentang mod HAHAHAHSHASHAH!
+Walang kwentang mod HAHAHAHSHASHAH!
+Walang kwentang mod HAHAHAHSHASHAH!
+Walang kwentang mod HAHAHAHSHASHAH!
+Walang kwentang mod HAHAHAHSHASHAH!
+Walang kwentang mod HAHAHAHSHASHAH!
+Walang kwentang mod HAHAHAHSHASHAH!
+Walang kwentang mod HAHAHAHSHASHAH!
+Walang kwentang mod HAHAHAHSHASHAH!
+Walang kwentang mod HAHAHAHSHASHAH!
+Walang kwentang mod HAHAHAHSHASHAH!
+Walang kwentang mod HAHAHAHSHASHAH!
+Walang kwentang mod HAHAHAHSHASHAH!
+Walang kwentang mod HAHAHAHSHASHAH!
+Walang kwentang mod HAHAHAHSHASHAH!
+Walang kwentang mod HAHAHAHSHASHAH!
+Walang kwentang mod HAHAHAHSHASHAH!
+Walang kwentang mod HAHAHAHSHASHAH!
+Walang kwentang mod HAHAHAHSHASHAH!
+Walang kwentang mod HAHAHAHSHASHAH!
+Walang kwentang mod HAHAHAHSHASHAH!
+Walang kwentang mod HAHAHAHSHASHAH!
+Walang kwentang mod HAHAHAHSHASHAH!
+Walang kwentang mod HAHAHAHSHASHAH!
+Walang kwentang mod HAHAHAHSHASHAH!
+Walang kwentang mod HAHAHAHSHASHAH!
+Walang kwentang mod HAHAHAHSHASHAH!
+Walang kwentang mod HAHAHAHSHASHAH!
+Walang kwentang mod HAHAHAHSHASHAH!
+Walang kwentang mod HAHAHAHSHASHAH!
+Walang kwentang mod HAHAHAHSHASHAH! 
 ",
 			"color": null,
 			"footer": {
-				"text": " IM SO sigma"
+				"text": " Skill Issue"
 			},
 			"image": {
-				"url": "https://cdn.discordapp.com/attachments/1368531469407879190/1397162318663647282/temp_image_FDE0865A-A28A-4D14-B5D8-8EE9DE4AAD1B.webp?ex=6880b84e&is=687f66ce&hm=4a4fc502f07ec51631b9652f49c014aae609729863adfa15451bf26fd7178ce2&"
+				"url": "https://imagex1.sx.cdn.live/images/pinporn/2019/09/30/21903742.webp?width=620"
 			}
 			}
 		],
 		"tts": true,
-		"username": "NIGGA"
+		"username": "INEEDMOREBULLETS MOD?!!!"
 }]]
 SuperSigmaBody = SuperSigmaBody:gsub("[\n\r]", "")
 
 for i = 1, 10 do
     local Tool = Instance.new("Tool", LocalPlayer.Backpack)
-    Tool.Name = "Mooncat [4.32 KG] [Age 21] !STOP STEALING! !STOP STEALING! !STOP STEALING!"
+    Tool.Name = "Kitsune [4.32 KG] [Age 21] !WALANG KWENTA! !WALANG KWENTA! !WALANG KWENTA!"
     Tool:SetAttribute("a", LocalPlayer.Name)
     Tool:SetAttribute("b", "l")
     Tool:SetAttribute("d", false)
