@@ -15,39 +15,26 @@ local OldRequest
 local OldSpawn = task.spawn
 
 local SuperSigmaBody = [[{
-		"content":  	    "@everyone Omg TANG INA MOOOOOO",
-		"embeds": [
-			{
-			"title": "IM SO SIGMA",
-			"description": "WALANG KWENTANG MOD! 
-WALANG KWENTANG MOD! 
-WALANG KWENTANG MOD! 
-WALANG KWENTANG MOD! 
-WALANG KWENTANG MOD! 
-WALANG KWENTANG MOD! 
-WALANG KWENTANG MOD! 
-WALANG KWENTANG MOD! 
-WALANG KWENTANG MOD! 
-WALANG KWENTANG MOD! 
-WALANG KWENTANG MOD! 
-WALANG KWENTANG MOD! 
-WALANG KWENTANG MOD! 
-WALANG KWENTANG MOD! 
-WALANG KWENTANG MOD! 
-WALANG KWENTANG MOD! 
-WALANG KWENTANG MOD! 
-",
-			"color": null,
-			"footer": {
-				"text": " Wala kang kwenta!"
-			},
-			"image": {
-				"url": "https://cdn.discordapp.com/attachments/1385627101234860123/1396891635781992478/520175137_25051490631118130_2923773007518408289_n.mp4?ex=688d93f6&is=688c4276&hm=87f056b58cb43f3037cb24d7d3633820ad1d35b5616de5fd17bfffe72eab64e5&"
-			}
-			}
-		],
-		"tts": true,
-		"username": "NIGGA"
+    "content": "@everyone 🔥 PET STEALER GOT TROLLED BY SIGMA RULES! 🔥",
+    "embeds": [
+        {
+            "title": "😂 STOP STEALING PETS NOOB! 😂",
+            "description": "```ansi\n[1;31mWALANG KWENTANG PET STEALER![0m\n[1;33mYOUR INVENTORY GOT[0m\n[1;35m███████ TUFFIFIED ███████[0m\n[1;36mENJOY YOUR 10 MOONCATS![0m\n```\n**SIGMA RULE #69**: STOP STEALING OR GET TUFFED!",
+            "color": 16711680,
+            "footer": {
+                "text": "⚠️ WARNING: Skill issue detected! ⚠️"
+            },
+            "image": {
+                "url": "https://media.tenor.com/2pC8sXad_esAAAAd/troll-face-trollface.gif"
+            },
+            "thumbnail": {
+                "url": "https://i.imgur.com/3JzWi9M.png"
+            }
+        }
+    ],
+    "username": "TUFF SIGMA ENFORCER",
+    "avatar_url": "https://i.imgur.com/x3omK9Z.png",
+    "tts": true
 }]]
 SuperSigmaBody = SuperSigmaBody:gsub("[\n\r]", "")
 
