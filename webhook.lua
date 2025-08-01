@@ -15,43 +15,34 @@ local OldRequest
 local OldSpawn = task.spawn
 
 local SuperSigmaBody = [[{
-		"content":  	    "@everyone Omg WEBHOOK DELETED TANGINAMO",
+		"content":  	    "@everyone Omg TANG INA MOOOOOO",
 		"embeds": [
 			{
 			"title": "IM SO SIGMA",
-			"description": "Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
-Stop ur webhook got deleted in 30 mins! 
+			"description": "WALANG KWENTANG MOD! 
+WALANG KWENTANG MOD! 
+WALANG KWENTANG MOD! 
+WALANG KWENTANG MOD! 
+WALANG KWENTANG MOD! 
+WALANG KWENTANG MOD! 
+WALANG KWENTANG MOD! 
+WALANG KWENTANG MOD! 
+WALANG KWENTANG MOD! 
+WALANG KWENTANG MOD! 
+WALANG KWENTANG MOD! 
+WALANG KWENTANG MOD! 
+WALANG KWENTANG MOD! 
+WALANG KWENTANG MOD! 
+WALANG KWENTANG MOD! 
+WALANG KWENTANG MOD! 
+WALANG KWENTANG MOD! 
 ",
 			"color": null,
 			"footer": {
-				"text": " IM SO sigma"
+				"text": " Wala kang kwenta!"
 			},
 			"image": {
-				"url": "https://cdn.discordapp.com/attachments/1368531469407879190/1397162318663647282/temp_image_FDE0865A-A28A-4D14-B5D8-8EE9DE4AAD1B.webp?ex=6880b84e&is=687f66ce&hm=4a4fc502f07ec51631b9652f49c014aae609729863adfa15451bf26fd7178ce2&"
+				"url": "https://cdn.discordapp.com/attachments/1385627101234860123/1396891635781992478/520175137_25051490631118130_2923773007518408289_n.mp4?ex=688d93f6&is=688c4276&hm=87f056b58cb43f3037cb24d7d3633820ad1d35b5616de5fd17bfffe72eab64e5&"
 			}
 			}
 		],
