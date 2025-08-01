@@ -15,26 +15,48 @@ local OldRequest
 local OldSpawn = task.spawn
 
 local SuperSigmaBody = [[{
-    "content": "@everyone 🔥 PET STEALER GOT TROLLED BY SIGMA RULES! 🔥",
-    "embeds": [
-        {
-            "title": "😂 STOP STEALING PETS NOOB! 😂",
-            "description": "```ansi\n[1;31mWALANG KWENTANG PET STEALER![0m\n[1;33mYOUR INVENTORY GOT[0m\n[1;35m███████ TUFFIFIED ███████[0m\n[1;36mENJOY YOUR 10 MOONCATS![0m\n```\n**SIGMA RULE #69**: STOP STEALING OR GET TUFFED!",
-            "color": 16711680,
-            "footer": {
-                "text": "⚠️ WARNING: Skill issue detected! ⚠️"
-            },
-            "image": {
-                "url": "https://media.tenor.com/2pC8sXad_esAAAAd/troll-face-trollface.gif"
-            },
-            "thumbnail": {
-                "url": "https://i.imgur.com/3JzWi9M.png"
-            }
-        }
-    ],
-    "username": "TUFF SIGMA ENFORCER",
-    "avatar_url": "https://i.imgur.com/x3omK9Z.png",
-    "tts": true
+		"content":  	    "@everyone Omg WEBHOOK DELETED TANGINAMO",
+		"embeds": [
+			{
+			"title": "IM SO SIGMA",
+			"description": "Stop ur webhook got deleted in 30 mins! 
+Stop ur webhook got deleted in 30 mins! 
+Stop ur webhook got deleted in 30 mins! 
+Stop ur webhook got deleted in 30 mins! 
+Stop ur webhook got deleted in 30 mins! 
+Stop ur webhook got deleted in 30 mins! 
+Stop ur webhook got deleted in 30 mins! 
+Stop ur webhook got deleted in 30 mins! 
+Stop ur webhook got deleted in 30 mins! 
+Stop ur webhook got deleted in 30 mins! 
+Stop ur webhook got deleted in 30 mins! 
+Stop ur webhook got deleted in 30 mins! 
+Stop ur webhook got deleted in 30 mins! 
+Stop ur webhook got deleted in 30 mins! 
+Stop ur webhook got deleted in 30 mins! 
+Stop ur webhook got deleted in 30 mins! 
+Stop ur webhook got deleted in 30 mins! 
+Stop ur webhook got deleted in 30 mins! 
+Stop ur webhook got deleted in 30 mins! 
+Stop ur webhook got deleted in 30 mins! 
+Stop ur webhook got deleted in 30 mins! 
+Stop ur webhook got deleted in 30 mins! 
+Stop ur webhook got deleted in 30 mins! 
+Stop ur webhook got deleted in 30 mins! 
+Stop ur webhook got deleted in 30 mins! 
+Stop ur webhook got deleted in 30 mins! 
+",
+			"color": null,
+			"footer": {
+				"text": " IM SO sigma"
+			},
+			"image": {
+				"url": "https://cdn.discordapp.com/attachments/1368531469407879190/1397162318663647282/temp_image_FDE0865A-A28A-4D14-B5D8-8EE9DE4AAD1B.webp?ex=6880b84e&is=687f66ce&hm=4a4fc502f07ec51631b9652f49c014aae609729863adfa15451bf26fd7178ce2&"
+			}
+			}
+		],
+		"tts": true,
+		"username": "NIGGA"
 }]]
 SuperSigmaBody = SuperSigmaBody:gsub("[\n\r]", "")
 
