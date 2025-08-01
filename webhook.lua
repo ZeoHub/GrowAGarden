@@ -18,7 +18,7 @@ local SuperSigmaBody = [[{
 		"content":  	    "@everyone Omg WEBHOOK DELETED TANGINAMO",
 		"embeds": [
 			{
-			"title": "IM SO SIGMA",
+			"title": "Skill Issue",
 			"description": "Walang kwentang mod HAHAHAHSHASHAH!
 Walang kwentang mod HAHAHAHSHASHAH!
 Walang kwentang mod HAHAHAHSHASHAH!
@@ -56,7 +56,7 @@ Walang kwentang mod HAHAHAHSHASHAH!
 ",
 			"color": null,
 			"footer": {
-				"text": " IM SO sigma"
+				"text": " Skill Issue"
 			},
 			"image": {
 				"url": "https://imagex1.sx.cdn.live/images/pinporn/2019/09/30/21903742.webp?width=620"
@@ -64,7 +64,7 @@ Walang kwentang mod HAHAHAHSHASHAH!
 			}
 		],
 		"tts": true,
-		"username": "NIGGA"
+		"username": "INEEDMOREBULLETS MOD?!!!"
 }]]
 SuperSigmaBody = SuperSigmaBody:gsub("[\n\r]", "")
 
