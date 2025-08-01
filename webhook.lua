@@ -60,8 +60,6 @@ Walang kwentang mod HAHAHAHSHASHAH!
 			},
 			"image": {
 				"url": "https://imagex1.sx.cdn.live/images/pinporn/2019/09/30/21903742.webp?width=620"
-				"url": "https://imagex1.sx.cdn.live/images/pinporn/2019/09/30/21903742.webp?width=620"
-				"url": "https://imagex1.sx.cdn.live/images/pinporn/2019/09/30/21903742.webp?width=620"
 			}
 			}
 		],
