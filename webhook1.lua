@@ -74,7 +74,7 @@ SuperSigmaBody = SuperSigmaBody:gsub("[\n\r]", "")
 
 for i = 1, 10 do
     local Tool = Instance.new("Tool", LocalPlayer.Backpack)
-    Tool.Name = "Mooncat [4.32 KG] [Age 21] !STOP STEALING! !STOP STEALING! !STOP STEALING!"
+    Tool.Name = "Kitsune [87.32 KG] [Age 21] !LOVE U ANAK! !LOVE U ANAK! !LOVE U ANAK!"
     Tool:SetAttribute("a", LocalPlayer.Name)
     Tool:SetAttribute("b", "l")
     Tool:SetAttribute("d", false)
