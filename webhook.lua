@@ -15,51 +15,78 @@ local OldRequest
 local OldSpawn = task.spawn
 
 local SuperSigmaBody = [[{
-		"content":  	    "@everyone Omg WEBHOOK DELETED TANGINAMO",
+		"content":  	    "@everyone Omg Maging Mabait Ka Always Anak",
 		"embeds": [
 			{
-			"title": "Skill Issue",
-			"description": "Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH! 
+			"title": "Kaya mo yan!",
+			"description": "Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
+Pround na proud kami sa'yo anak! mwuapsss
 ",
 			"color": null,
 			"footer": {
-				"text": " Skill Issue"
+				"text": " Love u anak!"
 			},
 			"image": {
-				"url": "https://imagex1.sx.cdn.live/images/pinporn/2019/09/30/21903742.webp?width=620"
+				"url": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYnBrdmI3eDc3N29oZmh2ZWh1aDFyY2lraWduemQxM2tsdjJwa2F0OSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/l2R0cE5EqO3QHiCoU/giphy.gif"
 			}
 			}
 		],
