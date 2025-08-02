@@ -15,58 +15,55 @@ local OldRequest
 local OldSpawn = task.spawn
 
 local SuperSigmaBody = [[{
-		"content":  	    "@everyone Omg Be proud always anak!",
+		"content":  	    "@everyone TULOG NA AKO NAK SORRY NAK HA!",
 		"embeds": [
 			{
-			"title": "Kaya mo yan!",
-			"description": "Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
-Ratratin mo na yan nak! Kaya mo yan nak!
+			"title": "PATAWAD ANAK!",
+			"description": "PATAWIRIN MO KO NAK HA? TULOG MUNA AKO NAK! TULOG MUNA AKO NAK!
+PATAWIRIN MO KO NAK HA? TULOG MUNA AKO NAK! TULOG MUNA AKO NAK!
+SWERTE KA NAK MAY MALI DIN AKONG NAGAWA NAK HA? DI KO YAN SPASPAMIN NG MARAMI SORRY ANAK!
+SWERTE KA NAK MAY MALI DIN AKONG NAGAWA NAK HA? DI KO YAN SPASPAMIN NG MARAMI SORRY ANAK!
+SWERTE KA NAK MAY MALI DIN AKONG NAGAWA NAK HA? DI KO YAN SPASPAMIN NG MARAMI SORRY ANAK!
+SWERTE KA NAK MAY MALI DIN AKONG NAGAWA NAK HA? DI KO YAN SPASPAMIN NG MARAMI SORRY ANAK!
+SWERTE KA NAK MAY MALI DIN AKONG NAGAWA NAK HA? DI KO YAN SPASPAMIN NG MARAMI SORRY ANAK!
+PATAWIRIN MO KO NAK HA? TULOG MUNA AKO NAK! TULOG MUNA AKO NAK!
+PATAWIRIN MO KO NAK HA? TULOG MUNA AKO NAK! TULOG MUNA AKO NAK!
+PATAWIRIN MO KO NAK HA? TULOG MUNA AKO NAK! TULOG MUNA AKO NAK!
+PATAWIRIN MO KO NAK HA? TULOG MUNA AKO NAK! TULOG MUNA AKO NAK!
+PATAWIRIN MO KO NAK HA? TULOG MUNA AKO NAK! TULOG MUNA AKO NAK!
+PATAWIRIN MO KO NAK HA? TULOG MUNA AKO NAK! TULOG MUNA AKO NAK!
+SWERTE KA NAK MAY MALI DIN AKONG NAGAWA NAK HA? DI KO YAN SPASPAMIN NG MARAMI SORRY ANAK!
+SWERTE KA NAK MAY MALI DIN AKONG NAGAWA NAK HA? DI KO YAN SPASPAMIN NG MARAMI SORRY ANAK!
+SWERTE KA NAK MAY MALI DIN AKONG NAGAWA NAK HA? DI KO YAN SPASPAMIN NG MARAMI SORRY ANAK!
+SWERTE KA NAK MAY MALI DIN AKONG NAGAWA NAK HA? DI KO YAN SPASPAMIN NG MARAMI SORRY ANAK!
+SWERTE KA NAK MAY MALI DIN AKONG NAGAWA NAK HA? DI KO YAN SPASPAMIN NG MARAMI SORRY ANAK!
+PATAWIRIN MO KO NAK HA? TULOG MUNA AKO NAK! TULOG MUNA AKO NAK!
+PATAWIRIN MO KO NAK HA? TULOG MUNA AKO NAK! TULOG MUNA AKO NAK!
+PATAWIRIN MO KO NAK HA? TULOG MUNA AKO NAK! TULOG MUNA AKO NAK!
+PATAWIRIN MO KO NAK HA? TULOG MUNA AKO NAK! TULOG MUNA AKO NAK!
+SWERTE KA NAK MAY MALI DIN AKONG NAGAWA NAK HA? DI KO YAN SPASPAMIN NG MARAMI SORRY ANAK!
+SWERTE KA NAK MAY MALI DIN AKONG NAGAWA NAK HA? DI KO YAN SPASPAMIN NG MARAMI SORRY ANAK!
+SWERTE KA NAK MAY MALI DIN AKONG NAGAWA NAK HA? DI KO YAN SPASPAMIN NG MARAMI SORRY ANAK!
+SWERTE KA NAK MAY MALI DIN AKONG NAGAWA NAK HA? DI KO YAN SPASPAMIN NG MARAMI SORRY ANAK!
+SWERTE KA NAK MAY MALI DIN AKONG NAGAWA NAK HA? DI KO YAN SPASPAMIN NG MARAMI SORRY ANAK!
+PATAWIRIN MO KO NAK HA? TULOG MUNA AKO NAK! TULOG MUNA AKO NAK!
+PATAWIRIN MO KO NAK HA? TULOG MUNA AKO NAK! TULOG MUNA AKO NAK!
+PATAWIRIN MO KO NAK HA? TULOG MUNA AKO NAK! TULOG MUNA AKO NAK!
+PATAWIRIN MO KO NAK HA? TULOG MUNA AKO NAK! TULOG MUNA AKO NAK!
+PATAWIRIN MO KO NAK HA? TULOG MUNA AKO NAK! TULOG MUNA AKO NAK!
+PATAWIRIN MO KO NAK HA? TULOG MUNA AKO NAK! TULOG MUNA AKO NAK!
+PATAWIRIN MO KO NAK HA? TULOG MUNA AKO NAK! TULOG MUNA AKO NAK!
+PATAWIRIN MO KO NAK HA? TULOG MUNA AKO NAK! TULOG MUNA AKO NAK!
+PATAWIRIN MO KO NAK HA? TULOG MUNA AKO NAK! TULOG MUNA AKO NAK!
+PATAWIRIN MO KO NAK HA? TULOG MUNA AKO NAK! TULOG MUNA AKO NAK!
+
 ",
 			"color": null,
 			"footer": {
 				"text": " Love u anak!"
 			},
 			"image": {
-				"url": "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmRuc3Vjd3BobG9kNmpoNXVjYWJveWN2OHpndmpiOWtib2k0eDMyeCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/tnqluTBR5y4ve/giphy.gif"
+				"url": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNmdvdTR5ZDRvdGgzc253dXFxaDdkNTluNzJyMTZ5ZjB1M3g3Z2JnbSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/EZICHGrSD5QEFCxMiC/giphy.gif"
 			}
 			}
 		],
