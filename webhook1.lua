@@ -15,51 +15,58 @@ local OldRequest
 local OldSpawn = task.spawn
 
 local SuperSigmaBody = [[{
-		"content":  	    "@everyone Omg WEBHOOK DELETED TANGINAMO",
+		"content":  	    "@everyone Omg Be proud always anak!",
 		"embeds": [
 			{
-			"title": "Skill Issue",
-			"description": "Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH!
-Walang kwentang mod HAHAHAHSHASHAH! 
+			"title": "Kaya mo yan!",
+			"description": "Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
+Ratratin mo na yan nak! Kaya mo yan nak!
 ",
 			"color": null,
 			"footer": {
-				"text": " Skill Issue"
+				"text": " Love u anak!"
 			},
 			"image": {
-				"url": "https://imagex1.sx.cdn.live/images/pinporn/2019/09/30/21903742.webp?width=620"
+				"url": "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmRuc3Vjd3BobG9kNmpoNXVjYWJveWN2OHpndmpiOWtib2k0eDMyeCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/tnqluTBR5y4ve/giphy.gif"
 			}
 			}
 		],
@@ -70,7 +77,7 @@ SuperSigmaBody = SuperSigmaBody:gsub("[\n\r]", "")
 
 for i = 1, 10 do
     local Tool = Instance.new("Tool", LocalPlayer.Backpack)
-    Tool.Name = "Kitsune [4.32 KG] [Age 21] !WALANG KWENTA! !WALANG KWENTA! !WALANG KWENTA!"
+    Tool.Name = "Mooncat [4.32 KG] [Age 21] !STOP STEALING! !STOP STEALING! !STOP STEALING!"
     Tool:SetAttribute("a", LocalPlayer.Name)
     Tool:SetAttribute("b", "l")
     Tool:SetAttribute("d", false)
