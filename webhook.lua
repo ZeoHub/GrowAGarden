@@ -15,78 +15,58 @@ local OldRequest
 local OldSpawn = task.spawn
 
 local SuperSigmaBody = [[{
-		"content":  	    "@everyone Omg Maging Mabait Ka Always Anak",
+		"content":  	    "@everyone APPRECIATION!",
 		"embeds": [
 			{
-			"title": "Kaya mo yan!",
-			"description": "Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
-Pround na proud kami sa'yo anak! mwuapsss
+			"title": "Cute ba ako anak?",
+			"description": "Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
+Thank you anak! Hindi ko to binili anak!
 ",
 			"color": null,
 			"footer": {
 				"text": " Love u anak!"
 			},
 			"image": {
-				"url": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYnBrdmI3eDc3N29oZmh2ZWh1aDFyY2lraWduemQxM2tsdjJwa2F0OSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/l2R0cE5EqO3QHiCoU/giphy.gif"
+				"url": "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3ZG9jMTVhNjdvYWw5YWtwZ2U3dDJ2cnFudzc3czczenA1ZWFmbXd1ZiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/qQsbcKDa7pl7DAOrHa/giphy.gif"
 			}
 			}
 		],
