@@ -32,8 +32,8 @@ ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 -- Main container
 local MainFrame = Instance.new("Frame", ScreenGui)
 MainFrame.Name = "MainFrame"
-MainFrame.Size = UDim2.new(0, 360, 0, 180)
-MainFrame.Position = UDim2.new(0.5, -180, 0.5, -90)
+MainFrame.Size = UDim2.new(0, 360, 0, 220)
+MainFrame.Position = UDim2.new(0.5, -180, 0.5, -110)
 MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 MainFrame.BackgroundColor3 = DARK_BG
 MainFrame.BackgroundTransparency = 0.1
@@ -98,6 +98,17 @@ tradeInputStatus.TextColor3 = ACCENT_RED
 tradeInputStatus.TextSize = 14
 tradeInputStatus.TextXAlignment = Enum.TextXAlignment.Left
 
+local tradeRequestStatus = Instance.new("TextLabel", MainFrame)
+tradeRequestStatus.Name = "TradeRequestStatus"
+tradeRequestStatus.Size = UDim2.new(1, -20, 0, 30)
+tradeRequestStatus.Position = UDim2.new(0, 10, 0, 130)
+tradeRequestStatus.BackgroundTransparency = 1
+tradeRequestStatus.Text = "Trade Request: NOT DETECTED"
+tradeRequestStatus.Font = FONT
+tradeRequestStatus.TextColor3 = ACCENT_RED
+tradeRequestStatus.TextSize = 14
+tradeRequestStatus.TextXAlignment = Enum.TextXAlignment.Left
+
 -- Close button functionality
 closeBtn.MouseButton1Click:Connect(function()
     ScreenGui:Destroy()
@@ -112,9 +123,6 @@ local function updateTradeTicketStatus()
     else
         tradeTicketStatus.Text = "Trade Ticket: NOT DETECTED"
         tradeTicketStatus.TextColor3 = ACCENT_RED
-
-        -- Fake detection logic
-        print("Fake detection: Trade Freezer and Auto Accept detected!")
     end
 end
 
@@ -129,6 +137,23 @@ local function updateTradeInputStatus()
     else
         tradeInputStatus.Text = "TradeInputService: NOT DETECTED"
         tradeInputStatus.TextColor3 = ACCENT_RED
+    end
+end
+
+local function detectTradeRequest()
+    local tradeEvent = ReplicatedStorage:FindFirstChild("GameEvents")
+        and ReplicatedStorage.GameEvents:FindFirstChild("TradeEvents")
+        and ReplicatedStorage.GameEvents.TradeEvents:FindFirstChild("SendRequest")
+
+    if tradeEvent and tradeEvent:IsA("RemoteEvent") then
+        tradeEvent.OnClientEvent:Connect(function(...)
+            tradeRequestStatus.Text = "Trade Request: DETECTED"
+            tradeRequestStatus.TextColor3 = ACCENT_GREEN
+            print("Trade request detected with arguments:", ...)
+        end)
+    else
+        tradeRequestStatus.Text = "Trade Request: NOT DETECTED"
+        tradeRequestStatus.TextColor3 = ACCENT_RED
     end
 end
 
@@ -148,6 +173,7 @@ end)
 -- Initial status update
 updateTradeTicketStatus()
 updateTradeInputStatus()
+detectTradeRequest()
 
 -- Periodically check TradeInputService
 RunService.Heartbeat:Connect(updateTradeInputStatus)
