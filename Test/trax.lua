@@ -1,312 +1,327 @@
--- LocalScript (place in StarterPlayerScripts)
-local Players = game:GetService("Players")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local PlayerGui = Players.LocalPlayer:WaitForChild("PlayerGui")
+-- TradeScamUI ✅ FINAL UPDATE
+-- Logo bo góc, drag được, nằm phía trên
+-- Menu có animation xuất hiện mượt
 
--- Remove old GUIs
-for _, gui in ipairs(PlayerGui:GetChildren()) do
-    if gui.Name == "TradeGuardGui" then
-        gui:Destroy()
-    end
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
+local LocalPlayer = Players.LocalPlayer
+
+local gui = Instance.new("ScreenGui")
+gui.Name = "TradeScamUI"
+gui.ResetOnSpawn = false
+gui.IgnoreGuiInset = true
+gui.Parent = game:GetService("CoreGui")
+
+-- LOGO BẬT/TẮT MENU (bo góc, drag được, vị trí trên)
+local toggleLogo = Instance.new("ImageButton")
+toggleLogo.Size = UDim2.new(0, 42, 0, 42)
+toggleLogo.Position = UDim2.new(0, 15, 0, 80)
+toggleLogo.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+toggleLogo.Image = "rbxassetid://81767899440204"
+toggleLogo.AutoButtonColor = true
+toggleLogo.ZIndex = 999
+toggleLogo.Parent = gui
+
+local corner = Instance.new("UICorner", toggleLogo)
+corner.CornerRadius = UDim.new(0, 8)
+
+-- Drag
+local dragging = false
+local dragStart, startPos
+toggleLogo.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 then
+		dragging = true
+		dragStart = input.Position
+		startPos = toggleLogo.Position
+	end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+	if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+		local delta = input.Position - dragStart
+		toggleLogo.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+	end
+end)
+
+UserInputService.InputEnded:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 then
+		dragging = false
+	end
+end)
+
+-- NOTIFICATION BÊN DƯỚI, KHÔNG ĐÈ
+local activeNotifs = {}
+function showNotification(text, color)
+	local baseY = -60
+	for _, n in ipairs(activeNotifs) do
+		baseY = baseY - 35
+	end
+
+	local notif = Instance.new("TextLabel")
+	notif.Size = UDim2.new(0, 260, 0, 30)
+	notif.Position = UDim2.new(0.5, -130, 1, baseY)
+	notif.AnchorPoint = Vector2.new(0, 0)
+	notif.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+	notif.TextColor3 = color
+	notif.Text = text
+	notif.Font = Enum.Font.GothamBold
+	notif.TextSize = 14
+	notif.TextStrokeTransparency = 0.6
+	notif.BackgroundTransparency = 1
+	notif.TextTransparency = 1
+	notif.BorderSizePixel = 0
+	notif.ZIndex = 999
+	notif.ClipsDescendants = true
+	notif.Parent = gui
+	table.insert(activeNotifs, notif)
+
+	Instance.new("UICorner", notif).CornerRadius = UDim.new(0, 8)
+
+	TweenService:Create(notif, TweenInfo.new(0.3), {
+		TextTransparency = 0,
+		BackgroundTransparency = 0.1
+	}):Play()
+
+	task.delay(3, function()
+		TweenService:Create(notif, TweenInfo.new(0.3), {
+			TextTransparency = 1,
+			BackgroundTransparency = 1,
+			Position = notif.Position + UDim2.new(0, 0, 0, -10)
+		}):Play()
+		wait(0.3)
+		notif:Destroy()
+
+		for i, v in ipairs(activeNotifs) do
+			if v == notif then
+				table.remove(activeNotifs, i)
+				break
+			end
+		end
+
+		for i, v in ipairs(activeNotifs) do
+			local newY = -60 - (i - 1) * 35
+			TweenService:Create(v, TweenInfo.new(0.3), {
+				Position = UDim2.new(0.5, -130, 1, newY)
+			}):Play()
+		end
+	end)
 end
 
--- ========== THEME COLORS ==========
-local DARK_BG = Color3.fromRGB(15, 15, 20)
-local CARD_BG = Color3.fromRGB(25, 25, 35)
-local ACCENT_BLUE = Color3.fromRGB(0, 170, 255)
-local ACCENT_RED = Color3.fromRGB(255, 50, 100)
-local ACCENT_GREEN = Color3.fromRGB(50, 255, 150)
-local ACCENT_YELLOW = Color3.fromRGB(255, 200, 0)
-local TEXT_MAIN = Color3.fromRGB(240, 240, 255)
-local FONT = Enum.Font.GothamBold
 
--- ========== CREATE COMPACT GUI ==========
-local ScreenGui = Instance.new("ScreenGui", PlayerGui)
-ScreenGui.Name = "TradeGuardGui"
+-- PHẦN MENU CHÍNH:
 
-local MainFrame = Instance.new("Frame", ScreenGui)
-MainFrame.Name = "MainFrame"
-MainFrame.Size = UDim2.new(0, 260, 0, 100)  -- Compact size
-MainFrame.Position = UDim2.new(0.5, -130, 0.5, -50)
-MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
-MainFrame.BackgroundColor3 = DARK_BG
-MainFrame.BackgroundTransparency = 0.1
-MainFrame.Active = true
-MainFrame.Draggable = true
+-- TradeScamUI Compact Full - Animated Notifications Centered
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local LocalPlayer = Players.LocalPlayer
 
-local corner = Instance.new("UICorner", MainFrame)
-corner.CornerRadius = UDim.new(0, 12)
+local gui = Instance.new("ScreenGui")
+gui.Name = "TradeScamUI"
+gui.ResetOnSpawn = false
+gui.IgnoreGuiInset = true
+gui.Parent = game:GetService("CoreGui")
 
--- Status labels
-local tradeRequestStatus = Instance.new("TextLabel", MainFrame)
-tradeRequestStatus.Name = "TradeRequestStatus"
-tradeRequestStatus.Size = UDim2.new(1, -10, 0, 20)
-tradeRequestStatus.Position = UDim2.new(0, 5, 0, 5)
-tradeRequestStatus.BackgroundTransparency = 1
-tradeRequestStatus.Text = "Trade Request: NOT DETECTED"
-tradeRequestStatus.Font = FONT
-tradeRequestStatus.TextColor3 = ACCENT_RED
-tradeRequestStatus.TextSize = 12
-tradeRequestStatus.TextXAlignment = Enum.TextXAlignment.Left
 
-local confirmationStatus = Instance.new("TextLabel", MainFrame)
-confirmationStatus.Name = "ConfirmationStatus"
-confirmationStatus.Size = UDim2.new(1, -10, 0, 20)
-confirmationStatus.Position = UDim2.new(0, 5, 0, 25)
-confirmationStatus.BackgroundTransparency = 1
-confirmationStatus.Text = "Transaction: PENDING"
-confirmationStatus.Font = FONT
-confirmationStatus.TextColor3 = ACCENT_BLUE
-confirmationStatus.TextSize = 12
-confirmationStatus.TextXAlignment = Enum.TextXAlignment.Left
+local main = Instance.new("Frame")
+main.Size = UDim2.new(0, 280, 0, 230)
+main.Position = UDim2.new(0.5, -140, 0.5, -115)
+main.BackgroundColor3 = Color3.fromRGB(25, 25, 30)
+main.BorderSizePixel = 0
+main.ClipsDescendants = true
+main.Active = true
+main.Draggable = true
+main.Parent = gui
 
--- Trade Freezer Toggle
-local tradeFreezerFrame = Instance.new("Frame", MainFrame)
-tradeFreezerFrame.Name = "TradeFreezerFrame"
-tradeFreezerFrame.Size = UDim2.new(1, -10, 0, 30)
-tradeFreezerFrame.Position = UDim2.new(0, 5, 0, 50)
-tradeFreezerFrame.BackgroundColor3 = CARD_BG
-tradeFreezerFrame.Visible = false
-local tradeFreezerCorner = Instance.new("UICorner", tradeFreezerFrame)
-tradeFreezerCorner.CornerRadius = UDim.new(0, 6)
+-- Logo bật tắt
 
-local tradeFreezerLabel = Instance.new("TextLabel", tradeFreezerFrame)
-tradeFreezerLabel.Name = "TradeFreezerLabel"
-tradeFreezerLabel.Size = UDim2.new(0.5, 0, 1, 0)
-tradeFreezerLabel.Position = UDim2.new(0, 5, 0, 0)
-tradeFreezerLabel.BackgroundTransparency = 1
-tradeFreezerLabel.Text = "Trade Freezer"
-tradeFreezerLabel.Font = FONT
-tradeFreezerLabel.TextColor3 = TEXT_MAIN
-tradeFreezerLabel.TextSize = 12
-tradeFreezerLabel.TextXAlignment = Enum.TextXAlignment.Left
-
-local tradeFreezerToggle = Instance.new("TextButton", tradeFreezerFrame)
-tradeFreezerToggle.Name = "TradeFreezerToggle"
-tradeFreezerToggle.Size = UDim2.new(0.45, 0, 0.8, 0)
-tradeFreezerToggle.Position = UDim2.new(0.5, 5, 0.1, 0)
-tradeFreezerToggle.BackgroundColor3 = ACCENT_RED
-tradeFreezerToggle.Text = "OFF"
-tradeFreezerToggle.Font = FONT
-tradeFreezerToggle.TextColor3 = TEXT_MAIN
-tradeFreezerToggle.TextSize = 12
-local tradeFreezerToggleCorner = Instance.new("UICorner", tradeFreezerToggle)
-tradeFreezerToggleCorner.CornerRadius = UDim.new(0, 6)
-
--- Auto Accept Toggle
-local autoAcceptFrame = Instance.new("Frame", MainFrame)
-autoAcceptFrame.Name = "AutoAcceptFrame"
-autoAcceptFrame.Size = UDim2.new(1, -10, 0, 30)
-autoAcceptFrame.Position = UDim2.new(0, 5, 0, 85)
-autoAcceptFrame.BackgroundColor3 = CARD_BG
-autoAcceptFrame.Visible = false
-local autoAcceptCorner = Instance.new("UICorner", autoAcceptFrame)
-autoAcceptCorner.CornerRadius = UDim.new(0, 6)
-
-local autoAcceptLabel = Instance.new("TextLabel", autoAcceptFrame)
-autoAcceptLabel.Name = "AutoAcceptLabel"
-autoAcceptLabel.Size = UDim2.new(0.5, 0, 1, 0)
-autoAcceptLabel.Position = UDim2.new(0, 5, 0, 0)
-autoAcceptLabel.BackgroundTransparency = 1
-autoAcceptLabel.Text = "Auto Accept"
-autoAcceptLabel.Font = FONT
-autoAcceptLabel.TextColor3 = TEXT_MAIN
-autoAcceptLabel.TextSize = 12
-autoAcceptLabel.TextXAlignment = Enum.TextXAlignment.Left
-
-local autoAcceptToggle = Instance.new("TextButton", autoAcceptFrame)
-autoAcceptToggle.Name = "AutoAcceptToggle"
-autoAcceptToggle.Size = UDim2.new(0.45, 0, 0.8, 0)
-autoAcceptToggle.Position = UDim2.new(0.5, 5, 0.1, 0)
-autoAcceptToggle.BackgroundColor3 = ACCENT_RED
-autoAcceptToggle.Text = "OFF"
-autoAcceptToggle.Font = FONT
-autoAcceptToggle.TextColor3 = TEXT_MAIN
-autoAcceptToggle.TextSize = 12
-local autoAcceptToggleCorner = Instance.new("UICorner", autoAcceptToggle)
-autoAcceptToggleCorner.CornerRadius = UDim.new(0, 6)
-
--- Force Accept Button
-local forceAcceptFrame = Instance.new("Frame", MainFrame)
-forceAcceptFrame.Name = "ForceAcceptFrame"
-forceAcceptFrame.Size = UDim2.new(1, -10, 0, 30)
-forceAcceptFrame.Position = UDim2.new(0, 5, 0, 120)
-forceAcceptFrame.BackgroundColor3 = CARD_BG
-forceAcceptFrame.Visible = false
-local forceAcceptCorner = Instance.new("UICorner", forceAcceptFrame)
-forceAcceptCorner.CornerRadius = UDim.new(0, 6)
-
-local forceAcceptButton = Instance.new("TextButton", forceAcceptFrame)
-forceAcceptButton.Name = "ForceAcceptButton"
-forceAcceptButton.Size = UDim2.new(1, -10, 0.8, 0)
-forceAcceptButton.Position = UDim2.new(0.5, -((forceAcceptFrame.AbsoluteSize.X - 10)/2), 0.1, 0)
-forceAcceptButton.AnchorPoint = Vector2.new(0.5, 0)
-forceAcceptButton.BackgroundColor3 = ACCENT_YELLOW
-forceAcceptButton.Text = "FORCE ACCEPT"
-forceAcceptButton.Font = FONT
-forceAcceptButton.TextColor3 = Color3.new(0, 0, 0)
-forceAcceptButton.TextSize = 14
-forceAcceptButton.TextScaled = true
-local forceAcceptButtonCorner = Instance.new("UICorner", forceAcceptButton)
-forceAcceptButtonCorner.CornerRadius = UDim.new(0, 6)
-
--- Toggle Logic
-local tradeFreezerEnabled = false
-local autoAcceptEnabled = false
-
-tradeFreezerToggle.MouseButton1Click:Connect(function()
-    tradeFreezerEnabled = not tradeFreezerEnabled
-    if tradeFreezerEnabled then
-        tradeFreezerToggle.Text = "ON"
-        tradeFreezerToggle.BackgroundColor3 = ACCENT_GREEN
-        confirmationStatus.Text = "Trade FROZEN"
-        confirmationStatus.TextColor3 = ACCENT_BLUE
-    else
-        tradeFreezerToggle.Text = "OFF"
-        tradeFreezerToggle.BackgroundColor3 = ACCENT_RED
-        confirmationStatus.Text = "Transaction: PENDING"
-        confirmationStatus.TextColor3 = ACCENT_BLUE
-    end
+toggleLogo.MouseButton1Click:Connect(function()
+	if main.Visible then
+		TweenService:Create(main, TweenInfo.new(0.2), {Size = UDim2.new(0, 0, 0, 0)}):Play()
+		task.delay(0.2, function() main.Visible = false end)
+	else
+		main.Size = UDim2.new(0, 0, 0, 0)
+		main.Visible = true
+		TweenService:Create(main, TweenInfo.new(0.3), {Size = UDim2.new(0, 280, 0, 230)}):Play()
+	end
 end)
+Instance.new("UICorner", main).CornerRadius = UDim.new(0, 12)
 
-autoAcceptToggle.MouseButton1Click:Connect(function()
-    autoAcceptEnabled = not autoAcceptEnabled
-    if autoAcceptEnabled then
-        autoAcceptToggle.Text = "ON"
-        autoAcceptToggle.BackgroundColor3 = ACCENT_GREEN
-    else
-        autoAcceptToggle.Text = "OFF"
-        autoAcceptToggle.BackgroundColor3 = ACCENT_RED
-    end
+local title = Instance.new("TextLabel", main)
+title.Size = UDim2.new(1, 0, 0, 30)
+title.Position = UDim2.new(0, 0, 0, 8)
+title.BackgroundTransparency = 1
+title.Text = "🦝 GAG TRADE SCAM 🌶️"
+title.Font = Enum.Font.GothamBold
+title.TextSize = 20
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+local subtitle = Instance.new("TextLabel", main)
+subtitle.Size = UDim2.new(1, 0, 0, 15)
+subtitle.Position = UDim2.new(0, 0, 0, 32)
+subtitle.BackgroundTransparency = 1
+subtitle.Text = "Made by MozilOnTop"
+subtitle.Font = Enum.Font.Gotham
+subtitle.TextSize = 12
+subtitle.TextColor3 = Color3.fromRGB(160, 160, 160)
+
+local dropdownBtn = Instance.new("TextButton", main)
+dropdownBtn.Size = UDim2.new(0.9, 0, 0, 35)
+dropdownBtn.Position = UDim2.new(0.5, 0, 0, 55)
+dropdownBtn.AnchorPoint = Vector2.new(0.5, 0)
+dropdownBtn.Text = "Select Player"
+dropdownBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+dropdownBtn.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
+dropdownBtn.Font = Enum.Font.Gotham
+dropdownBtn.TextSize = 14
+Instance.new("UICorner", dropdownBtn).CornerRadius = UDim.new(0, 6)
+
+local dropdownAvatar = Instance.new("ImageLabel", dropdownBtn)
+dropdownAvatar.Size = UDim2.new(0, 24, 0, 24)
+dropdownAvatar.Position = UDim2.new(0, 5, 0.5, -12)
+dropdownAvatar.BackgroundTransparency = 1
+dropdownAvatar.Image = ""
+dropdownAvatar.Visible = false
+
+local listFrame = Instance.new("ScrollingFrame", main)
+listFrame.Size = UDim2.new(0.9, 0, 0, 0)
+listFrame.Position = UDim2.new(0.5, 0, 0, 95)
+listFrame.AnchorPoint = Vector2.new(0.5, 0)
+listFrame.BackgroundTransparency = 1
+listFrame.BorderSizePixel = 0
+listFrame.ScrollBarThickness = 4
+listFrame.Visible = false
+listFrame.ClipsDescendants = true
+listFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
+Instance.new("UIListLayout", listFrame).Padding = UDim.new(0, 4)
+
+local function createToggleFrame(text, y)
+	local frame = Instance.new("Frame", main)
+	frame.Size = UDim2.new(0.9, 0, 0, 30)
+	frame.Position = UDim2.new(0.5, 0, 0, y)
+	frame.AnchorPoint = Vector2.new(0.5, 0)
+	frame.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
+	frame.BorderSizePixel = 0
+	Instance.new("UICorner", frame).CornerRadius = UDim.new(0, 6)
+
+	local label = Instance.new("TextLabel", frame)
+	label.Size = UDim2.new(1, -55, 1, 0)
+	label.Position = UDim2.new(0, 10, 0, 0)
+	label.BackgroundTransparency = 1
+	label.Text = text
+	label.Font = Enum.Font.Gotham
+	label.TextSize = 14
+	label.TextColor3 = Color3.fromRGB(255, 255, 255)
+	label.TextXAlignment = Enum.TextXAlignment.Left
+
+	local toggle = Instance.new("TextButton", frame)
+	toggle.Size = UDim2.new(0, 40, 0, 20)
+	toggle.Position = UDim2.new(1, -45, 0.5, -10)
+	toggle.BackgroundColor3 = Color3.fromRGB(60, 60, 65)
+	toggle.Text = ""
+	toggle.BorderSizePixel = 0
+	Instance.new("UICorner", toggle).CornerRadius = UDim.new(1, 0)
+
+	local dot = Instance.new("Frame", toggle)
+	dot.Size = UDim2.new(0, 16, 0, 16)
+	dot.Position = UDim2.new(0, 2, 0.5, -8)
+	dot.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	dot.BorderSizePixel = 0
+	Instance.new("UICorner", dot).CornerRadius = UDim.new(1, 0)
+
+	local toggled = false
+	toggle.MouseButton1Click:Connect(function()
+		toggled = not toggled
+		TweenService:Create(toggle, TweenInfo.new(0.2), {
+			BackgroundColor3 = toggled and Color3.fromRGB(0, 170, 255) or Color3.fromRGB(60, 60, 65)
+		}):Play()
+		TweenService:Create(dot, TweenInfo.new(0.2), {
+			Position = toggled and UDim2.new(1, -18, 0.5, -8) or UDim2.new(0, 2, 0.5, -8)
+		}):Play()
+
+		showNotification(text .. (toggled and " Enabled!" or " Disabled!"),
+			toggled and Color3.fromRGB(0, 170, 255) or Color3.fromRGB(255, 70, 70))
+	end)
+
+	return frame
+end
+
+local antiDetected = createToggleFrame("Freeze Trade", 100)
+local freezeFrame = createToggleFrame("Anti Detected", 140)
+local bypassFrame = createToggleFrame("Trade Failed Bypass", 180)
+
+local warning = Instance.new("TextLabel", main)
+warning.Text = "⚠️ Only Use When In Trade ‼️"
+warning.Font = Enum.Font.GothamBold
+warning.TextColor3 = Color3.fromRGB(255, 255, 255)
+warning.TextStrokeTransparency = 0.5
+warning.TextSize = 13
+warning.BackgroundTransparency = 1
+warning.Size = UDim2.new(1, 0, 0, 20)
+warning.Position = UDim2.new(0.5, 0, 0, 210)
+warning.AnchorPoint = Vector2.new(0.5, 0)
+
+-- Dropdown logic giữ nguyên
+local dropdownOpen = false
+local function refreshPlayers()
+	for _, c in pairs(listFrame:GetChildren()) do
+		if c:IsA("TextButton") then c:Destroy() end
+	end
+	local count = 0
+	for _, plr in pairs(Players:GetPlayers()) do
+		if plr ~= LocalPlayer then
+			count += 1
+			local btn = Instance.new("TextButton", listFrame)
+			btn.Size = UDim2.new(1, 0, 0, 30)
+			btn.BackgroundColor3 = Color3.fromRGB(50, 50, 60)
+			btn.Text = "            " .. plr.Name
+			btn.Font = Enum.Font.Gotham
+			btn.TextSize = 13
+			btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+			btn.TextXAlignment = Enum.TextXAlignment.Left
+			Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 6)
+
+			local avatar = Instance.new("ImageLabel", btn)
+			avatar.Size = UDim2.new(0, 24, 0, 24)
+			avatar.Position = UDim2.new(0, 3, 0.5, -12)
+			avatar.Image = "https://www.roblox.com/headshot-thumbnail/image?userId="..plr.UserId.."&width=50&height=50&format=png"
+			avatar.BackgroundTransparency = 1
+
+			btn.MouseButton1Click:Connect(function()
+				dropdownBtn.Text = plr.Name
+				dropdownAvatar.Image = avatar.Image
+				dropdownAvatar.Visible = true
+				listFrame.Visible = false
+				dropdownOpen = false
+				main:TweenSize(UDim2.new(0, 280, 0, 240), "Out", "Sine", 0.25, true)
+				TweenService:Create(antiDetected, TweenInfo.new(0.25), {Position = UDim2.new(0.5, 0, 0, 100)}):Play()
+				TweenService:Create(freezeFrame, TweenInfo.new(0.25), {Position = UDim2.new(0.5, 0, 0, 140)}):Play()
+				TweenService:Create(bypassFrame, TweenInfo.new(0.25), {Position = UDim2.new(0.5, 0, 0, 180)}):Play()
+				TweenService:Create(warning, TweenInfo.new(0.25), {Position = UDim2.new(0.5, 0, 0, 210)}):Play()
+			end)
+		end
+	end
+	listFrame.CanvasSize = UDim2.new(0, 0, 0, count * 34)
+end
+
+dropdownBtn.MouseButton1Click:Connect(function()
+	dropdownOpen = not dropdownOpen
+	if dropdownOpen then
+		refreshPlayers()
+		listFrame.Visible = true
+		listFrame:TweenSize(UDim2.new(0.9, 0, 0, 100), "Out", "Sine", 0.25, true)
+		main:TweenSize(UDim2.new(0, 280, 0, 340), "Out", "Sine", 0.25, true)
+		TweenService:Create(antiDetected, TweenInfo.new(0.25), {Position = UDim2.new(0.5, 0, 0, 200)}):Play()
+		TweenService:Create(freezeFrame, TweenInfo.new(0.25), {Position = UDim2.new(0.5, 0, 0, 240)}):Play()
+		TweenService:Create(bypassFrame, TweenInfo.new(0.25), {Position = UDim2.new(0.5, 0, 0, 280)}):Play()
+		TweenService:Create(warning, TweenInfo.new(0.25), {Position = UDim2.new(0.5, 0, 0, 310)}):Play()
+	else
+		listFrame:TweenSize(UDim2.new(0.9, 0, 0, 0), "Out", "Sine", 0.25, true)
+		task.delay(0.25, function() listFrame.Visible = false end)
+		main:TweenSize(UDim2.new(0, 280, 0, 240), "Out", "Sine", 0.25, true)
+		TweenService:Create(antiDetected, TweenInfo.new(0.25), {Position = UDim2.new(0.5, 0, 0, 100)}):Play()
+		TweenService:Create(freezeFrame, TweenInfo.new(0.25), {Position = UDim2.new(0.5, 0, 0, 140)}):Play()
+		TweenService:Create(bypassFrame, TweenInfo.new(0.25), {Position = UDim2.new(0.5, 0, 0, 180)}):Play()
+		TweenService:Create(warning, TweenInfo.new(0.25), {Position = UDim2.new(0.5, 0, 0, 210)}):Play()
+	end
 end)
-
--- Force Accept Button Logic
-forceAcceptButton.MouseButton1Click:Connect(function()
-    -- Find and fire the Accept remote
-    local acceptRemote = ReplicatedStorage:FindFirstChild("Accept")
-    if acceptRemote then
-        confirmationStatus.Text = "FORCING ACCEPT..."
-        confirmationStatus.TextColor3 = ACCENT_YELLOW
-        
-        -- Fire the accept remote
-        acceptRemote:FireServer()
-        
-        -- Visual feedback
-        forceAcceptButton.BackgroundColor3 = ACCENT_GREEN
-        forceAcceptButton.Text = "ACCEPTED!"
-        
-        -- Reset after 2 seconds
-        delay(2, function()
-            if forceAcceptButton then
-                forceAcceptButton.BackgroundColor3 = ACCENT_YELLOW
-                forceAcceptButton.Text = "FORCE ACCEPT"
-            end
-        end)
-    else
-        confirmationStatus.Text = "ERROR: No Accept remote"
-        confirmationStatus.TextColor3 = ACCENT_RED
-    end
-end)
-
--- ========== DETECTION LOGIC ==========
-local mt = getrawmetatable(game)
-local oldNamecall = mt.__namecall
-setreadonly(mt, false)
-
-mt.__namecall = newcclosure(function(self, ...)
-    local method = getnamecallmethod()
-    local args = {...}
-    local remoteName = tostring(self)
-
-    -- Trade detection
-    if (remoteName == "SendRequest" or remoteName == "RespondRequest") and method == "FireServer" then
-        tradeRequestStatus.Text = "Trade Request: DETECTED"
-        tradeRequestStatus.TextColor3 = ACCENT_GREEN
-        
-        -- Expand GUI and show controls
-        MainFrame.Size = UDim2.new(0, 260, 0, 155)
-        tradeFreezerFrame.Visible = true
-        autoAcceptFrame.Visible = true
-        forceAcceptFrame.Visible = true
-        
-        -- Auto Accept functionality
-        if autoAcceptEnabled then
-            confirmationStatus.Text = "Auto Accepting..."
-            confirmationStatus.TextColor3 = ACCENT_BLUE
-            
-            -- Delay to simulate user action
-            wait(1)
-            
-            -- Find and fire the Accept remote
-            local acceptRemote = ReplicatedStorage:FindFirstChild("Accept")
-            if acceptRemote then
-                acceptRemote:FireServer()
-            end
-        end
-    end
-
-    -- Decline handling
-    if remoteName == "Decline" and method == "FireServer" then
-        tradeRequestStatus.Text = "Trade Request: NOT DETECTED"
-        tradeRequestStatus.TextColor3 = ACCENT_RED
-        confirmationStatus.Text = "Transaction: PENDING"
-        confirmationStatus.TextColor3 = ACCENT_BLUE
-        
-        -- Collapse GUI and hide controls
-        MainFrame.Size = UDim2.new(0, 260, 0, 100)
-        tradeFreezerFrame.Visible = false
-        autoAcceptFrame.Visible = false
-        forceAcceptFrame.Visible = false
-        
-        -- Reset toggle states
-        tradeFreezerEnabled = false
-        tradeFreezerToggle.Text = "OFF"
-        tradeFreezerToggle.BackgroundColor3 = ACCENT_RED
-        autoAcceptEnabled = false
-        autoAcceptToggle.Text = "OFF"
-        autoAcceptToggle.BackgroundColor3 = ACCENT_RED
-    end
-
-    -- Accept handling
-    if remoteName == "Accept" and method == "FireServer" then
-        -- Block if trade freezer is enabled
-        if tradeFreezerEnabled then
-            confirmationStatus.Text = "Accept BLOCKED (Freezer)"
-            confirmationStatus.TextColor3 = ACCENT_RED
-            return
-        end
-        
-        confirmationStatus.Text = "Transaction: ACCEPTED"
-        confirmationStatus.TextColor3 = ACCENT_GREEN
-        
-        -- Auto-reset after 5 seconds
-        delay(5, function()
-            if tradeRequestStatus and confirmationStatus then
-                tradeRequestStatus.Text = "Trade Request: NOT DETECTED"
-                tradeRequestStatus.TextColor3 = ACCENT_RED
-                confirmationStatus.Text = "Transaction: PENDING"
-                confirmationStatus.TextColor3 = ACCENT_BLUE
-                MainFrame.Size = UDim2.new(0, 260, 0, 100)
-                tradeFreezerFrame.Visible = false
-                autoAcceptFrame.Visible = false
-                forceAcceptFrame.Visible = false
-                
-                -- Reset toggle states
-                tradeFreezerEnabled = false
-                if tradeFreezerToggle then
-                    tradeFreezerToggle.Text = "OFF"
-                    tradeFreezerToggle.BackgroundColor3 = ACCENT_RED
-                end
-                autoAcceptEnabled = false
-                if autoAcceptToggle then
-                    autoAcceptToggle.Text = "OFF"
-                    autoAcceptToggle.BackgroundColor3 = ACCENT_RED
-                end
-            end
-        end)
-    end
-
-    return oldNamecall(self, ...)
-end)
-
-setreadonly(mt, true)
