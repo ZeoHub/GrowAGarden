@@ -55,9 +55,16 @@ local logo = Instance.new("ImageLabel")
 logo.Name = "Logo"
 logo.Size = UDim2.new(1, 0, 1, 0)
 logo.BackgroundTransparency = 1
-logo.Image = "rbxassetid://119919697523670"
+logo.Image = "rbxassetid://119919697523670"  -- Ensure this asset ID is correct
 logo.ScaleType = Enum.ScaleType.Fit
 logo.ZIndex = 99999
+
+-- Add white stroke to logo
+local logoStroke = Instance.new("UIStroke")
+logoStroke.Color = Color3.new(1, 1, 1)  -- White
+logoStroke.Thickness = 3
+logoStroke.Transparency = 0.3
+logoStroke.Parent = logo
 
 -- Add glow effect to logo
 local glow = Instance.new("ImageLabel")
@@ -65,7 +72,7 @@ glow.Name = "Glow"
 glow.Size = UDim2.new(1.2, 0, 1.2, 0)
 glow.Position = UDim2.new(-0.1, 0, -0.1, 0)
 glow.BackgroundTransparency = 1
-glow.Image = "rbxassetid://119919697523670"
+glow.Image = "rbxassetid://119919697523670"  -- Same as logo
 glow.ImageColor3 = Color3.fromRGB(100, 150, 255)
 glow.ScaleType = Enum.ScaleType.Fit
 glow.ZIndex = 99998
@@ -86,7 +93,7 @@ local function startPulse()
     }):Play()
 end
 
--- Create loading text with Comic Neue Angular SemiBold font (FIXED)
+-- Create loading text with Comic Neue Angular SemiBold font
 local loadingText = Instance.new("TextLabel")
 loadingText.Name = "LoadingText"
 loadingText.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -97,45 +104,23 @@ loadingText.Text = "Loading: 1/1000"
 loadingText.TextColor3 = Color3.fromRGB(200, 220, 255)
 loadingText.TextSize = 22
 loadingText.ZIndex = 99999
-
--- FONT FIX: Use FontFace instead of deprecated Font property
 loadingText.FontFace = Font.new(
     "rbxasset://fonts/families/ComicNeueAngular.json",
     Enum.FontWeight.SemiBold,
     Enum.FontStyle.Normal
 )
 
--- Create progress bar
-local progressBar = Instance.new("Frame")
-progressBar.Name = "ProgressBar"
-progressBar.AnchorPoint = Vector2.new(0.5, 0.5)
-progressBar.Position = UDim2.new(0.5, 0, 0.7, 0)
-progressBar.Size = UDim2.new(0.6, 0, 0, 8)
-progressBar.BackgroundColor3 = Color3.fromRGB(40, 40, 80)
-progressBar.BorderSizePixel = 0
-progressBar.ZIndex = 99999
-
-local progressBarCorner = Instance.new("UICorner")
-progressBarCorner.CornerRadius = UDim.new(0.5, 0)
-progressBarCorner.Parent = progressBar
-
-local progressFill = Instance.new("Frame")
-progressFill.Name = "ProgressFill"
-progressFill.Size = UDim2.new(0, 0, 1, 0)
-progressFill.BackgroundColor3 = Color3.fromRGB(100, 150, 255)
-progressFill.BorderSizePixel = 0
-progressFill.ZIndex = 99999
-
-local progressFillCorner = Instance.new("UICorner")
-progressFillCorner.CornerRadius = UDim.new(0.5, 0)
-progressFillCorner.Parent = progressFill
+-- Add white stroke to text
+local textStroke = Instance.new("UIStroke")
+textStroke.Color = Color3.new(1, 1, 1)  -- White
+textStroke.Thickness = 2
+textStroke.Transparency = 0.2
+textStroke.Parent = loadingText
 
 -- Assemble the UI
-progressFill.Parent = progressBar
 logo.Parent = logoContainer
 logoContainer.Parent = blurContainer
 loadingText.Parent = blurContainer
-progressBar.Parent = blurContainer
 blurContainer.Parent = blurScreen
 
 -- Smoother blur animation with longer duration
@@ -147,7 +132,7 @@ local function animateBlur()
     return tween
 end
 
--- Progress bar with 13 second duration and 1-1000 count
+-- Loading simulation with 1-1000 count
 local function simulateProgress()
     local duration = 13
     local startTime = os.clock()
@@ -155,7 +140,6 @@ local function simulateProgress()
     
     while os.clock() - startTime < duration do
         local progress = (os.clock() - startTime) / duration
-        progressFill.Size = UDim2.new(progress, 0, 1, 0)
         
         -- Update loading text to show 1-1000 count
         local currentStep = math.floor(progress * totalSteps) + 1
@@ -167,7 +151,6 @@ local function simulateProgress()
         RunService.RenderStepped:Wait()
     end
     
-    progressFill.Size = UDim2.new(1, 0, 1, 0)
     loadingText.Text = "Loading Complete: 1000/1000"
 end
 
@@ -236,12 +219,13 @@ local function showLoadingScreen()
         TextTransparency = 1
     }):Play()
     
-    TweenService:Create(progressBar, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
-        BackgroundTransparency = 1
+    -- Fade out strokes
+    TweenService:Create(logoStroke, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
+        Transparency = 1
     }):Play()
     
-    TweenService:Create(progressFill, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
-        BackgroundTransparency = 1
+    TweenService:Create(textStroke, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
+        Transparency = 1
     }):Play()
     
     -- Start fade animations
