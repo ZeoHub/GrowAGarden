@@ -86,7 +86,7 @@ local function startPulse()
     }):Play()
 end
 
--- Create loading text with Comic Neue Angular SemiBold font
+-- Create loading text with Comic Neue Angular SemiBold font (FIXED)
 local loadingText = Instance.new("TextLabel")
 loadingText.Name = "LoadingText"
 loadingText.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -95,13 +95,15 @@ loadingText.Size = UDim2.new(0, 300, 0, 40)
 loadingText.BackgroundTransparency = 1
 loadingText.Text = "Loading: 1/1000"
 loadingText.TextColor3 = Color3.fromRGB(200, 220, 255)
-loadingText.Font = Font.new(
+loadingText.TextSize = 22
+loadingText.ZIndex = 99999
+
+-- FONT FIX: Use FontFace instead of deprecated Font property
+loadingText.FontFace = Font.new(
     "rbxasset://fonts/families/ComicNeueAngular.json",
     Enum.FontWeight.SemiBold,
     Enum.FontStyle.Normal
 )
-loadingText.TextSize = 22
-loadingText.ZIndex = 99999
 
 -- Create progress bar
 local progressBar = Instance.new("Frame")
