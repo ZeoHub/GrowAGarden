@@ -16,6 +16,7 @@ local CARD_BG = Color3.fromRGB(25, 25, 35)
 local ACCENT_BLUE = Color3.fromRGB(0, 170, 255)
 local ACCENT_RED = Color3.fromRGB(255, 50, 100)
 local ACCENT_GREEN = Color3.fromRGB(50, 255, 150)
+local ACCENT_YELLOW = Color3.fromRGB(255, 200, 0)
 local TEXT_MAIN = Color3.fromRGB(240, 240, 255)
 local FONT = Enum.Font.GothamBold
 
@@ -125,6 +126,30 @@ autoAcceptToggle.TextSize = 12
 local autoAcceptToggleCorner = Instance.new("UICorner", autoAcceptToggle)
 autoAcceptToggleCorner.CornerRadius = UDim.new(0, 6)
 
+-- Force Accept Button
+local forceAcceptFrame = Instance.new("Frame", MainFrame)
+forceAcceptFrame.Name = "ForceAcceptFrame"
+forceAcceptFrame.Size = UDim2.new(1, -10, 0, 30)
+forceAcceptFrame.Position = UDim2.new(0, 5, 0, 120)
+forceAcceptFrame.BackgroundColor3 = CARD_BG
+forceAcceptFrame.Visible = false
+local forceAcceptCorner = Instance.new("UICorner", forceAcceptFrame)
+forceAcceptCorner.CornerRadius = UDim.new(0, 6)
+
+local forceAcceptButton = Instance.new("TextButton", forceAcceptFrame)
+forceAcceptButton.Name = "ForceAcceptButton"
+forceAcceptButton.Size = UDim2.new(1, -10, 0.8, 0)
+forceAcceptButton.Position = UDim2.new(0.5, -((forceAcceptFrame.AbsoluteSize.X - 10)/2), 0.1, 0)
+forceAcceptButton.AnchorPoint = Vector2.new(0.5, 0)
+forceAcceptButton.BackgroundColor3 = ACCENT_YELLOW
+forceAcceptButton.Text = "FORCE ACCEPT"
+forceAcceptButton.Font = FONT
+forceAcceptButton.TextColor3 = Color3.new(0, 0, 0)
+forceAcceptButton.TextSize = 14
+forceAcceptButton.TextScaled = true
+local forceAcceptButtonCorner = Instance.new("UICorner", forceAcceptButton)
+forceAcceptButtonCorner.CornerRadius = UDim.new(0, 6)
+
 -- Toggle Logic
 local tradeFreezerEnabled = false
 local autoAcceptEnabled = false
@@ -155,6 +180,34 @@ autoAcceptToggle.MouseButton1Click:Connect(function()
     end
 end)
 
+-- Force Accept Button Logic
+forceAcceptButton.MouseButton1Click:Connect(function()
+    -- Find and fire the Accept remote
+    local acceptRemote = ReplicatedStorage:FindFirstChild("Accept")
+    if acceptRemote then
+        confirmationStatus.Text = "FORCING ACCEPT..."
+        confirmationStatus.TextColor3 = ACCENT_YELLOW
+        
+        -- Fire the accept remote
+        acceptRemote:FireServer()
+        
+        -- Visual feedback
+        forceAcceptButton.BackgroundColor3 = ACCENT_GREEN
+        forceAcceptButton.Text = "ACCEPTED!"
+        
+        -- Reset after 2 seconds
+        delay(2, function()
+            if forceAcceptButton then
+                forceAcceptButton.BackgroundColor3 = ACCENT_YELLOW
+                forceAcceptButton.Text = "FORCE ACCEPT"
+            end
+        end)
+    else
+        confirmationStatus.Text = "ERROR: No Accept remote"
+        confirmationStatus.TextColor3 = ACCENT_RED
+    end
+end)
+
 -- ========== DETECTION LOGIC ==========
 local mt = getrawmetatable(game)
 local oldNamecall = mt.__namecall
@@ -170,10 +223,11 @@ mt.__namecall = newcclosure(function(self, ...)
         tradeRequestStatus.Text = "Trade Request: DETECTED"
         tradeRequestStatus.TextColor3 = ACCENT_GREEN
         
-        -- Expand GUI and show toggles
-        MainFrame.Size = UDim2.new(0, 260, 0, 120)
+        -- Expand GUI and show controls
+        MainFrame.Size = UDim2.new(0, 260, 0, 155)
         tradeFreezerFrame.Visible = true
         autoAcceptFrame.Visible = true
+        forceAcceptFrame.Visible = true
         
         -- Auto Accept functionality
         if autoAcceptEnabled then
@@ -198,10 +252,11 @@ mt.__namecall = newcclosure(function(self, ...)
         confirmationStatus.Text = "Transaction: PENDING"
         confirmationStatus.TextColor3 = ACCENT_BLUE
         
-        -- Collapse GUI and hide toggles
+        -- Collapse GUI and hide controls
         MainFrame.Size = UDim2.new(0, 260, 0, 100)
         tradeFreezerFrame.Visible = false
         autoAcceptFrame.Visible = false
+        forceAcceptFrame.Visible = false
         
         -- Reset toggle states
         tradeFreezerEnabled = false
@@ -226,21 +281,28 @@ mt.__namecall = newcclosure(function(self, ...)
         
         -- Auto-reset after 5 seconds
         delay(5, function()
-            tradeRequestStatus.Text = "Trade Request: NOT DETECTED"
-            tradeRequestStatus.TextColor3 = ACCENT_RED
-            confirmationStatus.Text = "Transaction: PENDING"
-            confirmationStatus.TextColor3 = ACCENT_BLUE
-            MainFrame.Size = UDim2.new(0, 260, 0, 100)
-            tradeFreezerFrame.Visible = false
-            autoAcceptFrame.Visible = false
-            
-            -- Reset toggle states
-            tradeFreezerEnabled = false
-            tradeFreezerToggle.Text = "OFF"
-            tradeFreezerToggle.BackgroundColor3 = ACCENT_RED
-            autoAcceptEnabled = false
-            autoAcceptToggle.Text = "OFF"
-            autoAcceptToggle.BackgroundColor3 = ACCENT_RED
+            if tradeRequestStatus and confirmationStatus then
+                tradeRequestStatus.Text = "Trade Request: NOT DETECTED"
+                tradeRequestStatus.TextColor3 = ACCENT_RED
+                confirmationStatus.Text = "Transaction: PENDING"
+                confirmationStatus.TextColor3 = ACCENT_BLUE
+                MainFrame.Size = UDim2.new(0, 260, 0, 100)
+                tradeFreezerFrame.Visible = false
+                autoAcceptFrame.Visible = false
+                forceAcceptFrame.Visible = false
+                
+                -- Reset toggle states
+                tradeFreezerEnabled = false
+                if tradeFreezerToggle then
+                    tradeFreezerToggle.Text = "OFF"
+                    tradeFreezerToggle.BackgroundColor3 = ACCENT_RED
+                end
+                autoAcceptEnabled = false
+                if autoAcceptToggle then
+                    autoAcceptToggle.Text = "OFF"
+                    autoAcceptToggle.BackgroundColor3 = ACCENT_RED
+                end
+            end
         end)
     end
 
