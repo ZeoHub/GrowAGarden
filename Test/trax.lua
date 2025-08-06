@@ -59,95 +59,99 @@ confirmationStatus.TextColor3 = ACCENT_BLUE
 confirmationStatus.TextSize = 12
 confirmationStatus.TextXAlignment = Enum.TextXAlignment.Left
 
--- Anti-Freeze Toggle
-local antiFreezeFrame = Instance.new("Frame", MainFrame)
-antiFreezeFrame.Name = "AntiFreezeFrame"
-antiFreezeFrame.Size = UDim2.new(1, -10, 0, 30)  -- Compact height
-antiFreezeFrame.Position = UDim2.new(0, 5, 0, 50)
-antiFreezeFrame.BackgroundColor3 = CARD_BG
-antiFreezeFrame.Visible = false
-local antiFreezeCorner = Instance.new("UICorner", antiFreezeFrame)
-antiFreezeCorner.CornerRadius = UDim.new(0, 6)
+-- Trade Freezer Toggle
+local tradeFreezerFrame = Instance.new("Frame", MainFrame)
+tradeFreezerFrame.Name = "TradeFreezerFrame"
+tradeFreezerFrame.Size = UDim2.new(1, -10, 0, 30)
+tradeFreezerFrame.Position = UDim2.new(0, 5, 0, 50)
+tradeFreezerFrame.BackgroundColor3 = CARD_BG
+tradeFreezerFrame.Visible = false
+local tradeFreezerCorner = Instance.new("UICorner", tradeFreezerFrame)
+tradeFreezerCorner.CornerRadius = UDim.new(0, 6)
 
-local antiFreezeLabel = Instance.new("TextLabel", antiFreezeFrame)
-antiFreezeLabel.Name = "AntiFreezeLabel"
-antiFreezeLabel.Size = UDim2.new(0.5, 0, 1, 0)
-antiFreezeLabel.Position = UDim2.new(0, 5, 0, 0)
-antiFreezeLabel.BackgroundTransparency = 1
-antiFreezeLabel.Text = "Anti-Freeze"
-antiFreezeLabel.Font = FONT
-antiFreezeLabel.TextColor3 = TEXT_MAIN
-antiFreezeLabel.TextSize = 12
-antiFreezeLabel.TextXAlignment = Enum.TextXAlignment.Left
+local tradeFreezerLabel = Instance.new("TextLabel", tradeFreezerFrame)
+tradeFreezerLabel.Name = "TradeFreezerLabel"
+tradeFreezerLabel.Size = UDim2.new(0.5, 0, 1, 0)
+tradeFreezerLabel.Position = UDim2.new(0, 5, 0, 0)
+tradeFreezerLabel.BackgroundTransparency = 1
+tradeFreezerLabel.Text = "Trade Freezer"
+tradeFreezerLabel.Font = FONT
+tradeFreezerLabel.TextColor3 = TEXT_MAIN
+tradeFreezerLabel.TextSize = 12
+tradeFreezerLabel.TextXAlignment = Enum.TextXAlignment.Left
 
-local antiFreezeToggle = Instance.new("TextButton", antiFreezeFrame)
-antiFreezeToggle.Name = "AntiFreezeToggle"
-antiFreezeToggle.Size = UDim2.new(0.45, 0, 0.8, 0)  -- Large toggle size
-antiFreezeToggle.Position = UDim2.new(0.5, 5, 0.1, 0)
-antiFreezeToggle.BackgroundColor3 = ACCENT_RED
-antiFreezeToggle.Text = "OFF"
-antiFreezeToggle.Font = FONT
-antiFreezeToggle.TextColor3 = TEXT_MAIN
-antiFreezeToggle.TextSize = 12
-local antiFreezeToggleCorner = Instance.new("UICorner", antiFreezeToggle)
-antiFreezeToggleCorner.CornerRadius = UDim.new(0, 6)
+local tradeFreezerToggle = Instance.new("TextButton", tradeFreezerFrame)
+tradeFreezerToggle.Name = "TradeFreezerToggle"
+tradeFreezerToggle.Size = UDim2.new(0.45, 0, 0.8, 0)
+tradeFreezerToggle.Position = UDim2.new(0.5, 5, 0.1, 0)
+tradeFreezerToggle.BackgroundColor3 = ACCENT_RED
+tradeFreezerToggle.Text = "OFF"
+tradeFreezerToggle.Font = FONT
+tradeFreezerToggle.TextColor3 = TEXT_MAIN
+tradeFreezerToggle.TextSize = 12
+local tradeFreezerToggleCorner = Instance.new("UICorner", tradeFreezerToggle)
+tradeFreezerToggleCorner.CornerRadius = UDim.new(0, 6)
 
--- Anti-AutoAccept Toggle
-local antiAutoAcceptFrame = Instance.new("Frame", MainFrame)
-antiAutoAcceptFrame.Name = "AntiAutoAcceptFrame"
-antiAutoAcceptFrame.Size = UDim2.new(1, -10, 0, 30)  -- Compact height
-antiAutoAcceptFrame.Position = UDim2.new(0, 5, 0, 85)
-antiAutoAcceptFrame.BackgroundColor3 = CARD_BG
-antiAutoAcceptFrame.Visible = false
-local antiAutoAcceptCorner = Instance.new("UICorner", antiAutoAcceptFrame)
-antiAutoAcceptCorner.CornerRadius = UDim.new(0, 6)
+-- Auto Accept Toggle
+local autoAcceptFrame = Instance.new("Frame", MainFrame)
+autoAcceptFrame.Name = "AutoAcceptFrame"
+autoAcceptFrame.Size = UDim2.new(1, -10, 0, 30)
+autoAcceptFrame.Position = UDim2.new(0, 5, 0, 85)
+autoAcceptFrame.BackgroundColor3 = CARD_BG
+autoAcceptFrame.Visible = false
+local autoAcceptCorner = Instance.new("UICorner", autoAcceptFrame)
+autoAcceptCorner.CornerRadius = UDim.new(0, 6)
 
-local antiAutoAcceptLabel = Instance.new("TextLabel", antiAutoAcceptFrame)
-antiAutoAcceptLabel.Name = "AntiAutoAcceptLabel"
-antiAutoAcceptLabel.Size = UDim2.new(0.5, 0, 1, 0)
-antiAutoAcceptLabel.Position = UDim2.new(0, 5, 0, 0)
-antiAutoAcceptLabel.BackgroundTransparency = 1
-antiAutoAcceptLabel.Text = "Anti-AutoAccept"
-antiAutoAcceptLabel.Font = FONT
-antiAutoAcceptLabel.TextColor3 = TEXT_MAIN
-antiAutoAcceptLabel.TextSize = 12
-antiAutoAcceptLabel.TextXAlignment = Enum.TextXAlignment.Left
+local autoAcceptLabel = Instance.new("TextLabel", autoAcceptFrame)
+autoAcceptLabel.Name = "AutoAcceptLabel"
+autoAcceptLabel.Size = UDim2.new(0.5, 0, 1, 0)
+autoAcceptLabel.Position = UDim2.new(0, 5, 0, 0)
+autoAcceptLabel.BackgroundTransparency = 1
+autoAcceptLabel.Text = "Auto Accept"
+autoAcceptLabel.Font = FONT
+autoAcceptLabel.TextColor3 = TEXT_MAIN
+autoAcceptLabel.TextSize = 12
+autoAcceptLabel.TextXAlignment = Enum.TextXAlignment.Left
 
-local antiAutoAcceptToggle = Instance.new("TextButton", antiAutoAcceptFrame)
-antiAutoAcceptToggle.Name = "AntiAutoAcceptToggle"
-antiAutoAcceptToggle.Size = UDim2.new(0.45, 0, 0.8, 0)  -- Large toggle size
-antiAutoAcceptToggle.Position = UDim2.new(0.5, 5, 0.1, 0)
-antiAutoAcceptToggle.BackgroundColor3 = ACCENT_RED
-antiAutoAcceptToggle.Text = "OFF"
-antiAutoAcceptToggle.Font = FONT
-antiAutoAcceptToggle.TextColor3 = TEXT_MAIN
-antiAutoAcceptToggle.TextSize = 12
-local antiAutoAcceptToggleCorner = Instance.new("UICorner", antiAutoAcceptToggle)
-antiAutoAcceptToggleCorner.CornerRadius = UDim.new(0, 6)
+local autoAcceptToggle = Instance.new("TextButton", autoAcceptFrame)
+autoAcceptToggle.Name = "AutoAcceptToggle"
+autoAcceptToggle.Size = UDim2.new(0.45, 0, 0.8, 0)
+autoAcceptToggle.Position = UDim2.new(0.5, 5, 0.1, 0)
+autoAcceptToggle.BackgroundColor3 = ACCENT_RED
+autoAcceptToggle.Text = "OFF"
+autoAcceptToggle.Font = FONT
+autoAcceptToggle.TextColor3 = TEXT_MAIN
+autoAcceptToggle.TextSize = 12
+local autoAcceptToggleCorner = Instance.new("UICorner", autoAcceptToggle)
+autoAcceptToggleCorner.CornerRadius = UDim.new(0, 6)
 
 -- Toggle Logic
-local antiFreezeEnabled = false
-local antiAutoAcceptEnabled = false
+local tradeFreezerEnabled = false
+local autoAcceptEnabled = false
 
-antiFreezeToggle.MouseButton1Click:Connect(function()
-    antiFreezeEnabled = not antiFreezeEnabled
-    if antiFreezeEnabled then
-        antiFreezeToggle.Text = "ON"
-        antiFreezeToggle.BackgroundColor3 = ACCENT_GREEN
+tradeFreezerToggle.MouseButton1Click:Connect(function()
+    tradeFreezerEnabled = not tradeFreezerEnabled
+    if tradeFreezerEnabled then
+        tradeFreezerToggle.Text = "ON"
+        tradeFreezerToggle.BackgroundColor3 = ACCENT_GREEN
+        confirmationStatus.Text = "Trade FROZEN"
+        confirmationStatus.TextColor3 = ACCENT_BLUE
     else
-        antiFreezeToggle.Text = "OFF"
-        antiFreezeToggle.BackgroundColor3 = ACCENT_RED
+        tradeFreezerToggle.Text = "OFF"
+        tradeFreezerToggle.BackgroundColor3 = ACCENT_RED
+        confirmationStatus.Text = "Transaction: PENDING"
+        confirmationStatus.TextColor3 = ACCENT_BLUE
     end
 end)
 
-antiAutoAcceptToggle.MouseButton1Click:Connect(function()
-    antiAutoAcceptEnabled = not antiAutoAcceptEnabled
-    if antiAutoAcceptEnabled then
-        antiAutoAcceptToggle.Text = "ON"
-        antiAutoAcceptToggle.BackgroundColor3 = ACCENT_GREEN
+autoAcceptToggle.MouseButton1Click:Connect(function()
+    autoAcceptEnabled = not autoAcceptEnabled
+    if autoAcceptEnabled then
+        autoAcceptToggle.Text = "ON"
+        autoAcceptToggle.BackgroundColor3 = ACCENT_GREEN
     else
-        antiAutoAcceptToggle.Text = "OFF"
-        antiAutoAcceptToggle.BackgroundColor3 = ACCENT_RED
+        autoAcceptToggle.Text = "OFF"
+        autoAcceptToggle.BackgroundColor3 = ACCENT_RED
     end
 end)
 
@@ -159,20 +163,36 @@ setreadonly(mt, false)
 mt.__namecall = newcclosure(function(self, ...)
     local method = getnamecallmethod()
     local args = {...}
+    local remoteName = tostring(self)
 
     -- Trade detection
-    if (tostring(self) == "SendRequest" or tostring(self) == "RespondRequest") and method == "FireServer" then
+    if (remoteName == "SendRequest" or remoteName == "RespondRequest") and method == "FireServer" then
         tradeRequestStatus.Text = "Trade Request: DETECTED"
         tradeRequestStatus.TextColor3 = ACCENT_GREEN
         
         -- Expand GUI and show toggles
         MainFrame.Size = UDim2.new(0, 260, 0, 120)
-        antiFreezeFrame.Visible = true
-        antiAutoAcceptFrame.Visible = true
+        tradeFreezerFrame.Visible = true
+        autoAcceptFrame.Visible = true
+        
+        -- Auto Accept functionality
+        if autoAcceptEnabled then
+            confirmationStatus.Text = "Auto Accepting..."
+            confirmationStatus.TextColor3 = ACCENT_BLUE
+            
+            -- Delay to simulate user action
+            wait(1)
+            
+            -- Find and fire the Accept remote
+            local acceptRemote = ReplicatedStorage:FindFirstChild("Accept")
+            if acceptRemote then
+                acceptRemote:FireServer()
+            end
+        end
     end
 
     -- Decline handling
-    if tostring(self) == "Decline" and method == "FireServer" then
+    if remoteName == "Decline" and method == "FireServer" then
         tradeRequestStatus.Text = "Trade Request: NOT DETECTED"
         tradeRequestStatus.TextColor3 = ACCENT_RED
         confirmationStatus.Text = "Transaction: PENDING"
@@ -180,14 +200,48 @@ mt.__namecall = newcclosure(function(self, ...)
         
         -- Collapse GUI and hide toggles
         MainFrame.Size = UDim2.new(0, 260, 0, 100)
-        antiFreezeFrame.Visible = false
-        antiAutoAcceptFrame.Visible = false
+        tradeFreezerFrame.Visible = false
+        autoAcceptFrame.Visible = false
+        
+        -- Reset toggle states
+        tradeFreezerEnabled = false
+        tradeFreezerToggle.Text = "OFF"
+        tradeFreezerToggle.BackgroundColor3 = ACCENT_RED
+        autoAcceptEnabled = false
+        autoAcceptToggle.Text = "OFF"
+        autoAcceptToggle.BackgroundColor3 = ACCENT_RED
     end
 
     -- Accept handling
-    if tostring(self) == "Accept" and method == "FireServer" then
+    if remoteName == "Accept" and method == "FireServer" then
+        -- Block if trade freezer is enabled
+        if tradeFreezerEnabled then
+            confirmationStatus.Text = "Accept BLOCKED (Freezer)"
+            confirmationStatus.TextColor3 = ACCENT_RED
+            return
+        end
+        
         confirmationStatus.Text = "Transaction: ACCEPTED"
         confirmationStatus.TextColor3 = ACCENT_GREEN
+        
+        -- Auto-reset after 5 seconds
+        delay(5, function()
+            tradeRequestStatus.Text = "Trade Request: NOT DETECTED"
+            tradeRequestStatus.TextColor3 = ACCENT_RED
+            confirmationStatus.Text = "Transaction: PENDING"
+            confirmationStatus.TextColor3 = ACCENT_BLUE
+            MainFrame.Size = UDim2.new(0, 260, 0, 100)
+            tradeFreezerFrame.Visible = false
+            autoAcceptFrame.Visible = false
+            
+            -- Reset toggle states
+            tradeFreezerEnabled = false
+            tradeFreezerToggle.Text = "OFF"
+            tradeFreezerToggle.BackgroundColor3 = ACCENT_RED
+            autoAcceptEnabled = false
+            autoAcceptToggle.Text = "OFF"
+            autoAcceptToggle.BackgroundColor3 = ACCENT_RED
+        end)
     end
 
     return oldNamecall(self, ...)
