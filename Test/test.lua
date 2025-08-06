@@ -45,7 +45,7 @@ blur.Parent = Lighting
 local logoContainer = Instance.new("Frame")
 logoContainer.Name = "LogoContainer"
 logoContainer.AnchorPoint = Vector2.new(0.5, 0.5)
-logoContainer.Position = UDim2.new(0.5, 0, 0.4, 0)  -- Moved up to make space
+logoContainer.Position = UDim2.new(0.5, 0, 0.4, 0)
 logoContainer.Size = UDim2.new(0, 200, 0, 200)
 logoContainer.BackgroundTransparency = 1
 logoContainer.ZIndex = 99999
@@ -86,19 +86,17 @@ local function startPulse()
     }):Play()
 end
 
--- Create loading text with semi-bold font and black stroke
+-- Create loading text with white text and black stroke
 local loadingText = Instance.new("TextLabel")
 loadingText.Name = "LoadingText"
 loadingText.AnchorPoint = Vector2.new(0.5, 0.5)
-loadingText.Position = UDim2.new(0.5, 0, 0.65, 0)  -- Centered position
+loadingText.Position = UDim2.new(0.5, 0, 0.65, 0)
 loadingText.Size = UDim2.new(0, 300, 0, 40)
 loadingText.BackgroundTransparency = 1
 loadingText.Text = "Loading: 1/1000"
-loadingText.TextColor3 = Color3.fromRGB(200, 220, 255)
+loadingText.TextColor3 = Color3.new(1, 1, 1)  -- WHITE TEXT
 loadingText.TextSize = 22
 loadingText.ZIndex = 99999
-
--- Use semi-bold font
 loadingText.FontFace = Font.new(
     "rbxasset://fonts/families/GothamSSm.json",
     Enum.FontWeight.SemiBold,
@@ -112,20 +110,20 @@ textStroke.Thickness = 2
 textStroke.Transparency = 0.1
 textStroke.Parent = loadingText
 
--- Create rectangular progress bar
+-- Create rectangular progress bar with brown background and green fill
 local progressBar = Instance.new("Frame")
 progressBar.Name = "ProgressBar"
 progressBar.AnchorPoint = Vector2.new(0.5, 0.5)
-progressBar.Position = UDim2.new(0.5, 0, 0.75, 0)  -- Position below text
-progressBar.Size = UDim2.new(0.6, 0, 0, 20)  -- Thicker rectangular bar
-progressBar.BackgroundColor3 = Color3.fromRGB(40, 40, 80)
+progressBar.Position = UDim2.new(0.5, 0, 0.75, 0)
+progressBar.Size = UDim2.new(0.6, 0, 0, 20)
+progressBar.BackgroundColor3 = Color3.fromRGB(80, 50, 20)  -- BROWN
 progressBar.BorderSizePixel = 0
 progressBar.ZIndex = 99999
 
 local progressFill = Instance.new("Frame")
 progressFill.Name = "ProgressFill"
 progressFill.Size = UDim2.new(0, 0, 1, 0)
-progressFill.BackgroundColor3 = Color3.fromRGB(100, 150, 255)
+progressFill.BackgroundColor3 = Color3.fromRGB(50, 200, 50)  -- GREEN
 progressFill.BorderSizePixel = 0
 progressFill.ZIndex = 99999
 
@@ -241,6 +239,11 @@ local function showLoadingScreen()
     
     TweenService:Create(progressFill, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
         BackgroundTransparency = 1
+    }):Play()
+    
+    -- Fade out strokes
+    TweenService:Create(textStroke, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
+        Transparency = 1
     }):Play()
     
     -- Start fade animations
