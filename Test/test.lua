@@ -1,192 +1,262 @@
--- LocalScript (place in StarterPlayerScripts)
 local Players = game:GetService("Players")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local PlayerGui = Players.LocalPlayer:WaitForChild("PlayerGui")
+local TweenService = game:GetService("TweenService")
+local RunService = game:GetService("RunService")
+local Lighting = game:GetService("Lighting")
 
--- Remove old GUIs
-for _, gui in ipairs(PlayerGui:GetChildren()) do
-    if gui.Name == "TradeGuardGui" then
-        gui:Destroy()
+-- Wait for player
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+-- Create the loading screen GUI
+local blurScreen = Instance.new("ScreenGui")
+blurScreen.Name = "BlurLoadingScreen"
+blurScreen.DisplayOrder = 99999
+blurScreen.IgnoreGuiInset = true
+blurScreen.ResetOnSpawn = false
+
+-- Create blur effect container
+local blurContainer = Instance.new("Frame")
+blurContainer.Name = "BlurContainer"
+blurContainer.Size = UDim2.new(1, 0, 1, 0)
+blurContainer.BackgroundColor3 = Color3.fromRGB(15, 15, 30)
+blurContainer.BackgroundTransparency = 0.3
+blurContainer.ZIndex = 99999
+
+-- Add subtle gradient effect
+local gradient = Instance.new("UIGradient")
+gradient.Rotation = 90
+gradient.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(15, 15, 30)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(40, 30, 80))
+})
+gradient.Transparency = NumberSequence.new({
+    NumberSequenceKeypoint.new(0, 0.3),
+    NumberSequenceKeypoint.new(1, 0.7)
+})
+gradient.Parent = blurContainer
+
+-- Create the blur effect
+local blur = Instance.new("BlurEffect")
+blur.Name = "LoadingBlur"
+blur.Size = 0
+blur.Parent = Lighting
+
+-- Create the logo container
+local logoContainer = Instance.new("Frame")
+logoContainer.Name = "LogoContainer"
+logoContainer.AnchorPoint = Vector2.new(0.5, 0.5)
+logoContainer.Position = UDim2.new(0.5, 0, 0.45, 0)
+logoContainer.Size = UDim2.new(0, 200, 0, 200)
+logoContainer.BackgroundTransparency = 1
+logoContainer.ZIndex = 99999
+
+-- Create the logo
+local logo = Instance.new("ImageLabel")
+logo.Name = "Logo"
+logo.Size = UDim2.new(1, 0, 1, 0)
+logo.BackgroundTransparency = 1
+logo.Image = "rbxassetid://119919697523670"
+logo.ScaleType = Enum.ScaleType.Fit
+logo.ZIndex = 99999
+
+-- Add glow effect to logo
+local glow = Instance.new("ImageLabel")
+glow.Name = "Glow"
+glow.Size = UDim2.new(1.2, 0, 1.2, 0)
+glow.Position = UDim2.new(-0.1, 0, -0.1, 0)
+glow.BackgroundTransparency = 1
+glow.Image = "rbxassetid://119919697523670"
+glow.ImageColor3 = Color3.fromRGB(100, 150, 255)
+glow.ScaleType = Enum.ScaleType.Fit
+glow.ZIndex = 99998
+glow.ImageTransparency = 0.8
+glow.Parent = logoContainer
+
+-- Add pulsing effect to logo
+local pulseTween
+local function startPulse()
+    pulseTween = TweenService:Create(logo, TweenInfo.new(1.5, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut, -1, true), {
+        Size = UDim2.new(1.1, 0, 1.1, 0)
+    })
+    pulseTween:Play()
+    
+    TweenService:Create(glow, TweenInfo.new(1.5, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut, -1, true), {
+        Size = UDim2.new(1.4, 0, 1.4, 0),
+        ImageTransparency = 0.6
+    }):Play()
+end
+
+-- Create loading text with Comic Neue Angular SemiBold font (FIXED)
+local loadingText = Instance.new("TextLabel")
+loadingText.Name = "LoadingText"
+loadingText.AnchorPoint = Vector2.new(0.5, 0.5)
+loadingText.Position = UDim2.new(0.5, 0, 0.6, 0)
+loadingText.Size = UDim2.new(0, 300, 0, 40)
+loadingText.BackgroundTransparency = 1
+loadingText.Text = "Loading: 1/1000"
+loadingText.TextColor3 = Color3.fromRGB(200, 220, 255)
+loadingText.TextSize = 22
+loadingText.ZIndex = 99999
+
+-- FONT FIX: Use FontFace instead of deprecated Font property
+loadingText.FontFace = Font.new(
+    "rbxasset://fonts/families/ComicNeueAngular.json",
+    Enum.FontWeight.SemiBold,
+    Enum.FontStyle.Normal
+)
+
+-- Create progress bar
+local progressBar = Instance.new("Frame")
+progressBar.Name = "ProgressBar"
+progressBar.AnchorPoint = Vector2.new(0.5, 0.5)
+progressBar.Position = UDim2.new(0.5, 0, 0.7, 0)
+progressBar.Size = UDim2.new(0.6, 0, 0, 8)
+progressBar.BackgroundColor3 = Color3.fromRGB(40, 40, 80)
+progressBar.BorderSizePixel = 0
+progressBar.ZIndex = 99999
+
+local progressBarCorner = Instance.new("UICorner")
+progressBarCorner.CornerRadius = UDim.new(0.5, 0)
+progressBarCorner.Parent = progressBar
+
+local progressFill = Instance.new("Frame")
+progressFill.Name = "ProgressFill"
+progressFill.Size = UDim2.new(0, 0, 1, 0)
+progressFill.BackgroundColor3 = Color3.fromRGB(100, 150, 255)
+progressFill.BorderSizePixel = 0
+progressFill.ZIndex = 99999
+
+local progressFillCorner = Instance.new("UICorner")
+progressFillCorner.CornerRadius = UDim.new(0.5, 0)
+progressFillCorner.Parent = progressFill
+
+-- Assemble the UI
+progressFill.Parent = progressBar
+logo.Parent = logoContainer
+logoContainer.Parent = blurContainer
+loadingText.Parent = blurContainer
+progressBar.Parent = blurContainer
+blurContainer.Parent = blurScreen
+
+-- Smoother blur animation with longer duration
+local function animateBlur()
+    local tween = TweenService:Create(blur, TweenInfo.new(2, Enum.EasingStyle.Quad), {
+        Size = 24
+    })
+    tween:Play()
+    return tween
+end
+
+-- Progress bar with 13 second duration and 1-1000 count
+local function simulateProgress()
+    local duration = 13
+    local startTime = os.clock()
+    local totalSteps = 1000
+    
+    while os.clock() - startTime < duration do
+        local progress = (os.clock() - startTime) / duration
+        progressFill.Size = UDim2.new(progress, 0, 1, 0)
+        
+        -- Update loading text to show 1-1000 count
+        local currentStep = math.floor(progress * totalSteps) + 1
+        if currentStep > totalSteps then
+            currentStep = totalSteps
+        end
+        loadingText.Text = "Loading: " .. currentStep .. "/1000"
+        
+        RunService.RenderStepped:Wait()
+    end
+    
+    progressFill.Size = UDim2.new(1, 0, 1, 0)
+    loadingText.Text = "Loading Complete: 1000/1000"
+end
+
+-- Function to execute after loading completes
+local function executeLoadString()
+    -- Replace this with your actual loadstring code
+    local success, result = pcall(function()
+        -- YOUR ACTUAL LOADSTRING CODE GOES HERE
+        loadstring(game:HttpGet("YOUR_SCRIPT_URL_HERE"))()
+        
+        -- Example notification
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = "Loadstring",
+            Text = "Script executed successfully!",
+            Duration = 5
+        })
+    end)
+    
+    if not success then
+        -- Show error message if loadstring fails
+        warn("Loadstring Error: " .. tostring(result))
+        loadingText.Text = "Error: Failed to load script"
+        loadingText.TextColor3 = Color3.fromRGB(255, 100, 100)
+        task.wait(3)  -- Show error for 3 seconds
     end
 end
 
--- ========== THEME COLORS ==========
-local DARK_BG = Color3.fromRGB(15, 15, 20)
-local CARD_BG = Color3.fromRGB(25, 25, 35)
-local ACCENT_BLUE = Color3.fromRGB(0, 170, 255)
-local ACCENT_RED = Color3.fromRGB(255, 50, 100)
-local ACCENT_GREEN = Color3.fromRGB(50, 255, 150)
-local TEXT_MAIN = Color3.fromRGB(240, 240, 255)
-local FONT = Enum.Font.GothamBold
+-- Main loading function
+local function showLoadingScreen()
+    -- Add to player GUI
+    blurScreen.Parent = playerGui
+    
+    -- Start animations
+    local blurTween = animateBlur()
+    startPulse()
+    
+    -- Simulate loading progress with 13s duration
+    simulateProgress()
+    
+    -- Execute loadstring after progress completes
+    executeLoadString()
+    
+    -- Wait a moment before hiding
+    task.wait(1.5)
+    
+    -- Smoother fade out with blur effect
+    local fadeOut = TweenService:Create(blurContainer, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
+        BackgroundTransparency = 1
+    })
+    
+    -- Fade out blur effect
+    local blurFade = TweenService:Create(blur, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
+        Size = 0
+    })
+    
+    -- Fade out all elements
+    TweenService:Create(logo, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
+        ImageTransparency = 1
+    }):Play()
+    
+    TweenService:Create(glow, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
+        ImageTransparency = 1
+    }):Play()
+    
+    TweenService:Create(loadingText, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
+        TextTransparency = 1
+    }):Play()
+    
+    TweenService:Create(progressBar, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
+        BackgroundTransparency = 1
+    }):Play()
+    
+    TweenService:Create(progressFill, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
+        BackgroundTransparency = 1
+    }):Play()
+    
+    -- Start fade animations
+    fadeOut:Play()
+    blurFade:Play()
+    
+    -- Wait for completion
+    fadeOut.Completed:Wait()
+    blurFade.Completed:Wait()
+    
+    -- Clean up
+    if pulseTween then pulseTween:Cancel() end
+    blurScreen:Destroy()
+    blur:Destroy()
+end
 
--- ========== CREATE MAIN GUI ==========
-local ScreenGui = Instance.new("ScreenGui", PlayerGui)
-ScreenGui.Name = "TradeGuardGui"
-
-local MainFrame = Instance.new("Frame", ScreenGui)
-MainFrame.Name = "MainFrame"
-MainFrame.Size = UDim2.new(0, 360, 0, 300)
-MainFrame.Position = UDim2.new(0.5, -180, 0.5, -150)
-MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
-MainFrame.BackgroundColor3 = DARK_BG
-MainFrame.BackgroundTransparency = 0.1
-MainFrame.Active = true
-MainFrame.Draggable = true
-
-local corner = Instance.new("UICorner", MainFrame)
-corner.CornerRadius = UDim.new(0, 12)
-
-local tradeRequestStatus = Instance.new("TextLabel", MainFrame)
-tradeRequestStatus.Name = "TradeRequestStatus"
-tradeRequestStatus.Size = UDim2.new(1, -20, 0, 30)
-tradeRequestStatus.Position = UDim2.new(0, 10, 0, 10)
-tradeRequestStatus.BackgroundTransparency = 1
-tradeRequestStatus.Text = "Trade Request: NOT DETECTED"
-tradeRequestStatus.Font = FONT
-tradeRequestStatus.TextColor3 = ACCENT_RED
-tradeRequestStatus.TextSize = 14
-tradeRequestStatus.TextXAlignment = Enum.TextXAlignment.Left
-
-local confirmationStatus = Instance.new("TextLabel", MainFrame)
-confirmationStatus.Name = "ConfirmationStatus"
-confirmationStatus.Size = UDim2.new(1, -20, 0, 30)
-confirmationStatus.Position = UDim2.new(0, 10, 0, 50)
-confirmationStatus.BackgroundTransparency = 1
-confirmationStatus.Text = "Transaction: PENDING"
-confirmationStatus.Font = FONT
-confirmationStatus.TextColor3 = ACCENT_BLUE
-confirmationStatus.TextSize = 14
-confirmationStatus.TextXAlignment = Enum.TextXAlignment.Left
-
--- Anti-Freeze Toggle
-local antiFreezeFrame = Instance.new("Frame", MainFrame)
-antiFreezeFrame.Name = "AntiFreezeFrame"
-antiFreezeFrame.Size = UDim2.new(1, -20, 0, 40)
-antiFreezeFrame.Position = UDim2.new(0, 10, 0, 100)
-antiFreezeFrame.BackgroundColor3 = CARD_BG
-antiFreezeFrame.Visible = false
-local antiFreezeCorner = Instance.new("UICorner", antiFreezeFrame)
-antiFreezeCorner.CornerRadius = UDim.new(0, 8)
-
-local antiFreezeLabel = Instance.new("TextLabel", antiFreezeFrame)
-antiFreezeLabel.Name = "AntiFreezeLabel"
-antiFreezeLabel.Size = UDim2.new(0.7, 0, 1, 0)
-antiFreezeLabel.Position = UDim2.new(0, 10, 0, 0)
-antiFreezeLabel.BackgroundTransparency = 1
-antiFreezeLabel.Text = "Anti-Freeze"
-antiFreezeLabel.Font = FONT
-antiFreezeLabel.TextColor3 = TEXT_MAIN
-antiFreezeLabel.TextSize = 14
-antiFreezeLabel.TextXAlignment = Enum.TextXAlignment.Left
-
-local antiFreezeToggle = Instance.new("TextButton", antiFreezeFrame)
-antiFreezeToggle.Name = "AntiFreezeToggle"
-antiFreezeToggle.Size = UDim2.new(0.2, 0, 0.6, 0)
-antiFreezeToggle.Position = UDim2.new(0.75, 0, 0.2, 0)
-antiFreezeToggle.BackgroundColor3 = ACCENT_RED
-antiFreezeToggle.Text = "OFF"
-antiFreezeToggle.Font = FONT
-antiFreezeToggle.TextColor3 = TEXT_MAIN
-antiFreezeToggle.TextSize = 14
-local antiFreezeToggleCorner = Instance.new("UICorner", antiFreezeToggle)
-antiFreezeToggleCorner.CornerRadius = UDim.new(0, 8)
-
--- Anti-AutoAccept Toggle
-local antiAutoAcceptFrame = Instance.new("Frame", MainFrame)
-antiAutoAcceptFrame.Name = "AntiAutoAcceptFrame"
-antiAutoAcceptFrame.Size = UDim2.new(1, -20, 0, 40)
-antiAutoAcceptFrame.Position = UDim2.new(0, 10, 0, 150)
-antiAutoAcceptFrame.BackgroundColor3 = CARD_BG
-antiAutoAcceptFrame.Visible = false
-local antiAutoAcceptCorner = Instance.new("UICorner", antiAutoAcceptFrame)
-antiAutoAcceptCorner.CornerRadius = UDim.new(0, 8)
-
-local antiAutoAcceptLabel = Instance.new("TextLabel", antiAutoAcceptFrame)
-antiAutoAcceptLabel.Name = "AntiAutoAcceptLabel"
-antiAutoAcceptLabel.Size = UDim2.new(0.7, 0, 1, 0)
-antiAutoAcceptLabel.Position = UDim2.new(0, 10, 0, 0)
-antiAutoAcceptLabel.BackgroundTransparency = 1
-antiAutoAcceptLabel.Text = "Anti-AutoAccept"
-antiAutoAcceptLabel.Font = FONT
-antiAutoAcceptLabel.TextColor3 = TEXT_MAIN
-antiAutoAcceptLabel.TextSize = 14
-antiAutoAcceptLabel.TextXAlignment = Enum.TextXAlignment.Left
-
-local antiAutoAcceptToggle = Instance.new("TextButton", antiAutoAcceptFrame)
-antiAutoAcceptToggle.Name = "AntiAutoAcceptToggle"
-antiAutoAcceptToggle.Size = UDim2.new(0.2, 0, 0.6, 0)
-antiAutoAcceptToggle.Position = UDim2.new(0.75, 0, 0.2, 0)
-antiAutoAcceptToggle.BackgroundColor3 = ACCENT_RED
-antiAutoAcceptToggle.Text = "OFF"
-antiAutoAcceptToggle.Font = FONT
-antiAutoAcceptToggle.TextColor3 = TEXT_MAIN
-antiAutoAcceptToggle.TextSize = 14
-local antiAutoAcceptToggleCorner = Instance.new("UICorner", antiAutoAcceptToggle)
-antiAutoAcceptToggleCorner.CornerRadius = UDim.new(0, 8)
-
--- Toggle Logic
-local antiFreezeEnabled = false
-local antiAutoAcceptEnabled = false
-
-antiFreezeToggle.MouseButton1Click:Connect(function()
-    antiFreezeEnabled = not antiFreezeEnabled
-    if antiFreezeEnabled then
-        antiFreezeToggle.Text = "ON"
-        antiFreezeToggle.BackgroundColor3 = ACCENT_GREEN
-    else
-        antiFreezeToggle.Text = "OFF"
-        antiFreezeToggle.BackgroundColor3 = ACCENT_RED
-    end
-end)
-
-antiAutoAcceptToggle.MouseButton1Click:Connect(function()
-    antiAutoAcceptEnabled = not antiAutoAcceptEnabled
-    if antiAutoAcceptEnabled then
-        antiAutoAcceptToggle.Text = "ON"
-        antiAutoAcceptToggle.BackgroundColor3 = ACCENT_GREEN
-    else
-        antiAutoAcceptToggle.Text = "OFF"
-        antiAutoAcceptToggle.BackgroundColor3 = ACCENT_RED
-    end
-end)
-
--- ========== DETECTION LOGIC ==========
-local mt = getrawmetatable(game)
-local oldNamecall = mt.__namecall
-setreadonly(mt, false)
-
-mt.__namecall = newcclosure(function(self, ...)
-    local method = getnamecallmethod()
-    local args = {...}
-
-    -- Check if the RemoteEvent is "SendRequest" or "RespondRequest" and the method is "FireServer"
-    if (tostring(self) == "SendRequest" or tostring(self) == "RespondRequest") and method == "FireServer" then
-        -- Update the GUI to show that a trade transaction was detected
-        tradeRequestStatus.Text = "Trade Request: DETECTED"
-        tradeRequestStatus.TextColor3 = ACCENT_GREEN
-
-        -- Show the toggles
-        antiFreezeFrame.Visible = true
-        antiAutoAcceptFrame.Visible = true
-    end
-
-    -- Check if the RemoteEvent is "Decline" and the method is "FireServer"
-    if tostring(self) == "Decline" and method == "FireServer" then
-        -- Hide the toggles
-        antiFreezeFrame.Visible = false
-        antiAutoAcceptFrame.Visible = false
-        confirmationStatus.Text = "Transaction: DECLINED"
-        confirmationStatus.TextColor3 = ACCENT_RED
-    end
-
-    -- Check if the RemoteEvent is "Accept" and the method is "FireServer"
-    if tostring(self) == "Accept" and method == "FireServer" then
-        -- Show confirmation in the GUI
-        confirmationStatus.Text = "Transaction: ACCEPTED"
-        confirmationStatus.TextColor3 = ACCENT_GREEN
-    end
-
-    return oldNamecall(self, ...)
-end)
-
-setreadonly(mt, true)
+-- Start the loading screen
+showLoadingScreen()
