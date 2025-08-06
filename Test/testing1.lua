@@ -1,262 +1,418 @@
+-- TradeHelperUI ✅ FINAL UPDATE
+-- Logo with rounded corners, draggable, positioned at top
+-- Menu with smooth animations
+
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
-local RunService = game:GetService("RunService")
-local Lighting = game:GetService("Lighting")
+local UserInputService = game:GetService("UserInputService")
+local LocalPlayer = Players.LocalPlayer
 
--- Wait for player
-local player = Players.LocalPlayer
-local playerGui = player:WaitForChild("PlayerGui")
+-- Color scheme
+local BROWN_BG = Color3.fromRGB(118, 61, 25)
+local BROWN_LIGHT = Color3.fromRGB(164, 97, 43)
+local BROWN_BORDER = Color3.fromRGB(51, 25, 0)
+local ACCENT_GREEN = Color3.fromRGB(110, 196, 99)
+local BUTTON_RED = Color3.fromRGB(255, 62, 62)
+local BUTTON_GRAY = Color3.fromRGB(190, 190, 190)
+local BUTTON_GREEN = Color3.fromRGB(85, 200, 85)
+local BUTTON_GREEN_HOVER = Color3.fromRGB(120, 230, 120)
+local FONT = Enum.Font.FredokaOne
+local TILE_IMAGE = "rbxassetid://15910695828"
 
--- Create the loading screen GUI
-local blurScreen = Instance.new("ScreenGui")
-blurScreen.Name = "BlurLoadingScreen"
-blurScreen.DisplayOrder = 99999
-blurScreen.IgnoreGuiInset = true
-blurScreen.ResetOnSpawn = false
+local gui = Instance.new("ScreenGui")
+gui.Name = "TradeHelperUI"
+gui.ResetOnSpawn = false
+gui.IgnoreGuiInset = true
+gui.Parent = game:GetService("CoreGui")
 
--- Create blur effect container
-local blurContainer = Instance.new("Frame")
-blurContainer.Name = "BlurContainer"
-blurContainer.Size = UDim2.new(1, 0, 1, 0)
-blurContainer.BackgroundColor3 = Color3.fromRGB(15, 15, 30)
-blurContainer.BackgroundTransparency = 0.3
-blurContainer.ZIndex = 99999
+-- TOGGLE LOGO (rounded corners, draggable, top position)
+local toggleLogo = Instance.new("ImageButton")
+toggleLogo.Size = UDim2.new(0, 42, 0, 42)
+toggleLogo.Position = UDim2.new(0, 15, 0, 80)
+toggleLogo.BackgroundColor3 = BROWN_BG
+toggleLogo.Image = "rbxassetid://81767899440204"
+toggleLogo.AutoButtonColor = true
+toggleLogo.ZIndex = 999
+toggleLogo.Parent = gui
 
--- Add subtle gradient effect
-local gradient = Instance.new("UIGradient")
-gradient.Rotation = 90
-gradient.Color = ColorSequence.new({
-    ColorSequenceKeypoint.new(0, Color3.fromRGB(15, 15, 30)),
-    ColorSequenceKeypoint.new(1, Color3.fromRGB(40, 30, 80))
-})
-gradient.Transparency = NumberSequence.new({
-    NumberSequenceKeypoint.new(0, 0.3),
-    NumberSequenceKeypoint.new(1, 0.7)
-})
-gradient.Parent = blurContainer
+local corner = Instance.new("UICorner", toggleLogo)
+corner.CornerRadius = UDim.new(0, 8)
 
--- Create the blur effect
-local blur = Instance.new("BlurEffect")
-blur.Name = "LoadingBlur"
-blur.Size = 0
-blur.Parent = Lighting
+-- Add border to logo
+local logoBorder = Instance.new("UIStroke", toggleLogo)
+logoBorder.Color = BROWN_BORDER
+logoBorder.Thickness = 2
 
--- Create the logo container
-local logoContainer = Instance.new("Frame")
-logoContainer.Name = "LogoContainer"
-logoContainer.AnchorPoint = Vector2.new(0.5, 0.5)
-logoContainer.Position = UDim2.new(0.5, 0, 0.45, 0)
-logoContainer.Size = UDim2.new(0, 200, 0, 200)
-logoContainer.BackgroundTransparency = 1
-logoContainer.ZIndex = 99999
+-- Drag functionality
+local dragging = false
+local dragStart, startPos
+toggleLogo.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 then
+		dragging = true
+		dragStart = input.Position
+		startPos = toggleLogo.Position
+	end
+end)
 
--- Create the logo
-local logo = Instance.new("ImageLabel")
-logo.Name = "Logo"
-logo.Size = UDim2.new(1, 0, 1, 0)
-logo.BackgroundTransparency = 1
-logo.Image = "rbxassetid://119919697523670"
-logo.ScaleType = Enum.ScaleType.Fit
-logo.ZIndex = 99999
+UserInputService.InputChanged:Connect(function(input)
+	if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+		local delta = input.Position - dragStart
+		toggleLogo.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+	end
+end)
 
--- Add glow effect to logo
-local glow = Instance.new("ImageLabel")
-glow.Name = "Glow"
-glow.Size = UDim2.new(1.2, 0, 1.2, 0)
-glow.Position = UDim2.new(-0.1, 0, -0.1, 0)
-glow.BackgroundTransparency = 1
-glow.Image = "rbxassetid://119919697523670"
-glow.ImageColor3 = Color3.fromRGB(100, 150, 255)
-glow.ScaleType = Enum.ScaleType.Fit
-glow.ZIndex = 99998
-glow.ImageTransparency = 0.8
-glow.Parent = logoContainer
+UserInputService.InputEnded:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 then
+		dragging = false
+	end
+end)
 
--- Add pulsing effect to logo
-local pulseTween
-local function startPulse()
-    pulseTween = TweenService:Create(logo, TweenInfo.new(1.5, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut, -1, true), {
-        Size = UDim2.new(1.1, 0, 1.1, 0)
-    })
-    pulseTween:Play()
-    
-    TweenService:Create(glow, TweenInfo.new(1.5, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut, -1, true), {
-        Size = UDim2.new(1.4, 0, 1.4, 0),
-        ImageTransparency = 0.6
-    }):Play()
+-- NOTIFICATIONS (bottom, non-overlapping)
+local activeNotifs = {}
+function showNotification(text, color)
+	local baseY = -60
+	for _, n in ipairs(activeNotifs) do
+		baseY = baseY - 35
+	end
+
+	local notif = Instance.new("TextLabel")
+	notif.Size = UDim2.new(0, 260, 0, 30)
+	notif.Position = UDim2.new(0.5, -130, 1, baseY)
+	notif.AnchorPoint = Vector2.new(0, 0)
+	notif.BackgroundColor3 = BROWN_BG
+	notif.TextColor3 = color
+	notif.Text = text
+	notif.Font = FONT
+	notif.TextSize = 14
+	notif.TextStrokeTransparency = 0.6
+	notif.BackgroundTransparency = 1
+	notif.TextTransparency = 1
+	notif.BorderSizePixel = 0
+	notif.ZIndex = 999
+	notif.ClipsDescendants = true
+	notif.Parent = gui
+	table.insert(activeNotifs, notif)
+
+	-- Add border and corner
+	local notifCorner = Instance.new("UICorner", notif)
+	notifCorner.CornerRadius = UDim.new(0, 8)
+	local notifBorder = Instance.new("UIStroke", notif)
+	notifBorder.Color = BROWN_BORDER
+	notifBorder.Thickness = 2
+
+	TweenService:Create(notif, TweenInfo.new(0.3), {
+		TextTransparency = 0,
+		BackgroundTransparency = 0
+	}):Play()
+
+	task.delay(3, function()
+		TweenService:Create(notif, TweenInfo.new(0.3), {
+			TextTransparency = 1,
+			BackgroundTransparency = 1,
+			Position = notif.Position + UDim2.new(0, 0, 0, -10)
+		}):Play()
+		wait(0.3)
+		notif:Destroy()
+
+		for i, v in ipairs(activeNotifs) do
+			if v == notif then
+				table.remove(activeNotifs, i)
+				break
+			end
+		end
+
+		for i, v in ipairs(activeNotifs) do
+			local newY = -60 - (i - 1) * 35
+			TweenService:Create(v, TweenInfo.new(0.3), {
+				Position = UDim2.new(0.5, -130, 1, newY)
+			}):Play()
+		end
+	end)
 end
 
--- Create loading text with Comic Neue Angular SemiBold font (FIXED)
-local loadingText = Instance.new("TextLabel")
-loadingText.Name = "LoadingText"
-loadingText.AnchorPoint = Vector2.new(0.5, 0.5)
-loadingText.Position = UDim2.new(0.5, 0, 0.6, 0)
-loadingText.Size = UDim2.new(0, 300, 0, 40)
-loadingText.BackgroundTransparency = 1
-loadingText.Text = "Loading: 1/1000"
-loadingText.TextColor3 = Color3.fromRGB(200, 220, 255)
-loadingText.TextSize = 22
-loadingText.ZIndex = 99999
+-- MAIN MENU FRAME
+local main = Instance.new("Frame")
+main.Size = UDim2.new(0, 280, 0, 230)
+main.Position = UDim2.new(0.5, -140, 0.5, -115)
+main.BackgroundColor3 = BROWN_BG
+main.BorderSizePixel = 0
+main.ClipsDescendants = true
+main.Active = true
+main.Draggable = true
+main.Visible = false
+main.Parent = gui
 
--- FONT FIX: Use FontFace instead of deprecated Font property
-loadingText.FontFace = Font.new(
-    "rbxasset://fonts/families/ComicNeueAngular.json",
-    Enum.FontWeight.SemiBold,
-    Enum.FontStyle.Normal
-)
+-- Add tile background
+local bgPattern = Instance.new("ImageLabel")
+bgPattern.Name = "BackgroundPattern"
+bgPattern.Image = TILE_IMAGE
+bgPattern.ScaleType = Enum.ScaleType.Tile
+bgPattern.TileSize = UDim2.new(0, 100, 0, 100)
+bgPattern.BackgroundTransparency = 1
+bgPattern.Size = UDim2.new(1, 0, 1, 0)
+bgPattern.ZIndex = 0
+bgPattern.ImageTransparency = 0.8
+bgPattern.Parent = main
 
--- Create progress bar
-local progressBar = Instance.new("Frame")
-progressBar.Name = "ProgressBar"
-progressBar.AnchorPoint = Vector2.new(0.5, 0.5)
-progressBar.Position = UDim2.new(0.5, 0, 0.7, 0)
-progressBar.Size = UDim2.new(0.6, 0, 0, 8)
-progressBar.BackgroundColor3 = Color3.fromRGB(40, 40, 80)
-progressBar.BorderSizePixel = 0
-progressBar.ZIndex = 99999
+-- Add border
+local mainBorder = Instance.new("UIStroke", main)
+mainBorder.Color = BROWN_BORDER
+mainBorder.Thickness = 2
 
-local progressBarCorner = Instance.new("UICorner")
-progressBarCorner.CornerRadius = UDim.new(0.5, 0)
-progressBarCorner.Parent = progressBar
+-- Add corner radius
+local mainCorner = Instance.new("UICorner", main)
+mainCorner.CornerRadius = UDim.new(0, 12)
 
-local progressFill = Instance.new("Frame")
-progressFill.Name = "ProgressFill"
-progressFill.Size = UDim2.new(0, 0, 1, 0)
-progressFill.BackgroundColor3 = Color3.fromRGB(100, 150, 255)
-progressFill.BorderSizePixel = 0
-progressFill.ZIndex = 99999
+-- Toggle functionality
+toggleLogo.MouseButton1Click:Connect(function()
+	if main.Visible then
+		TweenService:Create(main, TweenInfo.new(0.2), {Size = UDim2.new(0, 0, 0, 0)}):Play()
+		task.delay(0.2, function() main.Visible = false end)
+	else
+		main.Size = UDim2.new(0, 0, 0, 0)
+		main.Visible = true
+		TweenService:Create(main, TweenInfo.new(0.3), {Size = UDim2.new(0, 280, 0, 230)}):Play()
+	end
+end)
 
-local progressFillCorner = Instance.new("UICorner")
-progressFillCorner.CornerRadius = UDim.new(0.5, 0)
-progressFillCorner.Parent = progressFill
+-- Title
+local title = Instance.new("TextLabel", main)
+title.Size = UDim2.new(1, 0, 0, 30)
+title.Position = UDim2.new(0, 0, 0, 8)
+title.BackgroundTransparency = 1
+title.Text = "🦝 TRADE HELPER UI 🌶️"
+title.Font = FONT
+title.TextSize = 20
+title.TextColor3 = Color3.new(1, 1, 1)
 
--- Assemble the UI
-progressFill.Parent = progressBar
-logo.Parent = logoContainer
-logoContainer.Parent = blurContainer
-loadingText.Parent = blurContainer
-progressBar.Parent = blurContainer
-blurContainer.Parent = blurScreen
+-- Subtitle
+local subtitle = Instance.new("TextLabel", main)
+subtitle.Size = UDim2.new(1, 0, 0, 15)
+subtitle.Position = UDim2.new(0, 0, 0, 32)
+subtitle.BackgroundTransparency = 1
+subtitle.Text = "Trade Management Tools"
+subtitle.Font = FONT
+subtitle.TextSize = 12
+subtitle.TextColor3 = Color3.fromRGB(220, 220, 220)
 
--- Smoother blur animation with longer duration
-local function animateBlur()
-    local tween = TweenService:Create(blur, TweenInfo.new(2, Enum.EasingStyle.Quad), {
-        Size = 24
-    })
-    tween:Play()
-    return tween
+-- Player dropdown
+local dropdownBtn = Instance.new("TextButton", main)
+dropdownBtn.Size = UDim2.new(0.9, 0, 0, 35)
+dropdownBtn.Position = UDim2.new(0.5, 0, 0, 55)
+dropdownBtn.AnchorPoint = Vector2.new(0.5, 0)
+dropdownBtn.Text = "Select Player"
+dropdownBtn.TextColor3 = Color3.new(1, 1, 1)
+dropdownBtn.BackgroundColor3 = BROWN_LIGHT
+dropdownBtn.Font = FONT
+dropdownBtn.TextSize = 14
+dropdownBtn.ZIndex = 3
+
+-- Dropdown styling
+local btnCorner = Instance.new("UICorner", dropdownBtn)
+btnCorner.CornerRadius = UDim.new(0, 6)
+local btnBorder = Instance.new("UIStroke", dropdownBtn)
+btnBorder.Color = BROWN_BORDER
+btnBorder.Thickness = 2
+
+-- Avatar preview
+local dropdownAvatar = Instance.new("ImageLabel", dropdownBtn)
+dropdownAvatar.Size = UDim2.new(0, 24, 0, 24)
+dropdownAvatar.Position = UDim2.new(0, 5, 0.5, -12)
+dropdownAvatar.BackgroundTransparency = 1
+dropdownAvatar.Image = ""
+dropdownAvatar.Visible = false
+
+-- Player list
+local listFrame = Instance.new("ScrollingFrame", main)
+listFrame.Size = UDim2.new(0.9, 0, 0, 0)
+listFrame.Position = UDim2.new(0.5, 0, 0, 95)
+listFrame.AnchorPoint = Vector2.new(0.5, 0)
+listFrame.BackgroundTransparency = 1
+listFrame.BorderSizePixel = 0
+listFrame.ScrollBarThickness = 4
+listFrame.Visible = false
+listFrame.ClipsDescendants = true
+listFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
+listFrame.ZIndex = 3
+
+-- List layout
+local listLayout = Instance.new("UIListLayout", listFrame)
+listLayout.Padding = UDim.new(0, 4)
+
+-- Toggle button creator
+local function createToggleFrame(text, y)
+	local frame = Instance.new("Frame", main)
+	frame.Size = UDim2.new(0.9, 0, 0, 30)
+	frame.Position = UDim2.new(0.5, 0, 0, y)
+	frame.AnchorPoint = Vector2.new(0.5, 0)
+	frame.BackgroundColor3 = BROWN_LIGHT
+	frame.BorderSizePixel = 0
+	frame.ZIndex = 2
+	
+	-- Add styling
+	local frameCorner = Instance.new("UICorner", frame)
+	frameCorner.CornerRadius = UDim.new(0, 6)
+	local frameBorder = Instance.new("UIStroke", frame)
+	frameBorder.Color = BROWN_BORDER
+	frameBorder.Thickness = 2
+
+	local label = Instance.new("TextLabel", frame)
+	label.Size = UDim2.new(1, -55, 1, 0)
+	label.Position = UDim2.new(0, 10, 0, 0)
+	label.BackgroundTransparency = 1
+	label.Text = text
+	label.Font = FONT
+	label.TextSize = 14
+	label.TextColor3 = Color3.new(1, 1, 1)
+	label.TextXAlignment = Enum.TextXAlignment.Left
+
+	local toggle = Instance.new("TextButton", frame)
+	toggle.Size = UDim2.new(0, 40, 0, 20)
+	toggle.Position = UDim2.new(1, -45, 0.5, -10)
+	toggle.BackgroundColor3 = BUTTON_GRAY
+	toggle.Text = ""
+	toggle.BorderSizePixel = 0
+	toggle.ZIndex = 2
+	
+	-- Toggle styling
+	local toggleCorner = Instance.new("UICorner", toggle)
+	toggleCorner.CornerRadius = UDim.new(1, 0)
+	local toggleBorder = Instance.new("UIStroke", toggle)
+	toggleBorder.Color = BROWN_BORDER
+	toggleBorder.Thickness = 1
+
+	local dot = Instance.new("Frame", toggle)
+	dot.Size = UDim2.new(0, 16, 0, 16)
+	dot.Position = UDim2.new(0, 2, 0.5, -8)
+	dot.BackgroundColor3 = Color3.new(1, 1, 1)
+	dot.BorderSizePixel = 0
+	dot.ZIndex = 3
+	
+	-- Dot styling
+	local dotCorner = Instance.new("UICorner", dot)
+	dotCorner.CornerRadius = UDim.new(1, 0)
+	local dotBorder = Instance.new("UIStroke", dot)
+	dotBorder.Color = BROWN_BORDER
+	dotBorder.Thickness = 1
+
+	local toggled = false
+	toggle.MouseButton1Click:Connect(function()
+		toggled = not toggled
+		TweenService:Create(toggle, TweenInfo.new(0.2), {
+			BackgroundColor3 = toggled and BUTTON_GREEN or BUTTON_GRAY
+		}):Play()
+		TweenService:Create(dot, TweenInfo.new(0.2), {
+			Position = toggled and UDim2.new(1, -18, 0.5, -8) or UDim2.new(0, 2, 0.5, -8)
+		}):Play()
+
+		showNotification(text .. (toggled and " Enabled" or " Disabled"),
+			toggled and ACCENT_GREEN or BUTTON_RED)
+	end)
+
+	return frame
 end
 
--- Progress bar with 13 second duration and 1-1000 count
-local function simulateProgress()
-    local duration = 13
-    local startTime = os.clock()
-    local totalSteps = 1000
-    
-    while os.clock() - startTime < duration do
-        local progress = (os.clock() - startTime) / duration
-        progressFill.Size = UDim2.new(progress, 0, 1, 0)
-        
-        -- Update loading text to show 1-1000 count
-        local currentStep = math.floor(progress * totalSteps) + 1
-        if currentStep > totalSteps then
-            currentStep = totalSteps
-        end
-        loadingText.Text = "Loading: " .. currentStep .. "/1000"
-        
-        RunService.RenderStepped:Wait()
-    end
-    
-    progressFill.Size = UDim2.new(1, 0, 1, 0)
-    loadingText.Text = "Loading Complete: 1000/1000"
+-- Create toggle buttons
+local tradeFreeze = createToggleFrame("Trade Freeze", 100)
+local securityMode = createToggleFrame("Security Mode", 140)
+local tradeProtection = createToggleFrame("Trade Protection", 180)
+
+-- Information label
+local infoLabel = Instance.new("TextLabel", main)
+infoLabel.Text = "⚠️ Trade Safely ‼️"
+infoLabel.Font = FONT
+infoLabel.TextColor3 = ACCENT_GREEN
+infoLabel.TextStrokeTransparency = 0.5
+infoLabel.TextSize = 13
+infoLabel.BackgroundTransparency = 1
+infoLabel.Size = UDim2.new(1, 0, 0, 20)
+infoLabel.Position = UDim2.new(0.5, 0, 0, 210)
+infoLabel.AnchorPoint = Vector2.new(0.5, 0)
+infoLabel.ZIndex = 2
+
+-- Dropdown functionality
+local dropdownOpen = false
+local function refreshPlayers()
+	for _, c in pairs(listFrame:GetChildren()) do
+		if c:IsA("TextButton") then c:Destroy() end
+	end
+	
+	local count = 0
+	for _, plr in pairs(Players:GetPlayers()) do
+		if plr ~= LocalPlayer then
+			count += 1
+			local btn = Instance.new("TextButton", listFrame)
+			btn.Size = UDim2.new(1, 0, 0, 30)
+			btn.BackgroundColor3 = BROWN_LIGHT
+			btn.Text = "            " .. plr.Name
+			btn.Font = FONT
+			btn.TextSize = 13
+			btn.TextColor3 = Color3.new(1, 1, 1)
+			btn.TextXAlignment = Enum.TextXAlignment.Left
+			btn.ZIndex = 4
+			
+			-- Button styling
+			local btnCorner = Instance.new("UICorner", btn)
+			btnCorner.CornerRadius = UDim.new(0, 6)
+			local btnBorder = Instance.new("UIStroke", btn)
+			btnBorder.Color = BROWN_BORDER
+			btnBorder.Thickness = 2
+			
+			-- Hover effect
+			btn.MouseEnter:Connect(function()
+				TweenService:Create(btn, TweenInfo.new(0.1), {
+					BackgroundColor3 = BUTTON_GREEN_HOVER
+				}):Play()
+			end)
+			
+			btn.MouseLeave:Connect(function()
+				TweenService:Create(btn, TweenInfo.new(0.1), {
+					BackgroundColor3 = BROWN_LIGHT
+				}):Play()
+			end)
+
+			local avatar = Instance.new("ImageLabel", btn)
+			avatar.Size = UDim2.new(0, 24, 0, 24)
+			avatar.Position = UDim2.new(0, 3, 0.5, -12)
+			avatar.Image = "https://www.roblox.com/headshot-thumbnail/image?userId="..plr.UserId.."&width=50&height=50&format=png"
+			avatar.BackgroundTransparency = 1
+
+			btn.MouseButton1Click:Connect(function()
+				dropdownBtn.Text = plr.Name
+				dropdownAvatar.Image = avatar.Image
+				dropdownAvatar.Visible = true
+				listFrame.Visible = false
+				dropdownOpen = false
+				main:TweenSize(UDim2.new(0, 280, 0, 240), "Out", "Sine", 0.25, true)
+				TweenService:Create(tradeFreeze, TweenInfo.new(0.25), {Position = UDim2.new(0.5, 0, 0, 100)}):Play()
+				TweenService:Create(securityMode, TweenInfo.new(0.25), {Position = UDim2.new(0.5, 0, 0, 140)}):Play()
+				TweenService:Create(tradeProtection, TweenInfo.new(0.25), {Position = UDim2.new(0.5, 0, 0, 180)}):Play()
+				TweenService:Create(infoLabel, TweenInfo.new(0.25), {Position = UDim2.new(0.5, 0, 0, 210)}):Play()
+			end)
+		end
+	end
+	listFrame.CanvasSize = UDim2.new(0, 0, 0, count * 34)
 end
 
--- Function to execute after loading completes
-local function executeLoadString()
-    -- Replace this with your actual loadstring code
-    local success, result = pcall(function()
-        -- YOUR ACTUAL LOADSTRING CODE GOES HERE
-        loadstring(game:HttpGet("YOUR_SCRIPT_URL_HERE"))()
-        
-        -- Example notification
-        game:GetService("StarterGui"):SetCore("SendNotification", {
-            Title = "Loadstring",
-            Text = "Script executed successfully!",
-            Duration = 5
-        })
-    end)
-    
-    if not success then
-        -- Show error message if loadstring fails
-        warn("Loadstring Error: " .. tostring(result))
-        loadingText.Text = "Error: Failed to load script"
-        loadingText.TextColor3 = Color3.fromRGB(255, 100, 100)
-        task.wait(3)  -- Show error for 3 seconds
-    end
-end
-
--- Main loading function
-local function showLoadingScreen()
-    -- Add to player GUI
-    blurScreen.Parent = playerGui
-    
-    -- Start animations
-    local blurTween = animateBlur()
-    startPulse()
-    
-    -- Simulate loading progress with 13s duration
-    simulateProgress()
-    
-    -- Execute loadstring after progress completes
-    executeLoadString()
-    
-    -- Wait a moment before hiding
-    task.wait(1.5)
-    
-    -- Smoother fade out with blur effect
-    local fadeOut = TweenService:Create(blurContainer, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
-        BackgroundTransparency = 1
-    })
-    
-    -- Fade out blur effect
-    local blurFade = TweenService:Create(blur, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
-        Size = 0
-    })
-    
-    -- Fade out all elements
-    TweenService:Create(logo, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
-        ImageTransparency = 1
-    }):Play()
-    
-    TweenService:Create(glow, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
-        ImageTransparency = 1
-    }):Play()
-    
-    TweenService:Create(loadingText, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
-        TextTransparency = 1
-    }):Play()
-    
-    TweenService:Create(progressBar, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
-        BackgroundTransparency = 1
-    }):Play()
-    
-    TweenService:Create(progressFill, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
-        BackgroundTransparency = 1
-    }):Play()
-    
-    -- Start fade animations
-    fadeOut:Play()
-    blurFade:Play()
-    
-    -- Wait for completion
-    fadeOut.Completed:Wait()
-    blurFade.Completed:Wait()
-    
-    -- Clean up
-    if pulseTween then pulseTween:Cancel() end
-    blurScreen:Destroy()
-    blur:Destroy()
-end
-
--- Start the loading screen
-showLoadingScreen()
+-- Dropdown toggle
+dropdownBtn.MouseButton1Click:Connect(function()
+	dropdownOpen = not dropdownOpen
+	if dropdownOpen then
+		refreshPlayers()
+		listFrame.Visible = true
+		listFrame:TweenSize(UDim2.new(0.9, 0, 0, 100), "Out", "Sine", 0.25, true)
+		main:TweenSize(UDim2.new(0, 280, 0, 340), "Out", "Sine", 0.25, true)
+		TweenService:Create(tradeFreeze, TweenInfo.new(0.25), {Position = UDim2.new(0.5, 0, 0, 200)}):Play()
+		TweenService:Create(securityMode, TweenInfo.new(0.25), {Position = UDim2.new(0.5, 0, 0, 240)}):Play()
+		TweenService:Create(tradeProtection, TweenInfo.new(0.25), {Position = UDim2.new(0.5, 0, 0, 280)}):Play()
+		TweenService:Create(infoLabel, TweenInfo.new(0.25), {Position = UDim2.new(0.5, 0, 0, 310)}):Play()
+	else
+		listFrame:TweenSize(UDim2.new(0.9, 0, 0, 0), "Out", "Sine", 0.25, true)
+		task.delay(0.25, function() listFrame.Visible = false end)
+		main:TweenSize(UDim2.new(0, 280, 0, 240), "Out", "Sine", 0.25, true)
+		TweenService:Create(tradeFreeze, TweenInfo.new(0.25), {Position = UDim2.new(0.5, 0, 0, 100)}):Play()
+		TweenService:Create(securityMode, TweenInfo.new(0.25), {Position = UDim2.new(0.5, 0, 0, 140)}):Play()
+		TweenService:Create(tradeProtection, TweenInfo.new(0.25), {Position = UDim2.new(0.5, 0, 0, 180)}):Play()
+		TweenService:Create(infoLabel, TweenInfo.new(0.25), {Position = UDim2.new(0.5, 0, 0, 210)}):Play()
+	end
+end)
