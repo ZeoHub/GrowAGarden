@@ -1,7 +1,6 @@
 -- LocalScript (place in StarterPlayerScripts)
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local TweenService = game:GetService("TweenService")
 local RunService = game:GetService("RunService")
 
 local LocalPlayer = Players.LocalPlayer
@@ -124,7 +123,7 @@ local function updateTradeInputStatus()
         and ReplicatedStorage.Modules:FindFirstChild("TradeControllers")
         and ReplicatedStorage.Modules.TradeControllers:FindFirstChild("TradeInputService")
 
-    if tradeInputService then
+    if tradeInputService and tradeInputService:IsA("RemoteEvent") then
         tradeInputStatus.Text = "TradeInputService: DETECTED"
         tradeInputStatus.TextColor3 = ACCENT_GREEN
     else
