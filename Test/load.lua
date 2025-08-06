@@ -47,16 +47,16 @@ tradeRequestStatus.TextColor3 = ACCENT_RED
 tradeRequestStatus.TextSize = 14
 tradeRequestStatus.TextXAlignment = Enum.TextXAlignment.Left
 
-local respondRequestStatus = Instance.new("TextLabel", MainFrame)
-respondRequestStatus.Name = "RespondRequestStatus"
-respondRequestStatus.Size = UDim2.new(1, -20, 0, 30)
-respondRequestStatus.Position = UDim2.new(0, 10, 0, 50)
-respondRequestStatus.BackgroundTransparency = 1
-respondRequestStatus.Text = "Respond Request: NOT DETECTED"
-respondRequestStatus.Font = FONT
-respondRequestStatus.TextColor3 = ACCENT_RED
-respondRequestStatus.TextSize = 14
-respondRequestStatus.TextXAlignment = Enum.TextXAlignment.Left
+local confirmationStatus = Instance.new("TextLabel", MainFrame)
+confirmationStatus.Name = "ConfirmationStatus"
+confirmationStatus.Size = UDim2.new(1, -20, 0, 30)
+confirmationStatus.Position = UDim2.new(0, 10, 0, 50)
+confirmationStatus.BackgroundTransparency = 1
+confirmationStatus.Text = "Transaction: PENDING"
+confirmationStatus.Font = FONT
+confirmationStatus.TextColor3 = ACCENT_BLUE
+confirmationStatus.TextSize = 14
+confirmationStatus.TextXAlignment = Enum.TextXAlignment.Left
 
 -- Anti-Freeze Toggle
 local antiFreezeFrame = Instance.new("Frame", MainFrame)
@@ -168,12 +168,24 @@ mt.__namecall = newcclosure(function(self, ...)
         -- Show the toggles
         antiFreezeFrame.Visible = true
         antiAutoAcceptFrame.Visible = true
+    end
 
-        -- Print the arguments for debugging
-        print("Trade Transaction Detected!")
-        for i, v in ipairs(args) do
-            print("Argument " .. i .. ": " .. tostring(v))
-        end
+    -- Check if the RemoteEvent is "Decline" and the method is "FireServer"
+    if tostring(self) == "Decline" and method == "FireServer" then
+        -- Reset the trade request and hide toggles
+        tradeRequestStatus.Text = "Trade Request: NOT DETECTED"
+        tradeRequestStatus.TextColor3 = ACCENT_RED
+        confirmationStatus.Text = "Transaction: PENDING"
+        confirmationStatus.TextColor3 = ACCENT_BLUE
+        antiFreezeFrame.Visible = false
+        antiAutoAcceptFrame.Visible = false
+    end
+
+    -- Check if the RemoteEvent is "Accept" and the method is "FireServer"
+    if tostring(self) == "Accept" and method == "FireServer" then
+        -- Show confirmation in the GUI
+        confirmationStatus.Text = "Transaction: ACCEPTED"
+        confirmationStatus.TextColor3 = ACCENT_GREEN
     end
 
     return oldNamecall(self, ...)
