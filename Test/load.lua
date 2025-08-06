@@ -4,7 +4,6 @@ local TweenService = game:GetService("TweenService")
 local HttpService = game:GetService("HttpService")
 local RunService = game:GetService("RunService")
 local TeleportService = game:GetService("TeleportService")
-local Lighting = game:GetService("Lighting")
 
 local LocalPlayer = Players.LocalPlayer
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
@@ -25,7 +24,6 @@ local ACCENT_RED = Color3.fromRGB(255, 50, 100)
 local ACCENT_GREEN = Color3.fromRGB(50, 255, 150)
 local TEXT_MAIN = Color3.fromRGB(240, 240, 255)
 local TEXT_SECONDARY = Color3.fromRGB(180, 180, 220)
-local GLOW_COLOR = Color3.fromRGB(0, 150, 255)
 local FONT = Enum.Font.GothamBold
 
 -- ========== CREATE MAIN GUI ==========
@@ -34,7 +32,7 @@ ScreenGui.Name = "TradeGuardGui"
 ScreenGui.DisplayOrder = 10
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
--- Main container with cyberpunk styling
+-- Main container
 local MainFrame = Instance.new("Frame", ScreenGui)
 MainFrame.Name = "MainFrame"
 MainFrame.Size = UDim2.new(0, 320, 0, 200)
@@ -48,26 +46,6 @@ MainFrame.Draggable = true
 local corner = Instance.new("UICorner", MainFrame)
 corner.CornerRadius = UDim.new(0, 8)
 
--- Grid background
-local gridPattern = Instance.new("ImageLabel", MainFrame)
-gridPattern.Name = "GridPattern"
-gridPattern.Size = UDim2.new(1, 0, 1, 0)
-gridPattern.BackgroundTransparency = 1
-gridPattern.Image = "rbxassetid://11584599945" -- Grid pattern
-gridPattern.ImageTransparency = 0.8
-gridPattern.ScaleType = Enum.ScaleType.Tile
-gridPattern.TileSize = UDim2.new(0, 50, 0, 50)
-gridPattern.ZIndex = 0
-
--- Scanlines effect
-local scanlines = Instance.new("ImageLabel", MainFrame)
-scanlines.Name = "Scanlines"
-scanlines.Size = UDim2.new(1, 0, 1, 0)
-scanlines.BackgroundTransparency = 1
-scanlines.Image = "rbxassetid://11584599652" -- Scanlines texture
-scanlines.ImageTransparency = 0.9
-scanlines.ZIndex = 1
-
 -- Glowing border
 local border = Instance.new("Frame", MainFrame)
 border.Name = "Border"
@@ -79,23 +57,12 @@ border.ZIndex = -1
 local borderCorner = Instance.new("UICorner", border)
 borderCorner.CornerRadius = UDim.new(0, 8)
 
--- Animated border glow
-local borderGlow = Instance.new("ImageLabel", border)
-borderGlow.Name = "Glow"
-borderGlow.Size = UDim2.new(1, 10, 1, 10)
-borderGlow.Position = UDim2.new(-0.05, 0, -0.05, 0)
-borderGlow.BackgroundTransparency = 1
-borderGlow.Image = "rbxassetid://11584599218" -- Glow texture
-borderGlow.ImageColor3 = ACCENT_BLUE
-borderGlow.ImageTransparency = 0.5
-borderGlow.ZIndex = -1
-
 -- Title bar
 local titleBar = Instance.new("Frame", MainFrame)
 titleBar.Name = "TitleBar"
 titleBar.Size = UDim2.new(1, 0, 0, 36)
-titleBar.BackgroundTransparency = 0.9
 titleBar.BackgroundColor3 = ACCENT_BLUE
+titleBar.BackgroundTransparency = 0.2
 local titleCorner = Instance.new("UICorner", titleBar)
 titleCorner.CornerRadius = UDim.new(0, 8, 0, 0)
 
@@ -109,8 +76,6 @@ titleText.Font = FONT
 titleText.TextColor3 = TEXT_MAIN
 titleText.TextSize = 16
 titleText.TextXAlignment = Enum.TextXAlignment.Left
-titleText.TextStrokeTransparency = 0.8
-titleText.TextStrokeColor3 = Color3.fromRGB(0, 50, 100)
 
 -- Close button
 local closeBtn = Instance.new("ImageButton", titleBar)
@@ -118,7 +83,7 @@ closeBtn.Name = "CloseButton"
 closeBtn.Size = UDim2.new(0, 28, 0, 28)
 closeBtn.Position = UDim2.new(1, -32, 0.5, -14)
 closeBtn.BackgroundTransparency = 1
-closeBtn.Image = "rbxassetid://3926305904" -- X icon
+closeBtn.Image = "rbxassetid://3926305904"
 closeBtn.ImageColor3 = TEXT_MAIN
 closeBtn.ScaleType = Enum.ScaleType.Fit
 
@@ -164,16 +129,6 @@ local function createModule(name, icon, color, position)
     local statusCorner = Instance.new("UICorner", status)
     statusCorner.CornerRadius = UDim.new(1, 0)
     
-    -- Status glow
-    local statusGlow = Instance.new("ImageLabel", status)
-    statusGlow.Size = UDim2.new(2, 0, 2, 0)
-    statusGlow.Position = UDim2.new(-0.5, 0, -0.5, 0)
-    statusGlow.BackgroundTransparency = 1
-    statusGlow.Image = "rbxassetid://11584599218" -- Glow texture
-    statusGlow.ImageColor3 = ACCENT_RED
-    statusGlow.ImageTransparency = 0.7
-    statusGlow.ZIndex = -1
-    
     -- Activation button
     local btn = Instance.new("TextButton", module)
     btn.Name = "ActivateButton"
@@ -188,29 +143,19 @@ local function createModule(name, icon, color, position)
     local btnCorner = Instance.new("UICorner", btn)
     btnCorner.CornerRadius = UDim.new(0, 4)
     
-    -- Button glow
-    local btnGlow = Instance.new("ImageLabel", btn)
-    btnGlow.Size = UDim2.new(1, 10, 1, 10)
-    btnGlow.Position = UDim2.new(-0.05, 0, -0.05, 0)
-    btnGlow.BackgroundTransparency = 1
-    btnGlow.Image = "rbxassetid://11584599218" -- Glow texture
-    btnGlow.ImageColor3 = color
-    btnGlow.ImageTransparency = 0.8
-    btnGlow.ZIndex = -1
-    
     return module, btn, status
 end
 
 -- Create protection modules
 local FrostShield, FrostButton, FrostStatus = createModule(
     "Frost Shield",
-    "rbxassetid://11584599488", -- Shield icon
+    "rbxassetid://7072718360", -- Shield icon
     ACCENT_BLUE,
     UDim2.new(0, 15, 0, 45)
     
 local AcceptSentinel, AcceptButton, AcceptStatus = createModule(
     "Accept Sentinel",
-    "rbxassetid://11584599027", -- Sentinel icon
+    "rbxassetid://7072723422", -- Sentinel icon
     ACCENT_PURPLE,
     UDim2.new(1, -155, 0, 45))
 
@@ -234,11 +179,6 @@ liveIndicator.BackgroundColor3 = ACCENT_RED
 liveIndicator.BorderSizePixel = 0
 local liveCorner = Instance.new("UICorner", liveIndicator)
 liveCorner.CornerRadius = UDim.new(1, 0)
-
--- Pulse animation
-local pulse = TweenService:Create(liveIndicator, TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {
-    BackgroundTransparency = 0.5
-})
 
 -- ========== NOTIFICATION SYSTEM ==========
 local NotificationGui = Instance.new("ScreenGui", PlayerGui)
@@ -275,15 +215,6 @@ local function showNotification(title, message, color)
     local borderCorner = Instance.new("UICorner", notifBorder)
     borderCorner.CornerRadius = UDim.new(0, 8)
     
-    local notifGlow = Instance.new("ImageLabel", notifBorder)
-    notifGlow.Size = UDim2.new(1, 10, 1, 10)
-    notifGlow.Position = UDim2.new(-0.05, 0, -0.05, 0)
-    notifGlow.BackgroundTransparency = 1
-    notifGlow.Image = "rbxassetid://11584599218" -- Glow texture
-    notifGlow.ImageColor3 = color
-    notifGlow.ImageTransparency = 0.6
-    notifGlow.ZIndex = -1
-    
     -- Title
     local titleLabel = Instance.new("TextLabel", container)
     titleLabel.Size = UDim2.new(1, -20, 0.5, 0)
@@ -311,12 +242,11 @@ local function showNotification(title, message, color)
     icon.Size = UDim2.new(0, 30, 0, 30)
     icon.Position = UDim2.new(1, -40, 0.5, -15)
     icon.BackgroundTransparency = 1
-    icon.Image = "rbxassetid://11584599027" -- Default icon
+    icon.Image = "rbxassetid://3926307971" -- Gear icon
     icon.ImageColor3 = color
     
     -- Animation
-    container.ClipsDescendants = true
-    local slideIn = TweenService:Create(container, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {
+    local slideIn = TweenService:Create(container, TweenInfo.new(0.4), {
         Position = UDim2.new(0, 0, 0, 0)
     })
     slideIn:Play()
@@ -324,7 +254,7 @@ local function showNotification(title, message, color)
     -- Remove after duration
     task.delay(4, function()
         if container and container.Parent then
-            local slideOut = TweenService:Create(container, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {
+            local slideOut = TweenService:Create(container, TweenInfo.new(0.4), {
                 Position = UDim2.new(0, 0, 0, -70)
             })
             slideOut:Play()
@@ -339,6 +269,7 @@ local frostActive = false
 local acceptActive = false
 local frostEndTime = 0
 local acceptEndTime = 0
+local pulseTween
 
 local function updateStatus()
     -- Update frost shield status
@@ -380,13 +311,25 @@ local function updateStatus()
         globalStatus.Text = "SYSTEM ACTIVE"
         globalStatus.TextColor3 = ACCENT_GREEN
         liveIndicator.BackgroundColor3 = ACCENT_GREEN
-        pulse:Play()
+        
+        -- Create pulse animation if not exists
+        if not pulseTween then
+            pulseTween = TweenService:Create(liveIndicator, TweenInfo.new(0.8, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {
+                BackgroundTransparency = 0.5
+            })
+            pulseTween:Play()
+        end
     else
         globalStatus.Text = "SYSTEM OFFLINE"
         globalStatus.TextColor3 = ACCENT_RED
         liveIndicator.BackgroundColor3 = ACCENT_RED
-        pulse:Stop()
-        liveIndicator.BackgroundTransparency = 0
+        
+        -- Stop pulse animation
+        if pulseTween then
+            pulseTween:Cancel()
+            pulseTween = nil
+            liveIndicator.BackgroundTransparency = 0
+        end
     end
 end
 
@@ -491,8 +434,7 @@ end)
 
 -- Simulate periodic trades
 task.spawn(function()
-    while true do
-        task.wait(math.random(20, 40))
+    while task.wait(math.random(20, 40)) and ScreenGui.Parent do
         simulateTrade()
     end
 end)
@@ -502,26 +444,20 @@ RunService.Heartbeat:Connect(updateStatus)
 
 -- Create background particles
 task.spawn(function()
-    local particleContainer = Instance.new("Frame", MainFrame)
-    particleContainer.Size = UDim2.new(1, 0, 1, 0)
-    particleContainer.BackgroundTransparency = 1
-    particleContainer.ZIndex = 0
-    
-    while true do
-        if #particleContainer:GetChildren() < 15 then
-            local particle = Instance.new("Frame", particleContainer)
+    while task.wait(0.2) and ScreenGui.Parent do
+        if #MainFrame:GetChildren() < 30 then  -- Limit number of particles
+            local particle = Instance.new("Frame", MainFrame)
             particle.Size = UDim2.new(0, math.random(2, 4), 0, math.random(2, 4))
             particle.Position = UDim2.new(0, math.random(0, 320), 0, math.random(0, 200))
             particle.BackgroundColor3 = ACCENT_BLUE
             particle.BackgroundTransparency = 0.7
+            particle.ZIndex = 0
             
             TweenService:Create(particle, TweenInfo.new(math.random(1, 3)), {
-                Position = UDim2.new(0, math.random(0, 320), 0, math.random(0, 200)),
                 BackgroundTransparency = 1
             }):Play()
             
-            particle:Destroy()
+            game:GetService("Debris"):AddItem(particle, 3)
         end
-        task.wait(0.2)
     end
 end)
