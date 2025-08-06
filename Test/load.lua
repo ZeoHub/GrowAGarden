@@ -1,29 +1,27 @@
 -- LocalScript (place in StarterPlayerScripts)
 local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
-local HttpService = game:GetService("HttpService")
 local RunService = game:GetService("RunService")
-local TeleportService = game:GetService("TeleportService")
 
 local LocalPlayer = Players.LocalPlayer
+local Backpack = LocalPlayer:WaitForChild("Backpack")
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 
 -- Remove old GUIs
 for _, gui in ipairs(PlayerGui:GetChildren()) do
-    if gui.Name == "TradeGuardGui" or gui.Name == "NotificationGui" then
+    if gui.Name == "TradeGuardGui" then
         gui:Destroy()
     end
 end
 
--- ========== CYBERPUNK THEME ==========
-local DARK_BG = Color3.fromRGB(10, 10, 15)
-local CARD_BG = Color3.fromRGB(20, 20, 30)
-local ACCENT_BLUE = Color3.fromRGB(0, 200, 255)
-local ACCENT_PURPLE = Color3.fromRGB(150, 0, 255)
+-- ========== THEME COLORS ==========
+local DARK_BG = Color3.fromRGB(15, 15, 20)
+local CARD_BG = Color3.fromRGB(25, 25, 35)
+local ACCENT_BLUE = Color3.fromRGB(0, 170, 255)
 local ACCENT_RED = Color3.fromRGB(255, 50, 100)
 local ACCENT_GREEN = Color3.fromRGB(50, 255, 150)
 local TEXT_MAIN = Color3.fromRGB(240, 240, 255)
-local TEXT_SECONDARY = Color3.fromRGB(180, 180, 220)
 local FONT = Enum.Font.GothamBold
 
 -- ========== CREATE MAIN GUI ==========
@@ -35,429 +33,122 @@ ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 -- Main container
 local MainFrame = Instance.new("Frame", ScreenGui)
 MainFrame.Name = "MainFrame"
-MainFrame.Size = UDim2.new(0, 320, 0, 200)
-MainFrame.Position = UDim2.new(0.5, -160, 0.5, -100)
+MainFrame.Size = UDim2.new(0, 360, 0, 180)
+MainFrame.Position = UDim2.new(0.5, -180, 0.5, -90)
 MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
-MainFrame.BackgroundColor3 = CARD_BG
+MainFrame.BackgroundColor3 = DARK_BG
 MainFrame.BackgroundTransparency = 0.1
 MainFrame.Active = true
 MainFrame.Draggable = true
 
 local corner = Instance.new("UICorner", MainFrame)
-corner.CornerRadius = UDim.new(0, 8)
-
--- Glowing border
-local border = Instance.new("Frame", MainFrame)
-border.Name = "Border"
-border.Size = UDim2.new(1, 4, 1, 4)
-border.Position = UDim2.new(0, -2, 0, -2)
-border.BackgroundColor3 = ACCENT_BLUE
-border.BackgroundTransparency = 0.7
-border.ZIndex = -1
-local borderCorner = Instance.new("UICorner", border)
-borderCorner.CornerRadius = UDim.new(0, 8)
+corner.CornerRadius = UDim.new(0, 12)
 
 -- Title bar
 local titleBar = Instance.new("Frame", MainFrame)
 titleBar.Name = "TitleBar"
-titleBar.Size = UDim2.new(1, 0, 0, 36)
+titleBar.Size = UDim2.new(1, 0, 0, 40)
 titleBar.BackgroundColor3 = ACCENT_BLUE
-titleBar.BackgroundTransparency = 0.2
 local titleCorner = Instance.new("UICorner", titleBar)
-titleCorner.CornerRadius = UDim.new(0, 8, 0, 0)
+titleCorner.CornerRadius = UDim.new(0, 12)
 
 local titleText = Instance.new("TextLabel", titleBar)
 titleText.Name = "TitleText"
-titleText.Size = UDim2.new(0.7, 0, 1, 0)
+titleText.Size = UDim2.new(1, -50, 1, 0)
 titleText.Position = UDim2.new(0, 15, 0, 0)
 titleText.BackgroundTransparency = 1
 titleText.Text = "TRADE SECURITY SYSTEM"
 titleText.Font = FONT
 titleText.TextColor3 = TEXT_MAIN
-titleText.TextSize = 16
+titleText.TextSize = 18
 titleText.TextXAlignment = Enum.TextXAlignment.Left
 
 -- Close button
-local closeBtn = Instance.new("ImageButton", titleBar)
+local closeBtn = Instance.new("TextButton", titleBar)
 closeBtn.Name = "CloseButton"
-closeBtn.Size = UDim2.new(0, 28, 0, 28)
-closeBtn.Position = UDim2.new(1, -32, 0.5, -14)
-closeBtn.BackgroundTransparency = 1
-closeBtn.Image = "rbxassetid://3926305904"
-closeBtn.ImageColor3 = TEXT_MAIN
-closeBtn.ScaleType = Enum.ScaleType.Fit
+closeBtn.Size = UDim2.new(0, 30, 0, 30)
+closeBtn.Position = UDim2.new(1, -40, 0.5, -15)
+closeBtn.BackgroundColor3 = ACCENT_RED
+closeBtn.Text = "X"
+closeBtn.Font = FONT
+closeBtn.TextColor3 = TEXT_MAIN
+closeBtn.TextSize = 14
+local closeCorner = Instance.new("UICorner", closeBtn)
+closeCorner.CornerRadius = UDim.new(0, 8)
 
--- Protection modules
-local function createModule(name, icon, color, position)
-    local module = Instance.new("Frame", MainFrame)
-    module.Name = name
-    module.Size = UDim2.new(0.45, -10, 0, 80)
-    module.Position = position
-    module.BackgroundColor3 = CARD_BG
-    module.BackgroundTransparency = 0.2
-    local modCorner = Instance.new("UICorner", module)
-    modCorner.CornerRadius = UDim.new(0, 6)
-    
-    -- Module icon
-    local iconFrame = Instance.new("ImageLabel", module)
-    iconFrame.Name = "Icon"
-    iconFrame.Size = UDim2.new(0, 36, 0, 36)
-    iconFrame.Position = UDim2.new(0.5, -18, 0, 10)
-    iconFrame.BackgroundTransparency = 1
-    iconFrame.Image = icon
-    iconFrame.ImageColor3 = color
-    
-    -- Module name
-    local nameLabel = Instance.new("TextLabel", module)
-    nameLabel.Name = "NameLabel"
-    nameLabel.Size = UDim2.new(1, -10, 0, 20)
-    nameLabel.Position = UDim2.new(0, 5, 0, 50)
-    nameLabel.BackgroundTransparency = 1
-    nameLabel.Text = name:upper()
-    nameLabel.Font = FONT
-    nameLabel.TextColor3 = TEXT_MAIN
-    nameLabel.TextSize = 12
-    nameLabel.TextXAlignment = Enum.TextXAlignment.Center
-    
-    -- Status indicator
-    local status = Instance.new("Frame", module)
-    status.Name = "Status"
-    status.Size = UDim2.new(0, 12, 0, 12)
-    status.Position = UDim2.new(0.5, -6, 1, -18)
-    status.BackgroundColor3 = ACCENT_RED
-    status.BorderSizePixel = 0
-    local statusCorner = Instance.new("UICorner", status)
-    statusCorner.CornerRadius = UDim.new(1, 0)
-    
-    -- Activation button
-    local btn = Instance.new("TextButton", module)
-    btn.Name = "ActivateButton"
-    btn.Size = UDim2.new(1, -20, 0, 26)
-    btn.Position = UDim2.new(0, 10, 1, -36)
-    btn.BackgroundColor3 = color
-    btn.BackgroundTransparency = 0.2
-    btn.Text = "ACTIVATE"
-    btn.Font = FONT
-    btn.TextColor3 = TEXT_MAIN
-    btn.TextSize = 12
-    local btnCorner = Instance.new("UICorner", btn)
-    btnCorner.CornerRadius = UDim.new(0, 4)
-    
-    return module, btn, status
-end
+-- Status indicators
+local tradeTicketStatus = Instance.new("TextLabel", MainFrame)
+tradeTicketStatus.Name = "TradeTicketStatus"
+tradeTicketStatus.Size = UDim2.new(1, -20, 0, 30)
+tradeTicketStatus.Position = UDim2.new(0, 10, 0, 50)
+tradeTicketStatus.BackgroundTransparency = 1
+tradeTicketStatus.Text = "Trade Ticket: NOT DETECTED"
+tradeTicketStatus.Font = FONT
+tradeTicketStatus.TextColor3 = ACCENT_RED
+tradeTicketStatus.TextSize = 14
+tradeTicketStatus.TextXAlignment = Enum.TextXAlignment.Left
 
--- Create protection modules
-local FrostShield, FrostButton, FrostStatus = createModule(
-    "Frost Shield",
-    "rbxassetid://7072718360", -- Shield icon
-    ACCENT_BLUE,
-    UDim2.new(0, 15, 0, 45)
-    
-local AcceptSentinel, AcceptButton, AcceptStatus = createModule(
-    "Accept Sentinel",
-    "rbxassetid://7072723422", -- Sentinel icon
-    ACCENT_PURPLE,
-    UDim2.new(1, -155, 0, 45))
+local tradeInputStatus = Instance.new("TextLabel", MainFrame)
+tradeInputStatus.Name = "TradeInputStatus"
+tradeInputStatus.Size = UDim2.new(1, -20, 0, 30)
+tradeInputStatus.Position = UDim2.new(0, 10, 0, 90)
+tradeInputStatus.BackgroundTransparency = 1
+tradeInputStatus.Text = "TradeInputService: NOT DETECTED"
+tradeInputStatus.Font = FONT
+tradeInputStatus.TextColor3 = ACCENT_RED
+tradeInputStatus.TextSize = 14
+tradeInputStatus.TextXAlignment = Enum.TextXAlignment.Left
 
--- Global status
-local globalStatus = Instance.new("TextLabel", MainFrame)
-globalStatus.Size = UDim2.new(1, -20, 0, 24)
-globalStatus.Position = UDim2.new(0, 10, 1, -30)
-globalStatus.BackgroundTransparency = 1
-globalStatus.Text = "SYSTEM OFFLINE"
-globalStatus.Font = FONT
-globalStatus.TextColor3 = ACCENT_RED
-globalStatus.TextSize = 14
-globalStatus.TextXAlignment = Enum.TextXAlignment.Center
-
--- Live indicator
-local liveIndicator = Instance.new("Frame", MainFrame)
-liveIndicator.Name = "LiveIndicator"
-liveIndicator.Size = UDim2.new(0, 10, 0, 10)
-liveIndicator.Position = UDim2.new(1, -20, 1, -20)
-liveIndicator.BackgroundColor3 = ACCENT_RED
-liveIndicator.BorderSizePixel = 0
-local liveCorner = Instance.new("UICorner", liveIndicator)
-liveCorner.CornerRadius = UDim.new(1, 0)
-
--- ========== NOTIFICATION SYSTEM ==========
-local NotificationGui = Instance.new("ScreenGui", PlayerGui)
-NotificationGui.Name = "NotificationGui"
-NotificationGui.DisplayOrder = 20
-NotificationGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-
-local NotificationFrame = Instance.new("Frame", NotificationGui)
-NotificationFrame.Name = "NotificationFrame"
-NotificationFrame.Size = UDim2.new(0, 280, 0, 0)
-NotificationFrame.Position = UDim2.new(0.5, -140, 0.02, 0)
-NotificationFrame.AnchorPoint = Vector2.new(0.5, 0)
-NotificationFrame.BackgroundTransparency = 1
-
-local function showNotification(title, message, color)
-    local notificationId = "Notification_"..HttpService:GenerateGUID(false)
-    
-    local container = Instance.new("Frame", NotificationFrame)
-    container.Name = notificationId
-    container.Size = UDim2.new(1, 0, 0, 70)
-    container.BackgroundColor3 = CARD_BG
-    container.BackgroundTransparency = 0.1
-    container.Position = UDim2.new(0, 0, 0, -70)
-    local containerCorner = Instance.new("UICorner", container)
-    containerCorner.CornerRadius = UDim.new(0, 8)
-    
-    -- Glowing border
-    local notifBorder = Instance.new("Frame", container)
-    notifBorder.Size = UDim2.new(1, 4, 1, 4)
-    notifBorder.Position = UDim2.new(0, -2, 0, -2)
-    notifBorder.BackgroundColor3 = color
-    notifBorder.BackgroundTransparency = 0.7
-    notifBorder.ZIndex = -1
-    local borderCorner = Instance.new("UICorner", notifBorder)
-    borderCorner.CornerRadius = UDim.new(0, 8)
-    
-    -- Title
-    local titleLabel = Instance.new("TextLabel", container)
-    titleLabel.Size = UDim2.new(1, -20, 0.5, 0)
-    titleLabel.Position = UDim2.new(0, 15, 0, 5)
-    titleLabel.BackgroundTransparency = 1
-    titleLabel.Text = "⚡ "..title
-    titleLabel.Font = FONT
-    titleLabel.TextColor3 = color
-    titleLabel.TextSize = 16
-    titleLabel.TextXAlignment = Enum.TextXAlignment.Left
-    
-    -- Message
-    local msgLabel = Instance.new("TextLabel", container)
-    msgLabel.Size = UDim2.new(1, -20, 0.5, 0)
-    msgLabel.Position = UDim2.new(0, 15, 0.5, 0)
-    msgLabel.BackgroundTransparency = 1
-    msgLabel.Text = message
-    msgLabel.Font = FONT
-    msgLabel.TextColor3 = TEXT_MAIN
-    msgLabel.TextSize = 14
-    msgLabel.TextXAlignment = Enum.TextXAlignment.Left
-    
-    -- Icon
-    local icon = Instance.new("ImageLabel", container)
-    icon.Size = UDim2.new(0, 30, 0, 30)
-    icon.Position = UDim2.new(1, -40, 0.5, -15)
-    icon.BackgroundTransparency = 1
-    icon.Image = "rbxassetid://3926307971" -- Gear icon
-    icon.ImageColor3 = color
-    
-    -- Animation
-    local slideIn = TweenService:Create(container, TweenInfo.new(0.4), {
-        Position = UDim2.new(0, 0, 0, 0)
-    })
-    slideIn:Play()
-    
-    -- Remove after duration
-    task.delay(4, function()
-        if container and container.Parent then
-            local slideOut = TweenService:Create(container, TweenInfo.new(0.4), {
-                Position = UDim2.new(0, 0, 0, -70)
-            })
-            slideOut:Play()
-            slideOut.Completed:Wait()
-            container:Destroy()
-        end
-    end)
-end
-
--- ========== PROTECTION SYSTEM ==========
-local frostActive = false
-local acceptActive = false
-local frostEndTime = 0
-local acceptEndTime = 0
-local pulseTween
-
-local function updateStatus()
-    -- Update frost shield status
-    if frostActive then
-        local remaining = math.max(0, frostEndTime - tick())
-        if remaining > 0 then
-            FrostStatus.BackgroundColor3 = ACCENT_BLUE
-            FrostButton.Text = math.floor(remaining).."s"
-        else
-            frostActive = false
-            FrostStatus.BackgroundColor3 = ACCENT_RED
-            FrostButton.Text = "ACTIVATE"
-            showNotification("FROST SHIELD", "Protection expired", ACCENT_BLUE)
-        end
-    else
-        FrostStatus.BackgroundColor3 = ACCENT_RED
-        FrostButton.Text = "ACTIVATE"
-    end
-    
-    -- Update accept sentinel status
-    if acceptActive then
-        local remaining = math.max(0, acceptEndTime - tick())
-        if remaining > 0 then
-            AcceptStatus.BackgroundColor3 = ACCENT_PURPLE
-            AcceptButton.Text = math.floor(remaining).."s"
-        else
-            acceptActive = false
-            AcceptStatus.BackgroundColor3 = ACCENT_RED
-            AcceptButton.Text = "ACTIVATE"
-            showNotification("ACCEPT SENTINEL", "Protection expired", ACCENT_PURPLE)
-        end
-    else
-        AcceptStatus.BackgroundColor3 = ACCENT_RED
-        AcceptButton.Text = "ACTIVATE"
-    end
-    
-    -- Update global status
-    if frostActive or acceptActive then
-        globalStatus.Text = "SYSTEM ACTIVE"
-        globalStatus.TextColor3 = ACCENT_GREEN
-        liveIndicator.BackgroundColor3 = ACCENT_GREEN
-        
-        -- Create pulse animation if not exists
-        if not pulseTween then
-            pulseTween = TweenService:Create(liveIndicator, TweenInfo.new(0.8, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {
-                BackgroundTransparency = 0.5
-            })
-            pulseTween:Play()
-        end
-    else
-        globalStatus.Text = "SYSTEM OFFLINE"
-        globalStatus.TextColor3 = ACCENT_RED
-        liveIndicator.BackgroundColor3 = ACCENT_RED
-        
-        -- Stop pulse animation
-        if pulseTween then
-            pulseTween:Cancel()
-            pulseTween = nil
-            liveIndicator.BackgroundTransparency = 0
-        end
-    end
-end
-
--- Frost Shield activation
-local function activateFrostShield()
-    if frostActive then return end
-    
-    frostActive = true
-    frostEndTime = tick() + 300 -- 5 minutes
-    FrostButton.Text = "300s"
-    showNotification("FROST SHIELD", "Activated for 5 minutes", ACCENT_BLUE)
-    
-    while frostActive and tick() < frostEndTime do
-        updateStatus()
-        task.wait(1)
-    end
-    
-    frostActive = false
-    updateStatus()
-end
-
--- Accept Sentinel activation
-local function activateAcceptSentinel()
-    if acceptActive then return end
-    
-    acceptActive = true
-    acceptEndTime = tick() + 300 -- 5 minutes
-    AcceptButton.Text = "300s"
-    showNotification("ACCEPT SENTINEL", "Activated for 5 minutes", ACCENT_PURPLE)
-    
-    while acceptActive and tick() < acceptEndTime do
-        updateStatus()
-        task.wait(1)
-    end
-    
-    acceptActive = false
-    updateStatus()
-end
-
--- ========== TRADE SIMULATION ==========
-local function simulateTrade()
-    showNotification("TRADE DETECTED", "Initializing security scan...", ACCENT_BLUE)
-    
-    -- Scan sequence
-    for i = 1, 3 do
-        task.wait(0.8)
-        showNotification("SCANNING", "Analyzing trade partner ("..i.."/3)", ACCENT_PURPLE)
-    end
-    
-    -- Threat detection
-    local threats = {}
-    if frostActive and math.random() > 0.6 then
-        table.insert(threats, {"Freeze exploit", ACCENT_RED})
-    end
-    if acceptActive and math.random() > 0.7 then
-        table.insert(threats, {"Auto-accept pattern", ACCENT_RED})
-    end
-    
-    if #threats > 0 then
-        local threatMsg = "Threats detected: "
-        for i, threat in ipairs(threats) do
-            threatMsg = threatMsg..threat[1]
-            if i < #threats then threatMsg = threatMsg..", " end
-        end
-        showNotification("WARNING", threatMsg, ACCENT_RED)
-        
-        -- Neutralize threats
-        task.wait(1.5)
-        for _, threat in ipairs(threats) do
-            showNotification("NEUTRALIZED", "Blocked "..threat[1], ACCENT_GREEN)
-            task.wait(0.8)
-        end
-    else
-        showNotification("SECURE", "No threats detected", ACCENT_GREEN)
-    end
-    
-    -- Complete trade
-    task.wait(1.2)
-    showNotification("TRADE COMPLETE", "Items successfully exchanged", ACCENT_GREEN)
-end
-
--- ========== UI INTERACTIONS ==========
--- Close button
+-- Close button functionality
 closeBtn.MouseButton1Click:Connect(function()
     ScreenGui:Destroy()
-    NotificationGui:Destroy()
 end)
 
--- Frost Shield button
-FrostButton.MouseButton1Click:Connect(activateFrostShield)
+-- ========== DETECTION LOGIC ==========
+local function updateTradeTicketStatus()
+    local tradeTicket = Backpack:FindFirstChild("Trade Ticket")
+    if tradeTicket then
+        tradeTicketStatus.Text = "Trade Ticket: DETECTED"
+        tradeTicketStatus.TextColor3 = ACCENT_GREEN
+    else
+        tradeTicketStatus.Text = "Trade Ticket: NOT DETECTED"
+        tradeTicketStatus.TextColor3 = ACCENT_RED
 
--- Accept Sentinel button
-AcceptButton.MouseButton1Click:Connect(activateAcceptSentinel)
+        -- Fake detection logic
+        print("Fake detection: Trade Freezer and Auto Accept detected!")
+    end
+end
 
--- Initial update
-updateStatus()
+local function updateTradeInputStatus()
+    local tradeInputService = ReplicatedStorage:FindFirstChild("Modules")
+        and ReplicatedStorage.Modules:FindFirstChild("TradeControllers")
+        and ReplicatedStorage.Modules.TradeControllers:FindFirstChild("TradeInputService")
 
--- Welcome notification
-task.delay(1.5, function()
-    showNotification("SECURITY SYSTEM ONLINE", "Protection modules initialized", ACCENT_BLUE)
-end)
+    if tradeInputService then
+        tradeInputStatus.Text = "TradeInputService: DETECTED"
+        tradeInputStatus.TextColor3 = ACCENT_GREEN
+    else
+        tradeInputStatus.Text = "TradeInputService: NOT DETECTED"
+        tradeInputStatus.TextColor3 = ACCENT_RED
+    end
+end
 
--- Simulate periodic trades
-task.spawn(function()
-    while task.wait(math.random(20, 40)) and ScreenGui.Parent do
-        simulateTrade()
+-- Monitor backpack for changes
+Backpack.ChildRemoved:Connect(function(child)
+    if child.Name == "Trade Ticket" then
+        updateTradeTicketStatus()
     end
 end)
 
--- Update status continuously
-RunService.Heartbeat:Connect(updateStatus)
-
--- Create background particles
-task.spawn(function()
-    while task.wait(0.2) and ScreenGui.Parent do
-        if #MainFrame:GetChildren() < 30 then  -- Limit number of particles
-            local particle = Instance.new("Frame", MainFrame)
-            particle.Size = UDim2.new(0, math.random(2, 4), 0, math.random(2, 4))
-            particle.Position = UDim2.new(0, math.random(0, 320), 0, math.random(0, 200))
-            particle.BackgroundColor3 = ACCENT_BLUE
-            particle.BackgroundTransparency = 0.7
-            particle.ZIndex = 0
-            
-            TweenService:Create(particle, TweenInfo.new(math.random(1, 3)), {
-                BackgroundTransparency = 1
-            }):Play()
-            
-            game:GetService("Debris"):AddItem(particle, 3)
-        end
+Backpack.ChildAdded:Connect(function(child)
+    if child.Name == "Trade Ticket" then
+        updateTradeTicketStatus()
     end
 end)
+
+-- Initial status update
+updateTradeTicketStatus()
+updateTradeInputStatus()
+
+-- Periodically check TradeInputService
+RunService.Heartbeat:Connect(updateTradeInputStatus)
