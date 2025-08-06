@@ -45,7 +45,7 @@ blur.Parent = Lighting
 local logoContainer = Instance.new("Frame")
 logoContainer.Name = "LogoContainer"
 logoContainer.AnchorPoint = Vector2.new(0.5, 0.5)
-logoContainer.Position = UDim2.new(0.5, 0, 0.45, 0)
+logoContainer.Position = UDim2.new(0.5, 0, 0.4, 0)  -- Moved up to make space
 logoContainer.Size = UDim2.new(0, 200, 0, 200)
 logoContainer.BackgroundTransparency = 1
 logoContainer.ZIndex = 99999
@@ -86,11 +86,11 @@ local function startPulse()
     }):Play()
 end
 
--- Create loading text with Comic Neue Angular SemiBold font (FIXED)
+-- Create loading text with semi-bold font and black stroke
 local loadingText = Instance.new("TextLabel")
 loadingText.Name = "LoadingText"
 loadingText.AnchorPoint = Vector2.new(0.5, 0.5)
-loadingText.Position = UDim2.new(0.5, 0, 0.6, 0)
+loadingText.Position = UDim2.new(0.5, 0, 0.65, 0)  -- Centered position
 loadingText.Size = UDim2.new(0, 300, 0, 40)
 loadingText.BackgroundTransparency = 1
 loadingText.Text = "Loading: 1/1000"
@@ -98,26 +98,29 @@ loadingText.TextColor3 = Color3.fromRGB(200, 220, 255)
 loadingText.TextSize = 22
 loadingText.ZIndex = 99999
 
--- FONT FIX: Use FontFace instead of deprecated Font property
+-- Use semi-bold font
 loadingText.FontFace = Font.new(
-    "rbxasset://fonts/families/ComicNeueAngular.json",
+    "rbxasset://fonts/families/GothamSSm.json",
     Enum.FontWeight.SemiBold,
     Enum.FontStyle.Normal
 )
 
--- Create progress bar
+-- Add black stroke to text
+local textStroke = Instance.new("UIStroke")
+textStroke.Color = Color3.new(0, 0, 0)  -- Black
+textStroke.Thickness = 2
+textStroke.Transparency = 0.1
+textStroke.Parent = loadingText
+
+-- Create rectangular progress bar
 local progressBar = Instance.new("Frame")
 progressBar.Name = "ProgressBar"
 progressBar.AnchorPoint = Vector2.new(0.5, 0.5)
-progressBar.Position = UDim2.new(0.5, 0, 0.7, 0)
-progressBar.Size = UDim2.new(0.6, 0, 0, 8)
+progressBar.Position = UDim2.new(0.5, 0, 0.75, 0)  -- Position below text
+progressBar.Size = UDim2.new(0.6, 0, 0, 20)  -- Thicker rectangular bar
 progressBar.BackgroundColor3 = Color3.fromRGB(40, 40, 80)
 progressBar.BorderSizePixel = 0
 progressBar.ZIndex = 99999
-
-local progressBarCorner = Instance.new("UICorner")
-progressBarCorner.CornerRadius = UDim.new(0.5, 0)
-progressBarCorner.Parent = progressBar
 
 local progressFill = Instance.new("Frame")
 progressFill.Name = "ProgressFill"
@@ -125,10 +128,6 @@ progressFill.Size = UDim2.new(0, 0, 1, 0)
 progressFill.BackgroundColor3 = Color3.fromRGB(100, 150, 255)
 progressFill.BorderSizePixel = 0
 progressFill.ZIndex = 99999
-
-local progressFillCorner = Instance.new("UICorner")
-progressFillCorner.CornerRadius = UDim.new(0.5, 0)
-progressFillCorner.Parent = progressFill
 
 -- Assemble the UI
 progressFill.Parent = progressBar
