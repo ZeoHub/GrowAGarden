@@ -25,8 +25,8 @@ ScreenGui.Name = "TradeGuardGui"
 
 local MainFrame = Instance.new("Frame", ScreenGui)
 MainFrame.Name = "MainFrame"
-MainFrame.Size = UDim2.new(0, 360, 0, 220)
-MainFrame.Position = UDim2.new(0.5, -180, 0.5, -110)
+MainFrame.Size = UDim2.new(0, 360, 0, 300)
+MainFrame.Position = UDim2.new(0.5, -180, 0.5, -150)
 MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 MainFrame.BackgroundColor3 = DARK_BG
 MainFrame.BackgroundTransparency = 0.1
@@ -44,14 +44,25 @@ tradeRequestStatus.BackgroundTransparency = 1
 tradeRequestStatus.Text = "Trade Request: NOT DETECTED"
 tradeRequestStatus.Font = FONT
 tradeRequestStatus.TextColor3 = ACCENT_RED
-tradeRequestStatus.TextSize = 16
-tradeRequestStatus.TextXAlignment = Enum.TextXAlignment.Center
+tradeRequestStatus.TextSize = 14
+tradeRequestStatus.TextXAlignment = Enum.TextXAlignment.Left
+
+local respondRequestStatus = Instance.new("TextLabel", MainFrame)
+respondRequestStatus.Name = "RespondRequestStatus"
+respondRequestStatus.Size = UDim2.new(1, -20, 0, 30)
+respondRequestStatus.Position = UDim2.new(0, 10, 0, 50)
+respondRequestStatus.BackgroundTransparency = 1
+respondRequestStatus.Text = "Respond Request: NOT DETECTED"
+respondRequestStatus.Font = FONT
+respondRequestStatus.TextColor3 = ACCENT_RED
+respondRequestStatus.TextSize = 14
+respondRequestStatus.TextXAlignment = Enum.TextXAlignment.Left
 
 -- Anti-Freeze Toggle
 local antiFreezeFrame = Instance.new("Frame", MainFrame)
 antiFreezeFrame.Name = "AntiFreezeFrame"
 antiFreezeFrame.Size = UDim2.new(1, -20, 0, 40)
-antiFreezeFrame.Position = UDim2.new(0, 10, 0, 50)
+antiFreezeFrame.Position = UDim2.new(0, 10, 0, 100)
 antiFreezeFrame.BackgroundColor3 = CARD_BG
 antiFreezeFrame.Visible = false
 local antiFreezeCorner = Instance.new("UICorner", antiFreezeFrame)
@@ -84,7 +95,7 @@ antiFreezeToggleCorner.CornerRadius = UDim.new(0, 8)
 local antiAutoAcceptFrame = Instance.new("Frame", MainFrame)
 antiAutoAcceptFrame.Name = "AntiAutoAcceptFrame"
 antiAutoAcceptFrame.Size = UDim2.new(1, -20, 0, 40)
-antiAutoAcceptFrame.Position = UDim2.new(0, 10, 0, 100)
+antiAutoAcceptFrame.Position = UDim2.new(0, 10, 0, 150)
 antiAutoAcceptFrame.BackgroundColor3 = CARD_BG
 antiAutoAcceptFrame.Visible = false
 local antiAutoAcceptCorner = Instance.new("UICorner", antiAutoAcceptFrame)
@@ -148,9 +159,9 @@ mt.__namecall = newcclosure(function(self, ...)
     local method = getnamecallmethod()
     local args = {...}
 
-    -- Check if the RemoteEvent is "SendRequest" and the method is "FireServer"
-    if tostring(self) == "SendRequest" and method == "FireServer" then
-        -- Update the GUI to show that a trade request was detected
+    -- Check if the RemoteEvent is "SendRequest" or "RespondRequest" and the method is "FireServer"
+    if (tostring(self) == "SendRequest" or tostring(self) == "RespondRequest") and method == "FireServer" then
+        -- Update the GUI to show that a trade transaction was detected
         tradeRequestStatus.Text = "Trade Request: DETECTED"
         tradeRequestStatus.TextColor3 = ACCENT_GREEN
 
@@ -159,18 +170,10 @@ mt.__namecall = newcclosure(function(self, ...)
         antiAutoAcceptFrame.Visible = true
 
         -- Print the arguments for debugging
-        print("Trade Request Detected!")
+        print("Trade Transaction Detected!")
         for i, v in ipairs(args) do
             print("Argument " .. i .. ": " .. tostring(v))
         end
-
-        -- Reset the status after 5 seconds
-        task.delay(5, function()
-            tradeRequestStatus.Text = "Trade Request: NOT DETECTED"
-            tradeRequestStatus.TextColor3 = ACCENT_RED
-            antiFreezeFrame.Visible = false
-            antiAutoAcceptFrame.Visible = false
-        end)
     end
 
     return oldNamecall(self, ...)
