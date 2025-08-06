@@ -1,6 +1,999 @@
---[[
+-- LocalScript (place in StarterPlayerScripts)
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local TweenService = game:GetService("TweenService")
+local HttpService = game:GetService("HttpService")
+local RunService = game:GetService("RunService")
+local TeleportService = game:GetService("TeleportService")
+local Lighting = game:GetService("Lighting")
 
-obfuscated @ discord.gg/25ms
+local LocalPlayer = Players.LocalPlayer
+local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 
---]]
-return(function(...)local c={"5+0pgfv=","xE9FaRG=","x7yhOP8=";"Rpor4qaD","57Xm75s=";"RV9lmx6=","gn==";"EOhIvie=","ROv=","RU==";"DaF=";"e3X84Oui6CcbTJlsQqRoB3a8yJ2iQYWVROMoe35vA7/kTJub63XiRYF=";"GNswIw8=";"8t9nFyA=","FxpdqQ8=","";"zF15","fcaOSDT=","AfwrpJv=","htXFG9G=","tIaly9v=";"/g4Uw/D=";"vAT=";"hgtOTn==","Tprrev==","bSusR1F=","qc/HAzF=";"dnwA","91lkc/5=";"xrIyLv==";"2TnAg/G=","pJ9PRqA=";"WJs=";"M2Ut","M+EyXb/=";"OeCNypA=";"uQ7zPw8=";"QBrr5q/=";"z8JW7pA=","xcak+88=","aCMCW/D=","AbXjeVcwTOAvyqXVR7nEQU==","d23kskA=";"Yv==";"9qTDzn==","OGbEWHF=","Bn==";"N855lt/=";"zdr0guG=";"hehMnN/=";"0v==";"/Adban==","TOMrT3G=";"R3ldBw6=","+k6=";"4IIhztF=";"RtZZy5+=","wxYvMZs=";"9b3uPN8=";"LhVxS7A=";"ydMy+w6=";"Cksn6t+=";"/p4Cav==";"q2kfzOT=";"0MPrmkv=","5qrTBYs=";"Ra8YAn==";"PkvWRYDhPv==","buO6m16=","rayeHge=";"0Vv=";"+tKdE3v=","AwXKBJgAeWMjRFlq","ntU=","L/xapyG=","ub3MGiG=","ag8yaf8=","IlrqnrU=","/yLz8J6=","P4Sb";"8kCr8ke=";"NrIlbDv=","Cmd6ut6=";"b/ANfms=";"Mj+=";"WMMpjCs=";"D/6ElOT=","QFBFNxF=","8UgjTuZ=","9B5RFh6=","8X9PGU==","gOL/pBZ=";"fDgg";"Dz8G84D=","KU5=","p+biuaA=";"kfOv0S/=";"guGYI7/=","tQ4mzx6=";"a/z9Sy8=";"og9W";"kUcXVv==";"MiAMc9U=","YXrYBzs=";"gAs9FOv=";"jDGxQMn=";"Oo2jROU=";"e3KiRq2j";"Y46tL8e=","XKJ8kVF=","Its=";"hFv74F8=","ZxDv","SG==","A7bNcU==","e3KiRq/=","KdSx3U==","aiOlcT6=","S11lWqs=","AWHzPi/=","cG==";"8fJhPx8=";"rv==","SRAy","eU4qV6Z=";"QSbOAsG=";"m22c5MA=","ZNPJmu+=","bBgKwoZ=","H4e=","Ti9Amue=","Pv==","I8Nw0n==","biRdqn==";"hJcst68=";"4JgGTJa9","+LlMCxZ=","ERJLAU==","+T6vynD=","BU==";"awuBtG==";"JIKqZwT=";"lwKtEZ5=","KjdObSn=";"knckw/Z=";"YfuW4CXVBkcGTpKsBYr34Jgb4qWdBkvhe3X84Oui6zZd63KkTVuWB3Uh","psoeIdD=","XcZE4ov=";"Bq2rRn==";"88zJQG==","2s9iWp5=";"bUf5osF=";"78MhLWRW","ltw5/pn=";"DcA=";"y5TT0VA=";"ymUS8u8=";"Bq2rRCa8e3WiRG==","5SUFAn==";"2MA=";"TfW8RU==";"YeyoJhv=";"dDJxrST=";"7wWryqhqXG==";"cbs=","OU==","InbU","dBzPwhU=","enlDNG==";"V9APLbA=";"76Q+ylG=","sLYglG==","DGGTHn==","e3XjBwT=","YY2xeBe=","egL1oU==";"Hx/VIcA=","Oo2hB3U=","sN4LWle=","uiWNTwn=";"GulsxsF=";"m1ZP","xU7fZwn=","oM8M3Uv=","77cjRJ2w6qZvBq286U==";"5HiCcvn=","f4lr1n==","y2QY1w/=","2X0Jy4D=";"fTRvCR/=";"pOve2I+=";"/jDLRGU=";"BqXi";"+ZlOeCvo","+hQr0K+=";"efWi1jU=";"iHknaqT=","Cbc2E3Z=","P/yu/U==","UqloB3+dBCXr4U==";"Rlfs/Q/=","fn==","C07iJn==";"D7+/Fv==";"Tp2iTpK8","YCyJj6e=","Qvp7gGs=";"mM7HbBU=","2PFyVg+="}local function O(G)return(c)[G-(-513111-(-568721))]end for G,P in ipairs({{1656-1655;(-1042737+(706103-(-459896+992683)))-(460181+-1329811)};{-535405+((12293+-370960)-(-894073));876232-(1135728-259640)};{-534083-(-534228),-804291-(171490-975990)}})do while(P)[124870-((-566662+973176)-(423236-141591))]<(P)[80568+-80566]do(c)[(P)[(-308004+295353)+((-145327-181971)+339950)]],(c)[(P)[262634-262632]],(P)[-419517-((980586+-263266)+-1136838)],(P)[(-217705+741980)+-524273]=(c)[(P)[(-622858+1043902)+-421042]],(c)[(P)[395424+-395423]],(P)[323754+(-410306+86553)]+(((-75144+-1230688)-(-552814))+753019),(P)[-612380-(-612382)]-(398227-398226)end end do local G=string.char local P=c local L={o=240128+-240075,y=730499-(233053+497420),["2"]=695613+-695552;g=(678691-749790)-(-71156);["7"]=-566458+566476;h=-1038153+1038194;L=-408657+408676,X=((-511097+-202444)-221077)-(-934639),a=334582+-334569,["3"]=-166462+166500;["/"]=(-646422-183336)-(-829818);j=44587-44542;b=(1128976-1037450)-91491;B=-352338-(-672477-(-320112));Q=-352899-(-352909);O=-1011530+1011553,l=(1567098-701001)-866048;k=323218+-323184,i=(-212820+300563)-87697,["+"]=574228-(-474726+1048934);p=895739-895685,H=-315653+315664;m=-214630+(-101291-(-315984));I=474158-(-536958+1011057);e=-711798+711826;x=-111648-(-111710),D=684697-684657,J=-121356-(-121378);F=(315815-(870137+-1319690))+-765332,q=(-797030-((-73510+949475)+-1168307))-(-504694),G=-477108-(-477156);Y=(50714+((-1860090-(-922045))-(-1042214)))+-154881,v=-585192+585224;r=((428245+((508653+-1384909)+12703))+231798)+(599098+-395555);R=763937+-763912,["9"]=-383474+383517;s=-927640-(-927684);A=667124-667112,S=-604987-(-605017);P=-725210+725224;n=246156-246156;T=398718+-398694,["1"]=243846+-243804;Z=(-269929+745825)+-475892,t=-214995-(-215026);N=-842228+842279,w=-1023491-(-1023546);M=-438090-(-438107),C=-265326-(-265333),K=-462122-(-462127);["8"]=-497493-(-497545);f=679580+-679541,c=-863486+863487;["4"]=(513826-(104972-(-603381)))-(-194556),E=(-325206+(360390-(-667329)))-702455,u=(-179057+-589805)+768871,["0"]=230671+-230656,V=-47057+(695487-648380);["6"]=(((-494442-(-237111))+781247)-(-330668+-114624))-969200,["5"]=232089+-232033,z=-688124+688127,W=581584+-581547,d=-489005+489052;U=274298+(-325949+51667)}local O=table.insert local o=string.sub local u=string.len local b=math.floor local f=table.concat local X=type for c=-350988+350989,#P,((1614302-864497)-622155)-127649 do local p=(P)[c]if X(p)=="string"then local X=u(p)local s={}local K=435307-435306 local N=402134-402134 local A=-824149+824149 while K<=X do local P=o(p,K,K)local c=(L)[P]if c then N=N+c*(-912698+912762)^((93898-93895)-A)A=A+(-501745-(-501746))if A==-753106+753110 then A=(1027540+(-2280899-(-903075)))-(-350284)local P=b(N/(-804943-(-870479)))local L=b((N%(-972672-(-1789483-(-751275))))/((664121+-1173530)+509665))local c=N%(233471-233215)O(s,G(P,L,c))N=408106-408106 end elseif P=="="then O(s,G(b(N/(-925700+991236))))if K>=X or o(p,K+(928101+(-929798-(-1698))),K+(-55884+55885))~="="then O(s,G(b((N%(-1027915+1093451))/(-450086+450342))))end break end K=K+(-824671-(-824672))end;(P)[c]=f(s)end end end do local G=true pcall(function()((getgenv()))[O(-397527+453323)]=function() end end)local P=(string)[O((974658-(79719-(-420405)))-(759163-340387))]local L=function()error(O(((504658-215406)-354576)+(809921-688867)))end local c=false local o=pcall(function()c=true end)and c local u=(math)[O((632330-(456780+-902031))-(66619-((517015+(-57870+-95883))+(-454553-864018))))]local b=(table)[O((-145456+(1846369-740319))-904844)]local f=table and(table)[O((953660-694138)+-203841)]or unpack local X=u(807865-(999595+-191733),-51371-(-51436))local p=-221684-(-221684)local s=-427902-(585998+-1013900)local K={pcall(function()local G=(3730564-((-574444+(125747+(-581792+-130731)))-(132185-279911)))-O(-946360+1002099)^(14026318-(-449454))return O(-172144-(366023+-593865))/G end)}local N=(K)[-197645+197647]local A=tonumber((P(tostring(N),O(1056432-1000819)))())for L=-1033235-(-1033236),X,((-64352+(-623219+-63152))+996033)-(784726+-539417)do local c=(math)[O(345479-289826)](632744-632743,-1006133-((768988+-858854)+-916367))local o=u((-1016429+(1165549-(-365505)))-514625,567042+-566787)local b=u((128279-729795)-(-601517),c)local K=u(-688023-(-688024),327351+-327349)==(-822108+191216)-(-630893)local Q=N:gsub(O(-420441-(-1004123-(-528069))),O((462778+((42790-(874990-834052))+((-66634+-680073)+690164)))+-352410)..(tostring(u(-632807-(-632807),-879459-(101599+(-606807+-384251))))..O(671240+-615563)))local k={pcall(function()if u(-927504-(-927505),-782798-(-1444033-(-661233)))==-465167-(-465168)or L==X then local L=tonumber((P(tostring((({pcall(function()local G=(-771322+16029625)-O(858514+-802805)^(850936-(-39814-(-2628)))return O(967663+-912045)/G end)}))[-512352-(-512354)]),O(-585341-(-640954))))())G=G and A==L end if K then error(Q,389431+-389431)end local p={}for G=(-440426+448337)+-7910,c,40906+(14556-55461)do(p)[G]=u(788785+-788785,156083-(-10433-(-166261)))end;(p)[b]=o return f(p)end)}if K then G=G and((k)[-976453-(-976454)]==false and(k)[174841-(132391-(-42448))]==Q)else G=G and(k)[340425-340424]p=(p+(k)[b+(-250624-(-250625))])%((43109-(-436315+74466))-404702)s=(s+o)%(-559404+559660)end end local Q=loadstring or load or((getfenv(print)))[O(125078+-69384)]or((getfenv(print)))[O(342735+(267063+-554095))]if not Q then local G,P=pcall(function()return require(O(305185+-249440))end)Q=P and(P)[O(255378+(-163901-(563260+-527477)))]end local k=true if Q then local G=tonumber((P(tostring((({(Q(O(-277995+333761)))()}))[137974-137972]),O(188476+-132863)))())local L=tonumber((P(tostring((({(Q(O(269682+-213991)))()}))[-455057-(-455059)]),O(-519284+574897)))())k=G~=L end G=G and(p==s and k)local m=not G and L()if G then else repeat return(function()while true do l1,l2=l2,l1 L()end end)()until true while true do l2=u(288894-288893,-116468+116474)if l2>-743126+743128 then l2=tostring(l1)else l1=l2 end end return end end local L=function(G)local P,L=(G)[#G],O(-158807-(-214577))for c=-140281-(-140282),#P,929196-((-3452-(-572447))-(-273515-(-322335-(-409020))))do L=L..(P)[(G)[c]]end return L end local P,G do local c=(math)[O((302118+-692217)+445907)]local o=(math)[L({244375-(-295752+540125);765353-((-641414+1141244)-(-265522));{O(223010+-167325);O(305519+-249858)}})]local u=(table)[L({812319+-812318,394565+-394563;{O(200881-145162);O(674208-618444)}})]local b=(string)[O((68683+285675)-298579)]local f=535716+-535716 local X=((-851005+803374)+-382195)-(-429828)local p={}local s={}local K=(-487937-(-367234))+120703 local N={}for G=432722+-432721,-608648+608904,729570+-729569 do(N)[G]=G end repeat local G=o(-344401+344402,#N)local P=u(N,G);(s)[P]=b(P-(981377-981376))until#N==-83646-(-800453+716807)local A={}local function Q()if#A==(-130133+(((-81929+2029940)-413312)-550156))+-854410 then f=(f*((828137+-914058)+86110)+((-769965-(-324184))+3771309328258))%(235288+35184371853544)repeat X=(X*(-462871+462910))%(439264-439007)until X~=1012417+(-2047429-(-1035013))local G=X%(-424997-(-425029))local P=(c(f/(-682806+682808)^((964820+-964807)-(X-G)/(322164-(-432079-(-754211)))))%(((-1517493-(-1002918))+1226730)+4294255141.0))/(283100+-283098)^G local o=c((P%(761104-761103))*(4294219403.0-(-747893)))+c(P)local u=o%(-1045769+(1948024-(1081634-244915)))local b=(o-u)/(-495505-(-561041))local p=u%((-147387-123409)-(-271052))local s=(u-p)/(((893745-124762)+238633)+-1007360)local K=b%((-706771-((297037-960620)-(-317156-79933)))-(-440533))local N=(b-K)/(-545240+545496)A={p,s;K,N}end return(table)[L({-727407-(-727409);-169438+(985078-815639);{O(352291-296527);O(999252+(-1250176-(264072-570715)))}})](A)end local k={}P=setmetatable({},{[L({828084+-828082;690143+-690142;{O(21650+34113);O(409443+-353720)}})]=k,[L({-163311-(-163313);20387+-20384;-108460+108461;{O(-645689+701453);O(472404-(-775131+1191883));O(-137802-(-193609))}})]=nil})function G(P,L)local c=k if(c)[L]then else A={}local G=s f=L%(917394+35184371171438)X=L%(-54443-(-54698))+(-323537-(-323539))local o=(string)[O(1048346-992608)](P);(c)[L]=O(-388351+444121)local u=-343934+343989 for o=-853997+853998,o,-180183-(-180184)do u=(((string)[O(-102149-(-606800-((583204+426998)+-1459147)))](P,o)+Q())+u)%(160436+-160180);(c)[L]=(c)[L]..(G)[u+(509421+-509420)]end end return L end end return(function(c,u,b,f,X,p,s,A,N,U,o,C,Q,m,q,I,k,K,g,j,...)K,U,N,C,Q,q,g,A,I,m,j,k,o={},function(G,...)(N)[G]=(N)[G]-(-936953-(-936954))if(N)[G]==787554-787554 then(N)[G],(K)[G]=nil,nil end end,{},function(G,P,...)local L=k(P)local c=function(...)return o(G,{},P,L)end return c end,-190999-(-190999),function(G,P,...)local L=k(P)local c=function(...)return o(G,{...},P,L)end return c end,function(G,P,...)local L=k(P)local c=function(c,O,u,...)return o(G,{c,O,u},P,L)end return c end,function(...)Q=Q+(-392782-(-392783));(N)[Q]=566489-566488 return Q end,function(G,P,...)local L=k(P)local c=function(c,O,u,b,f,...)return o(G,{c,O;u;b,f},P,L)end return c end,function(G,...)local P,L=996519+-996518,(G)[783473-783472]while L do(N)[L],P=(N)[L]-(-612257+612258),P+(-555120+555121)if(N)[L]==1023210+-1023210 then(N)[L],(K)[L]=nil,nil end L=(G)[P]end end,function(G,P,...)local L=k(P)local c=function(c,O,u,b,...)return o(G,{c;O;u,b},P,L)end return c end,function(c,...)for G=-204783-(-204784),#c,-517+(1012053-1011535)do(N)[(c)[G]]=(N)[(c)[G]]+(-132706-(-132707))end if b then local o=b(true)local u=X(o);(u)[(P)[G(L({(157895+-452115)+294221,-564058+564060,{O(-723225-(-778875));O(406242+(-121459+-229006))}}),-812822+7079871931424)]],(u)[(P)[G(O(806357-750558),(480163+(-523321-(-1258028-(-596555))))+21615579870574)]],(u)[(P)[G(O(-309264-(-364892)),((-21133+1330120250104)-(-485272))-(834782+-1152792))]]=c,m,function(...)return-556149+4420407 end return o else return f({},{[(P)[G(O(-558693+614407),415232+((1746010422563-(-940044))-474357))]]=m;[(P)[G(L({(193463+413768)-607230;582208-582206,{O(174175-118363);O(-433322+488978)}}),1191749313768-(-412570))]]=c;[(P)[G(O(749578+((-1049816-(-276437))-(-79523))),18143353685975-(-331499))]]=function(...)return(5620947-740011)-(514186+502492)end})end end,function(o,b,f,X,...)local R,x,Z,t,z,Y,N,a,m,Q,H,k,E,s,q,l,T while o do if o<((-3334-(-934532))+-1886937)+(9038318-(-729148))then if o<6047945-594017 then if o<(-124067+3800962)-68182 then if o<-51106+(404363+2614351)then if o<1523835-(-422298+1401515)then if o<223515-(-16560)then if o<879564-758133 then m=(P)[G(L({(499008-(-337823))+(-103164+(675903+((-1601411-136539)-(-328381))));((-664781+(1086562-103429))+63337)-381687,1043947-1043943;703344+-703341;{O((-181078-(-169520))-(-67330));O(-816708+(-848431+1720793)),O(268107+-212319);O(139408+(423357-507131))}}),3915760343030-661054)]Q=(P)[G(O(94148-38416),4730672659044-815095)]k=(c)[Q]Q=k(m)k=(P)[G(L({-139278+139281;-933962+933963;-577845+577847,{O(783724-(-914477+1642521)),O(-693560+749342),O(-604539-(-660196))}}),-509415+9259816280743)]q=Q~=k k=true N=b s=q and k o=s and-380684+(-198116+9127819)or 932987-725558 else q=(P)[G(L({(-764058+1690759)+-926680;(381429+(-548579-261844))+428998;275925-275919;-825925+825947,-749126-(-749145);396396+-396379;449440-449433,660882+-660868;-1027908-(-252505+-775415),725210+-725207,-504281+504291;939522+-939513,-910431+910432;-30223+30231;445780-(-948226+1393991),-52310+(527594-475273),817670+-817654;1035676-((-64308+150192)+949787);-366148+366161,-104326-(-104328);76457-76439;856735+(-79923-776792),{O((-1085751-(-553183))+588336);O(-766921+((1124483-868775)+567004)),O(620561-(1127444-562664));O(-390156+((((-930239+2595332)-879312)-520576)+180682)),O(108410+(-522223-(485511+-955053)));O(570078-514321),O((211143+669287)-824733),O((-1523242-(-561661))-(-1017223)),O(934664-((-939716+1687083)+131668)),O(770665+-714993),O(-352690+(-522146-(-930570)));O(-123617-(-179305)),O(-431407+487202),O(-555306-(-610929)),O(-888007+943753);O(199174+(-713238-(-569858)));O(491969-(-580815+1017051));O(((1663036-632509)+(-63428-693641))-217716),O(-218284+273973),O(334379+((-832791-(209242-64061))-(-699340)));O(-54237+109886);O(365467-(-461783-(-771450)))}}),-1022142+12660001432751)]x=(P)[G(O(497013-441335),20601295237752-413257)]Z=(P)[G(L({885060+-885059;618497-618495,{O(-332275+388018);O(-681801-(-737431))}}),(791353+-1020932)+17403556725573)]k=(P)[G(L({-957845+957847;(914956-282570)+-632385,{O(368644-312932);O(-294308+350061)}}),9991638652763-809724)]t=(P)[G(L({862728+-862725,(-397196+1032788)+-635587;(-1100020-(-220150))-(-879877);(1683096-(824288+-93114))+-951916;(189870-(-632734+1050651))-((802923+-1482891)+451920),-692796-(-692808);673028+-673020,(((306091-(-700219))+-1259927)+204676)-(230095+-279046),737116+-737107;-265563+265574;-1016025-((-1061664-214162)-(-259788));550521+(((1300121-909886)+(47221+-84102))+(-219102-(1068937-384166)));626257+-626253,950746+-950732,{O(-762629+818357);O((((416982-574281)+((384024+-686744)-(-520870)))-973991)-(-968954));O((-897381+370583)+582539);O(-545120+600844),O(457002+-401338),O(-761874+817515),O(((-986846+1335580)-(-292817))+-585784);O(-814809+870448),O(-533957-(-589732)),O(736698-(-397550+1078621)),O(1012756-957124);O(-881202-(-936867));O(305173-249562),O(-1030681+((57199+-246316)+(2009325-733779)))}}),-1013918+26119876827878)];(c)[k]=q R=(P)[G(L({-829431+829432;(224257-(-339660))+-563915,{O(-648552+704278);O(-960715-(-1016362))}}),17092505246002-135588)]k=(P)[G(L({786377+-786362;(654509+-177391)+-477102;-802795+802813;845170-845151;-784804+784811;-758332+758356,-1016333+1016353;-745689+745703,(573098+381406)+(-1984674-(-513982-516194)),-478689+478693;620784+((-1371419-(265954+-755834))-(-260757));(((1778001-829887)+-1194293)-246324)+492514,137820-137819;620285-620272;719427+-719402,509766+-509745,294075-294070,-205576+205593,-362990+362999;((202095-187183)+(-758628+(660270+-386586)))-(-470035);-211653-(-211663),-390129-(-390137);(-235775+265381)-29594,679920-679897;179728+-179706,{O(-658546+714261);O(((610886+-1946597)-(-978372))-(-413015)),O(-464883+520498),O(((-572377+(84357-(-305655)))+((-992826-(-262870))+-44121))+1012258),O(-123510-(-179177));O(-880605+936226);O(-461031-(-516648));O(-636482-(-692198));O((599860+-1273702)+729524);O(-806746-(-862471));O(901968-846149);O((145180+-194216)+(419814+-315043)),O(692529+-636892);O(-216918-(-272721));O(-759421+815123);O((569626+-1084319)-(-570495));O(-442448-(-498119));O(-1012158+(-293674+1361539)),O(-455706-(-511396));O(890466-834710);O(474686+-419016),O((-378524-589231)+1023516),O(-612046+(1179331-511665));O(986482-930689),O(595909-540136)}}),25357093310424-(-460560-(-48463)))]Y=(P)[G(L({461169-461167,403412+-403411;-179015-(-179018);{O((-326325+((-738885+-33200)+(-1007258+1378199)))-(-783206));O(352287+-296518);O(1063924-1008224)}}),902389+10382353143014)]z=(P)[G(L({-879085-(-879086),11942+-11940;{O(45140-(-10612)),O(775450-719834)}}),131839+1020553296998)]H=(P)[G(L({443298-443296;-581312+581313,{O(943590+-887906),O(-296602+352294)}}),32403068366707-588522)];(c)[Z]=k Z=369471-(-630529);(c)[Y]=Z Y=(P)[G(L({797399-797395;-135264-(-135265),-234943+234946,-520579+520581;{O(-707198-(-762995)),O(948902-893219);O(660039-(1007706-403375)),O(-377189+432888)}}),(239662+30188440054037)-(-420372))];(c)[R]=Y R=(c)[H]s={}o=(c)[(P)[G(L({-209434+209435,-323412-((-284810-(338426+589909))-(-889731));(464816+-326028)+-138785;{O(-315133+370869);O(-10461+66094);O(-223243+278881)}}),(-531410+(116352+5953288337434))-280230)]]T=(c)[x]z=(T)[z]x={z(T,t)}H=R(u(x))R=H()end else o=15477498-655807 end else if o<-686238+(-244919+2662930)then E=U(E)Z=A()l=U(l)o=2534808-(-787879)R=(P)[G(O(-429938-((-383346+(179579+1175538))+-1457498)),22724730273665-(-67299))]Y=(P)[G(O(-82846+138655),863878+3222925725255)]a=I(-795402+12945554,{q});(K)[Z]=a a=(K)[Z]H=g(8889388-(-929055),{Z,q})Z=U(Z);(c)[Y]=a Y=(c)[R]R=Y(H)else m=true o=m and 15799505-(-239665-102310)or(537270+-959588)+15891839 end end else if o<((1025870+-723602)+282775)+2774055 then if o<(724969-(-155880))+2211460 then l=true o=(262051+13067247)-303443;(K)[q]=l else l=(K)[q]o=l and 8288994-(-1493520-(-671962))or-375265+(4841045-531618)end else if o<2654629-(-913303)then E=A()Z=(P)[G(O((57131-(-324179))-325493),(778780+(30324856716757-(-221135)))-71993)]Y=g(458322+(842058+4070472),{E})m=false;(K)[E]=m a=(c)[Z]Z=(P)[G(O(814779+(-1358249-(-599113))),31493751014386-909223)]m=(a)[Z]Z=-625114-(-625114)a=m(Z,Y)Z=(P)[G(O(1102395-1046759),(-1759907-(-487393+-523953))+(1560854157036-556879))]a=(c)[Z]o=13980203-826503 Z=(P)[G(O(-531346+587067),-742679+8111270103261)]m=(a)[Z]Z=.1 a=m(Z)m=(K)[E]else R=(P)[G(L({1030544+-1030543;1001911-1001909;{O((-1708007-(-450708+-464366))-(-848684));O(653904+-598235)}}),5243035569939-((95283-(-969018))-494964))]x=(P)[G(O(-322967-(-378716)),346568+14822669529122)]Y=(c)[R]T=(c)[x]x=(P)[G(L({112976+-112974;-447418-(-1307067-(-859648));{O(7356-(-48355));O(-298558-(-354369))}}),(308700-732206)+33477875275771)]H=(T)[x]t=(P)[G(O(-219987+275682),18225815479441-187602)]T={H()}R=Y(u(T))H=(P)[G(L({279771+-279769;-868747-(-868748);{O(411199-355553),O(-300904+356530)}}),705403+11359517785464)]Y=(c)[H]o=1040071+4669550 x=(c)[t]t=(P)[G(L({(((-38233-347456)-(-293095))+(418010+410605))-736020;-266542-(-266544);{O(460236+-404481),O(-18137+73803)}}),10934698186426-1014463)]T=(x)[t]x={T()}H=Y(u(x))Z=R==H l=Z end end end else if o<3475168-(-918186)then if o<4725138-769710 then if o<2778675-(-885498)then o=(-959647+14887387)-901885 else H=(P)[G(O(((-883118-(-648026))+-362907)-(-653678)),((-317522+447662)-(-1201691-(-932245)))+27467033108724)]R=(c)[H]E=o H=(P)[G(L({-58261-(-58263);(-449377+-75249)+524627,{O(480388-424720);O(-1035788+1091528)}}),-559872+(828216+17638538806382))]T=(P)[G(O(-205235-(-271307-(-10328))),13367629764837-336709)]Y=(R)[H]R=Y()H=(c)[T]T=(P)[G(L({219779+-219777;928251+-928250,{O(320953-265148);O(1004205-948583)}}),225345+15266015076019)]Y=(H)[T]H=Y()Z=R==H o=Z and-610591+6320212 or 1019944+2570924 l=Z end else if o<2929911-(-570396-474641)then o=-594166+4528328 else Z=A()T=(P)[G(O(-377244+432858),890829+(22794254044071-(-267473)))]R=o E=nil;(K)[Z]=E E=g(810305+(609444+14317587),{Z});(K)[Z]=E H=(c)[T]o=H and 4721069-142680 or(679500+-250145)+9733365 Y=H end end else if o<-648218+((5757356-399869)-(-345430))then if o<950297+(32287+3558196)then Z=(K)[E]a=not Z o=a and(-477695+-4800)+1605995 or 11207129-229350 else o=R H=(K)[Z]o=524783-317354 Z=U(Z)q=U(q)k=U(k)R=Y(H)end else if o<888104+4399692 then H=(P)[G(O(-14141-(-69801)),(257407+(-389855+30189262315722))-(-311633))]R=(c)[H]Z=R o=(608475+4526682)-(-779618)else s={}o=true;(K)[(f)[(((-314830+-165145)-140037)+-269126)-((-756190+-707381)-(-574432))]]=o o=(c)[(P)[G(L({-13131-(-13133),-231228-(-463688+232459),574426-574423;{O(391763-336050),O(940878+-885234);O(-434015+489733)}}),-932104+19502098807686)]]end end end end else if o<7369891-684856 then if o<-939774+6848545 then if o<(902322+5561034)-774772 then if o<(-106895+(5627110-(-625386-(-321859))))-282681 then m=true o=m and((37985+9238376)-(-279971))-(-955955)or 919632+14837020 else m=(K)[E]o=m and 10068101-828685 or 13605733-452033 end else if o<(783535+5367122)-327390 then o=E o=l and(-275529+3456744)-116911 or 865402+10307669 else Y=(P)[G(L({-831721-(-851628+19905),744320+-744319,{O((824051+-492165)+-276108);O(-47692+103340)}}),367231+4783168260808)]a=o Z=(c)[Y]E=Z o=Z and 10338005-(-74638)or 13590617-852898 end end else if o<-547161+6999193 then if o<493662+5693630 then o=Y o=(11090657-564607)-113407 E=Z else a=(P)[G(O(-636649-(98549-(680813+110102))),19484738915502-(-1036269))]E=(c)[a]m=E l=o o=E and 15461434-(-150639)or(-707168-(-103440))+6497665 end else if o<6664920-125805 then x=(P)[G(O((834987+((-924262+879970)-676004))+(955058+-1014053)),141132+(29287353747134-(-720577)))]a=(P)[G(O(969733+-914078),867417+(12149455093098-373215))]E=(c)[a]Z=o T=(c)[x]R=o x=(P)[G(L({-544644+544645,861882+-861880;{O(901065+-845289),O((385160+356605)+-686125)}}),(-874874+25481406823101)-280439)]H=(T)[x]T=(P)[G(L({-266759+266760;(-46909+-273407)+320318;{O((222418-(-975693+(82305+642878)))-417235);O(-208918-(-170905-93778))}}),18660057398803-461311)]R=(P)[G(O((-421941-(-1012001))+-534448),10258739966777-853213)]Y=H and T Z=(P)[G(O(-723440+((-1393476-((702555+-2198503)-(-910680+307614)))+1279693)),26380552117574-(-1055961-(-23199+-990220)))]a=Y or R m=(E)[a]a=I(15920164-522798,{q})E=m(a,Z)m=(K)[q]o=m and(112927+-1136799)+(432385+13630894)or 3457759-(-29502)else o=386582+14435109 end end end else if o<8706060-477121 then if o<1309+7349570 then if o<-211983+(-881192+8430391)then s=true o=s and 303890+7040509 or 13802566-406085 else o=6486204-(-398844)end else if o<7079283-(-308503)then o=true s={};(K)[(f)[1026552+-1026551]]=o o=(c)[(P)[G(L({721650-721648;(1196794-267780)+-929011,(-38379+483613)-445233,{O(-261072+316799),O(-26606+82389);O(-832733+888525)}}),10153930073252-(131425+-896468))]]else o=true;(K)[(f)[338673-(-15695-(-354367))]]=o s=(K)[(f)[-752426+752428]]o=(c)[(P)[G(L({509211-509208;(-1642299-(-745347))+896953;114328-(653415+-539089),{O((-822357+(482663+563960))-168476);O(191462+-135752);O((577975-177711)+-344504)}}),(31877033131090-(-372577))-(870816-738023))]]s={s}end end else if o<9426385-(1735839-923507)then if o<7942126-(-562073)then l=true o=l and(-344974+(-296104+16088782))-(-465401)or 4295882-(-603466-(-927927))else q=A()s=false;(K)[q]=s s=nil k=A();(K)[k]=s m=(P)[G(O(842795+-787137),-240808+20971472926505)]s=I(984168+6462907,{q;k});(K)[k]=s Q=(K)[k];(c)[m]=Q m=(K)[q]o=m and-93270+13950665 or 7118317-727276 end else if o<-982544+9726466 then N=(P)[G(O(809831+-754127),22360109253932-320738)]s=(c)[N]N=(P)[G(O(1020787-965028),99002+24161796646965)]o=(s)[N]N={}s=o(N)o=true;(K)[(f)[-257243+257244]]=o s={}o=(c)[(P)[G(L({342444-342441;952436-952434,-606385+606386,{O(923572+((-666645-(-96365))+-297587));O(434487+(-827256-(-448432)));O(-642000+697635)}}),(-392082+1180163)+4222955375712)]]else o=3880084-(-100813)end end end end end else if o<12913912-(-197134)then if o<(937340-314737)+((10586717-(-551493-448904))-(-675551+(-37303+((252955+-385445)+1885815))))then if o<-921527+(10740767-(-451323))then if o<-109313+((947687+8723924)-(-12332-146746))then if o<(11095392-1007901)-860030 then if o<(8519352-(-1133865-(-645446)))-(-90915)then o=6475817-980715 else o=220605+(7403830-(-843431))end else Y=(P)[G(O(-335597+391403),23759362195481-197796)]m=false;(K)[E]=m Z=(c)[Y]Y=(P)[G(O(-130639-(-186449)),32461914077200-(-494881))]o=11284074-306295 R=I(7912354-559731,{E})a=(Z)[Y]Y=-280696+(-265993-(-1273130-(-726439)))Z=a(Y,R)Z=(K)[E]a=not Z end else if o<11074625-988026 then N=(P)[G(L({-258268+(911933-((-15064+925246)+-256519));1039643-1039642,{O(-981502-(-1037188));O((290747+-29417)-205556)}}),-241154+(725478+13102097820034))]s=(c)[N]N=(P)[G(L({818697-818694,-717257-(-798338-(-81080));359127+-359125,{O(-37630+93392);O(-74868+130530),O((684459+-88832)-539809)}}),32290751008398-((1264083-292469)+-664746))]o=(s)[N]N=(K)[(f)[-22608+(-846702-(-869311))]]s=o(N)s={}o=true;(K)[(f)[-387106-(-387108)]]=o o=(c)[(P)[G(L({364012-(-999020+1363031);(319274+-149089)+-170183,-382479-(-382482),{O(-34106-(-89807));O(505694+-449974);O(-975869+1031640)}}),1008710+14379405514874)]]else T=(P)[G(O(117485+-61731),21439768301795-(-272193))]H=(c)[T]Y=H o=384066+4194323 end end else if o<-284179+10740387 then if o<9911249-(-518565)then o=a o=970171+((946016+(-757014-(-443093-(-275639))))+(13392751-(-892695)))m=E else s=true o=s and(320163+-941590)+15228608 or 354757+13323740 end else if o<11622236-664368 then o=4766048-(-729054)else o=536569+3955145 end end end else if o<(-445035+(((68378+(-510100+984859))+-849687)+388110))+12960239 then if o<11378087-(210628+-954535)then if o<693312+10650544 then E=(K)[q]o=E and(1454682-687909)-321637 or 4696777-715880 else o=(787502+((530565+-2163307)-(-51321)))+4281180 end else if o<-938398+13219744 then o=true;(K)[(f)[-287942+287943]]=o o=(286336-(782002-452274))+6928440 else o=(794115-597894)+15897120 end end else if o<93087+(-29615+12968554)then if o<954161+((1045809+10538408)-(-445642))then H=(P)[G(L({223640+-223639,111063-111061;{O((465556-(-611204))-1021086);O(-125471+181272)}}),-701534+7656250234717)]Y=o R=(c)[H]Z=R o=R and 5454850-(-459925)or(-488659+6480692)-772088 else E=true o=E and-747543+4361869 or 14676700-(-663878)end else if o<13530804-(-355310+808864)then o=257714+15835627 else l=A()m={};(K)[l]=m E=-668165-(-668166)m=(K)[l]a=(K)[l];(m)[E]=a a=j(((748513+14404827)-(-530458))-(-998931+(219201+454111)),{l,q})E=(P)[G(O((-226785-508279)-(74412+-865289)),-224560+13367502614115)]m=(c)[E]E=m(a)a=C(334956+8280730,{q})E=(P)[G(O(121490-((825051-(-123175))+-882516)),28341943337330-(-431802-525079))]m=(c)[E]E=m(a)m=(K)[q]o=m and(250965+9124208)-338506 or 244024+6212042 end end end end else if o<-172551+15602265 then if o<433320+(-714628+(15057346-479730))then if o<(690319+13428112)-664124 then if o<12949896-(-246877)then o=-427830+6096541 else s={}o=(c)[(P)[G(L({42096+(-855256+813163);1030041+-1030039,602713+(183844-(1324161-(((424637+((-692574-(-758145))-332411))-95760)+475568)));{O(76483-20696),O(665363-609712),O(-781695-(-837499))}}),1856986433249-650152)]]end else if o<489631+13354010 then s={}o=(c)[(P)[G(L({774944+-774943;-332100-(-332103);(-410730+126265)+284467,{O(672311-616638);O(-867736+923355);O((141834+(1461913-978341))-(77318+492273))}}),32115928424344-987047)]]else o=1466796-(-855737)end end else if o<(992796+14047601)-((-1634077-(-841810))+749343)then if o<15131278-509882 then o=479837+(791155+9169970)else E=true o=E and((-624222+6876229)-435867)-(-764588)or 874010+(394051+7528848)end else if o<(702961+-153936)+(165097+14643965)then o=(-573077-(-20027))+(703584+(11406805-(1406212-1021944)))else o=true;(K)[(f)[-941571-(-941572)]]=o o=11443821-1002859 end end end else if o<16796117-989856 then if o<-895712+16570610 then if o<16572511-1002009 then o=796675+5594366 else o=l o=m and 13681441-592935 or 944356+2378331 end else if o<16416029-674932 then o=(K)[(f)[-612102-(-268907-343196)]]s={o}o=(c)[(P)[G(L({((-1967133-(617985+-1464739))-(-918013))-(-202369);-260957-(-260959);-766868+766869;{O((-561962+1276100)+-658463),O(-990288-(-1045919));O(-790967-(-846752))}}),425065+1815627496742)]]else o=5867992-(-588074)end end else if o<16479270-454748 then if o<16894509-((((-845206+338203)+1070355)+433053)+(848010-(751431-(300692+-456133))))then o=790696+7677170 else N=(P)[G(O(((234087+-1112840)+(83120-(-788250)))+63167),10394101845183-(-783549))]s=(c)[N]N=(P)[G(O(-706229-(-761853)),-398983+(((-757922+1735228)+(-1610673-(-141740)))+(438658+5812627857535)))]o=(s)[N]N=(K)[(f)[-196414+196415]]s=o(N)o=true;(K)[(f)[1012412-1012410]]=o o=(c)[(P)[G(L({(985825+-1925218)+(-968354+1907750),178115-178114;-721121+721123,{O(-491853+547639),O(735967+-680342);O(789675+-733988)}}),29628310147477-485125)]]s={}end else if o<16939712-820121 then m=true o=m and 11918321-(-636788)or 12657770-779285 else o=3019443-696910 end end end end end end end o=#X return u(s)end return(q(675974-674395,{}))(u(s))end)(getfenv and getfenv()or _ENV,unpack or(table)[(P)[G(L({1034263+-1034261;-292897+292898;{O(-283493+339291);O(-59663-(-115308))}}),301374+9082699003505)]],newproxy,setmetatable,getmetatable,select,{...})end)(...)
+-- Remove old GUIs
+for _, gui in ipairs(PlayerGui:GetChildren()) do
+    if gui.Name == "TradeGuardGui" or gui.Name == "NotificationGui" then
+        gui:Destroy()
+    end
+end
+
+-- ========== Enhanced Theme Settings ==========
+local DARK_BG = Color3.fromRGB(15, 15, 25)
+local CARD_BG = Color3.fromRGB(30, 30, 45)
+local ACCENT_BLUE = Color3.fromRGB(80, 170, 255)
+local ACCENT_GREEN = Color3.fromRGB(100, 230, 150)
+local ACCENT_RED = Color3.fromRGB(240, 90, 90)
+local ACCENT_YELLOW = Color3.fromRGB(255, 210, 50)
+local TEXT_MAIN = Color3.fromRGB(245, 245, 245)
+local TEXT_SECONDARY = Color3.fromRGB(180, 180, 210)
+local TOGGLE_ON = ACCENT_BLUE
+local TOGGLE_OFF = Color3.fromRGB(70, 70, 100)
+local FONT = Enum.Font.GothamMedium
+local SHADOW_COLOR = Color3.fromRGB(5, 5, 10)
+local GLOW_INTENSITY = 0.15
+
+-- ========== Create Main GUI ==========
+local ScreenGui = Instance.new("ScreenGui", PlayerGui)
+ScreenGui.Name = "TradeGuardGui"
+ScreenGui.DisplayOrder = 10
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+-- Enhanced main frame with glass effect
+local MainFrame = Instance.new("Frame", ScreenGui)
+MainFrame.Name = "MainFrame"
+MainFrame.Size = UDim2.new(0, 280, 0, 160)
+MainFrame.Position = UDim2.new(0.5, -140, 0.5, -80)
+MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+MainFrame.BackgroundColor3 = DARK_BG
+MainFrame.BackgroundTransparency = 0.1
+MainFrame.Active = true
+MainFrame.Draggable = true
+
+local mainCorner = Instance.new("UICorner", MainFrame)
+mainCorner.CornerRadius = UDim.new(0, 12)
+
+-- Glass effect
+local GlassEffect = Instance.new("Frame", MainFrame)
+GlassEffect.Name = "GlassEffect"
+GlassEffect.Size = UDim2.new(1, 0, 1, 0)
+GlassEffect.BackgroundTransparency = 0.95
+GlassEffect.BackgroundColor3 = Color3.new(1, 1, 1)
+GlassEffect.BorderSizePixel = 0
+local glassCorner = Instance.new("UICorner", GlassEffect)
+glassCorner.CornerRadius = UDim.new(0, 12)
+
+-- Enhanced shadow with glow effect
+local mainShadow = Instance.new("ImageLabel", MainFrame)
+mainShadow.Name = "Shadow"
+mainShadow.Size = UDim2.new(1, 20, 1, 20)
+mainShadow.Position = UDim2.new(0, -10, 0, -10)
+mainShadow.BackgroundTransparency = 1
+mainShadow.Image = "rbxassetid://5554236805" -- Soft glow image
+mainShadow.ImageColor3 = ACCENT_BLUE
+mainShadow.ImageTransparency = 0.8
+mainShadow.ScaleType = Enum.ScaleType.Slice
+mainShadow.SliceCenter = Rect.new(20, 20, 280, 280)
+mainShadow.ZIndex = -1
+
+-- Title bar with gradient
+local TitleBar = Instance.new("Frame", MainFrame)
+TitleBar.Name = "TitleBar"
+TitleBar.Size = UDim2.new(1, 0, 0, 32)
+TitleBar.BackgroundColor3 = CARD_BG
+local titleBarCorner = Instance.new("UICorner", TitleBar)
+titleBarCorner.CornerRadius = UDim.new(0, 12, 0, 0)
+
+-- Gradient effect for title bar
+local titleGradient = Instance.new("UIGradient", TitleBar)
+titleGradient.Rotation = 90
+titleGradient.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(60, 60, 90)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(40, 40, 60))
+})
+
+local TitleText = Instance.new("TextLabel", TitleBar)
+TitleText.Name = "TitleText"
+TitleText.Size = UDim2.new(0.7, 0, 1, 0)
+TitleText.Position = UDim2.new(0, 12, 0, 0)
+TitleText.BackgroundTransparency = 1
+TitleText.Text = "TRADE GUARDIAN"
+TitleText.Font = FONT
+TitleText.TextColor3 = TEXT_MAIN
+TitleText.TextSize = 15
+TitleText.TextXAlignment = Enum.TextXAlignment.Left
+TitleText.TextStrokeTransparency = 0.8
+
+-- Close button with hover effect
+local CloseButton = Instance.new("ImageButton", TitleBar)
+CloseButton.Name = "CloseButton"
+CloseButton.Size = UDim2.new(0, 26, 0, 26)
+CloseButton.Position = UDim2.new(1, -30, 0.5, -13)
+CloseButton.BackgroundColor3 = ACCENT_RED
+CloseButton.Image = "rbxassetid://3926305904" -- X icon
+CloseButton.ScaleType = Enum.ScaleType.Fit
+local closeCorner = Instance.new("UICorner", CloseButton)
+closeCorner.CornerRadius = UDim.new(1, 0)
+
+-- Close button glow
+local closeGlow = Instance.new("ImageLabel", CloseButton)
+closeGlow.Size = UDim2.new(1.4, 0, 1.4, 0)
+closeGlow.Position = UDim2.new(-0.2, 0, -0.2, 0)
+closeGlow.BackgroundTransparency = 1
+closeGlow.Image = "rbxassetid://5554236805" -- Soft glow image
+closeGlow.ImageColor3 = ACCENT_RED
+closeGlow.ImageTransparency = 0.9
+closeGlow.ZIndex = -1
+
+-- ========== Enhanced Protection Boxes ==========
+local function createProtectionBox(parent, name, iconId, color)
+    local Box = Instance.new("Frame", parent)
+    Box.Name = name
+    Box.Size = UDim2.new(0.45, -10, 0, 75)
+    Box.BackgroundColor3 = CARD_BG
+    Box.BackgroundTransparency = 0.1
+    Box.ClipsDescendants = true
+    local boxCorner = Instance.new("UICorner", Box)
+    boxCorner.CornerRadius = UDim.new(0, 8)
+    
+    -- Background pattern
+    local Pattern = Instance.new("ImageLabel", Box)
+    Pattern.Size = UDim2.new(1, 0, 1, 0)
+    Pattern.BackgroundTransparency = 1
+    Pattern.Image = "rbxassetid://8995986363" -- Subtle hex pattern
+    Pattern.ImageTransparency = 0.95
+    Pattern.ImageColor3 = color
+    Pattern.ScaleType = Enum.ScaleType.Tile
+    Pattern.TileSize = UDim2.new(0, 50, 0, 50)
+    
+    -- Box header
+    local IconFrame = Instance.new("Frame", Box)
+    IconFrame.Size = UDim2.new(0, 32, 0, 32)
+    IconFrame.Position = UDim2.new(0.5, -16, 0, 10)
+    IconFrame.BackgroundColor3 = color
+    IconFrame.BackgroundTransparency = 0.2
+    local iconCorner = Instance.new("UICorner", IconFrame)
+    iconCorner.CornerRadius = UDim.new(1, 0)
+    
+    local Icon = Instance.new("ImageLabel", IconFrame)
+    Icon.Size = UDim2.new(0, 20, 0, 20)
+    Icon.Position = UDim2.new(0.5, -10, 0.5, -10)
+    Icon.BackgroundTransparency = 1
+    Icon.Image = iconId
+    Icon.ImageColor3 = TEXT_MAIN
+    
+    -- Icon glow
+    local iconGlow = Instance.new("ImageLabel", Icon)
+    iconGlow.Size = UDim2.new(2, 0, 2, 0)
+    iconGlow.Position = UDim2.new(-0.5, 0, -0.5, 0)
+    iconGlow.BackgroundTransparency = 1
+    iconGlow.Image = "rbxassetid://5554236805" -- Soft glow image
+    iconGlow.ImageColor3 = color
+    iconGlow.ImageTransparency = 0.85
+    iconGlow.ZIndex = -1
+    
+    -- Toggle switch
+    local ToggleFrame = Instance.new("Frame", Box)
+    ToggleFrame.Name = "Toggle"
+    ToggleFrame.Size = UDim2.new(0, 44, 0, 24)
+    ToggleFrame.Position = UDim2.new(0.5, -22, 1, -32)
+    ToggleFrame.BackgroundColor3 = TOGGLE_OFF
+    local toggleCorner = Instance.new("UICorner", ToggleFrame)
+    toggleCorner.CornerRadius = UDim.new(1, 0)
+    
+    local ToggleButton = Instance.new("TextButton", ToggleFrame)
+    ToggleButton.Name = "Button"
+    ToggleButton.Size = UDim2.new(0, 20, 0, 20)
+    ToggleButton.Position = UDim2.new(0, 2, 0.5, -10)
+    ToggleButton.BackgroundColor3 = TEXT_MAIN
+    ToggleButton.AutoButtonColor = false
+    ToggleButton.Text = ""
+    local buttonCorner = Instance.new("UICorner", ToggleButton)
+    buttonCorner.CornerRadius = UDim.new(1, 0)
+    
+    -- Toggle glow
+    local toggleGlow = Instance.new("ImageLabel", ToggleButton)
+    toggleGlow.Size = UDim2.new(1.5, 0, 1.5, 0)
+    toggleGlow.Position = UDim2.new(-0.25, 0, -0.25, 0)
+    toggleGlow.BackgroundTransparency = 1
+    toggleGlow.Image = "rbxassetid://5554236805" -- Soft glow image
+    toggleGlow.ImageColor3 = color
+    toggleGlow.ImageTransparency = 0.9
+    toggleGlow.ZIndex = -1
+    
+    -- Settings button
+    local SettingsButton = Instance.new("ImageButton", Box)
+    SettingsButton.Name = "SettingsButton"
+    SettingsButton.Size = UDim2.new(0, 24, 0, 24)
+    SettingsButton.Position = UDim2.new(1, -28, 0, 10)
+    SettingsButton.BackgroundTransparency = 1
+    SettingsButton.Image = "rbxassetid://3926307971" -- Gear icon
+    SettingsButton.ImageColor3 = TEXT_MAIN
+    SettingsButton.ScaleType = Enum.ScaleType.Fit
+    
+    -- Status label
+    local StatusLabel = Instance.new("TextLabel", Box)
+    StatusLabel.Size = UDim2.new(1, -10, 0, 18)
+    StatusLabel.Position = UDim2.new(0, 5, 1, -38)
+    StatusLabel.BackgroundTransparency = 1
+    StatusLabel.Text = "INACTIVE"
+    StatusLabel.Font = FONT
+    StatusLabel.TextColor3 = TEXT_SECONDARY
+    StatusLabel.TextSize = 12
+    StatusLabel.TextXAlignment = Enum.TextXAlignment.Center
+    StatusLabel.TextStrokeTransparency = 0.8
+    
+    return Box, ToggleButton, SettingsButton, StatusLabel
+end
+
+-- Frost Shield Box
+local FrostShieldBox, FrostToggleButton, FrostSettings, FrostStatus = createProtectionBox(
+    MainFrame, 
+    "FrostShieldBox", 
+    "rbxassetid://3926305904", -- Snowflake icon
+    ACCENT_BLUE
+)
+FrostShieldBox.Position = UDim2.new(0, 12, 0, 38)
+
+-- Accept Sentinel Box
+local AcceptSentinelBox, AcceptToggleButton, AcceptSettings, AcceptStatus = createProtectionBox(
+    MainFrame, 
+    "AcceptSentinelBox", 
+    "rbxassetid://3926307971", -- Checkmark icon
+    ACCENT_GREEN
+)
+AcceptSentinelBox.Position = UDim2.new(1, -132, 0, 38)
+
+-- Global status with animated dots
+local GlobalStatus = Instance.new("TextLabel", MainFrame)
+GlobalStatus.Size = UDim2.new(1, -20, 0, 20)
+GlobalStatus.Position = UDim2.new(0, 10, 1, -25)
+GlobalStatus.BackgroundTransparency = 1
+GlobalStatus.Text = "GUARDIAN INACTIVE"
+GlobalStatus.Font = FONT
+GlobalStatus.TextColor3 = TEXT_SECONDARY
+GlobalStatus.TextSize = 13
+GlobalStatus.TextXAlignment = Enum.TextXAlignment.Center
+GlobalStatus.TextStrokeTransparency = 0.8
+
+-- ========== Animated Live Status ==========
+local LiveIndicator = Instance.new("Frame", MainFrame)
+LiveIndicator.Name = "LiveIndicator"
+LiveIndicator.Size = UDim2.new(0, 10, 0, 10)
+LiveIndicator.Position = UDim2.new(1, -18, 1, -18)
+LiveIndicator.BackgroundColor3 = ACCENT_RED
+LiveIndicator.BorderSizePixel = 0
+local indicatorCorner = Instance.new("UICorner", LiveIndicator)
+indicatorCorner.CornerRadius = UDim.new(1, 0)
+
+-- Pulsing glow effect
+local pulseGlow = Instance.new("ImageLabel", LiveIndicator)
+pulseGlow.Size = UDim2.new(2, 0, 2, 0)
+pulseGlow.Position = UDim2.new(-0.5, 0, -0.5, 0)
+pulseGlow.BackgroundTransparency = 1
+pulseGlow.Image = "rbxassetid://5554236805" -- Soft glow image
+pulseGlow.ImageColor3 = ACCENT_RED
+pulseGlow.ImageTransparency = 0.9
+pulseGlow.ZIndex = -1
+
+local LiveText = Instance.new("TextLabel", MainFrame)
+LiveText.Name = "LiveText"
+LiveText.Size = UDim2.new(0, 50, 0, 14)
+LiveText.Position = UDim2.new(1, -65, 1, -19)
+LiveText.BackgroundTransparency = 1
+LiveText.Text = "OFFLINE"
+LiveText.Font = FONT
+LiveText.TextColor3 = TEXT_SECONDARY
+LiveText.TextSize = 11
+LiveText.TextXAlignment = Enum.TextXAlignment.Right
+LiveText.TextStrokeTransparency = 0.8
+
+-- ========== Enhanced Settings Modal ==========
+local ModalFrame = Instance.new("Frame", ScreenGui)
+ModalFrame.Name = "SettingsModal"
+ModalFrame.Size = UDim2.new(0, 240, 0, 180)
+ModalFrame.Position = UDim2.new(0.5, -120, 0.5, -90)
+ModalFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+ModalFrame.BackgroundColor3 = CARD_BG
+ModalFrame.BackgroundTransparency = 0.1
+ModalFrame.Visible = false
+ModalFrame.ZIndex = 20
+local modalCorner = Instance.new("UICorner", ModalFrame)
+modalCorner.CornerRadius = UDim.new(0, 12)
+
+-- Glass effect
+local modalGlass = Instance.new("Frame", ModalFrame)
+modalGlass.Size = UDim2.new(1, 0, 1, 0)
+modalGlass.BackgroundTransparency = 0.95
+modalGlass.BackgroundColor3 = Color3.new(1, 1, 1)
+modalGlass.BorderSizePixel = 0
+local modalGlassCorner = Instance.new("UICorner", modalGlass)
+modalGlassCorner.CornerRadius = UDim.new(0, 12)
+
+-- Enhanced shadow with glow
+local modalShadow = Instance.new("ImageLabel", ModalFrame)
+modalShadow.Name = "Shadow"
+modalShadow.Size = UDim2.new(1, 20, 1, 20)
+modalShadow.Position = UDim2.new(0, -10, 0, -10)
+modalShadow.BackgroundTransparency = 1
+modalShadow.Image = "rbxassetid://5554236805" -- Soft glow image
+modalShadow.ImageColor3 = ACCENT_BLUE
+modalShadow.ImageTransparency = 0.8
+modalShadow.ScaleType = Enum.ScaleType.Slice
+modalShadow.SliceCenter = Rect.new(20, 20, 280, 280)
+modalShadow.ZIndex = -1
+
+local ModalTitle = Instance.new("TextLabel", ModalFrame)
+ModalTitle.Size = UDim2.new(1, 0, 0, 36)
+ModalTitle.Position = UDim2.new(0, 0, 0, 0)
+ModalTitle.BackgroundColor3 = ACCENT_BLUE
+ModalTitle.BackgroundTransparency = 0.2
+ModalTitle.Text = "DURATION SETTINGS"
+ModalTitle.Font = FONT
+ModalTitle.TextColor3 = TEXT_MAIN
+ModalTitle.TextSize = 15
+local titleCorner = Instance.new("UICorner", ModalTitle)
+titleCorner.CornerRadius = UDim.new(0, 12, 0, 0)
+
+-- Title gradient
+local modalTitleGradient = Instance.new("UIGradient", ModalTitle)
+modalTitleGradient.Rotation = 90
+modalTitleGradient.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(100, 170, 255)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(70, 140, 220))
+})
+
+local DurationLabel = Instance.new("TextLabel", ModalFrame)
+DurationLabel.Size = UDim2.new(1, -20, 0, 28)
+DurationLabel.Position = UDim2.new(0, 10, 0, 45)
+DurationLabel.BackgroundTransparency = 1
+DurationLabel.Text = "Set duration (seconds):"
+DurationLabel.Font = FONT
+DurationLabel.TextColor3 = TEXT_SECONDARY
+DurationLabel.TextSize = 13
+DurationLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+local DurationInput = Instance.new("TextBox", ModalFrame)
+DurationInput.Size = UDim2.new(1, -30, 0, 36)
+DurationInput.Position = UDim2.new(0, 15, 0, 75)
+DurationInput.BackgroundColor3 = Color3.fromRGB(40, 40, 60)
+DurationInput.BackgroundTransparency = 0.1
+DurationInput.PlaceholderText = "Enter duration"
+DurationInput.Text = "300"
+DurationInput.TextColor3 = TEXT_MAIN
+DurationInput.TextSize = 14
+DurationInput.Font = FONT
+DurationInput.ClearTextOnFocus = false
+local inputCorner = Instance.new("UICorner", DurationInput)
+inputCorner.CornerRadius = UDim.new(0, 8)
+
+-- Input glow on focus
+DurationInput.Focused:Connect(function()
+    TweenService:Create(DurationInput, TweenInfo.new(0.2), {
+        BackgroundColor3 = Color3.fromRGB(50, 50, 80)
+    }):Play()
+end)
+
+DurationInput.FocusLost:Connect(function()
+    TweenService:Create(DurationInput, TweenInfo.new(0.2), {
+        BackgroundColor3 = Color3.fromRGB(40, 40, 60)
+    }):Play()
+end)
+
+local ConfirmButton = Instance.new("TextButton", ModalFrame)
+ConfirmButton.Size = UDim2.new(0.4, 0, 0, 32)
+ConfirmButton.Position = UDim2.new(0.1, 0, 1, -38)
+ConfirmButton.BackgroundColor3 = ACCENT_GREEN
+ConfirmButton.BackgroundTransparency = 0.1
+ConfirmButton.Text = "CONFIRM"
+ConfirmButton.Font = FONT
+ConfirmButton.TextColor3 = TEXT_MAIN
+ConfirmButton.TextSize = 13
+local confirmCorner = Instance.new("UICorner", ConfirmButton)
+confirmCorner.CornerRadius = UDim.new(0, 8)
+
+-- Button gradient
+local confirmGradient = Instance.new("UIGradient", ConfirmButton)
+confirmGradient.Rotation = 90
+confirmGradient.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(100, 230, 170)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(80, 200, 140))
+})
+
+local CancelButton = Instance.new("TextButton", ModalFrame)
+CancelButton.Size = UDim2.new(0.4, 0, 0, 32)
+CancelButton.Position = UDim2.new(0.55, 0, 1, -38)
+CancelButton.BackgroundColor3 = ACCENT_RED
+CancelButton.BackgroundTransparency = 0.1
+CancelButton.Text = "CANCEL"
+CancelButton.Font = FONT
+CancelButton.TextColor3 = TEXT_MAIN
+CancelButton.TextSize = 13
+local cancelCorner = Instance.new("UICorner", CancelButton)
+cancelCorner.CornerRadius = UDim.new(0, 8)
+
+-- Button gradient
+local cancelGradient = Instance.new("UIGradient", CancelButton)
+cancelGradient.Rotation = 90
+cancelGradient.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(240, 110, 110)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(210, 80, 80))
+})
+
+-- ========== Enhanced Notification System ==========
+local NotificationGui = Instance.new("ScreenGui", PlayerGui)
+NotificationGui.Name = "NotificationGui"
+NotificationGui.DisplayOrder = 20
+NotificationGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+local NotificationFrame = Instance.new("Frame", NotificationGui)
+NotificationFrame.Name = "NotificationFrame"
+NotificationFrame.Size = UDim2.new(0, 260, 0, 0)
+NotificationFrame.Position = UDim2.new(0.5, -130, 0.02, 0)
+NotificationFrame.AnchorPoint = Vector2.new(0.5, 0)
+NotificationFrame.BackgroundTransparency = 1
+
+local function showNotification(title, message, color)
+    local notificationId = "Notification_"..HttpService:GenerateGUID(false)
+    
+    local Container = Instance.new("Frame", NotificationFrame)
+    Container.Name = notificationId
+    Container.Size = UDim2.new(1, 0, 0, 70)
+    Container.BackgroundColor3 = CARD_BG
+    Container.BackgroundTransparency = 0.1
+    Container.Position = UDim2.new(0, 0, 0, -70)
+    local containerCorner = Instance.new("UICorner", Container)
+    containerCorner.CornerRadius = UDim.new(0, 12)
+    
+    -- Glass effect
+    local notificationGlass = Instance.new("Frame", Container)
+    notificationGlass.Size = UDim2.new(1, 0, 1, 0)
+    notificationGlass.BackgroundTransparency = 0.95
+    notificationGlass.BackgroundColor3 = Color3.new(1, 1, 1)
+    notificationGlass.BorderSizePixel = 0
+    local glassCorner = Instance.new("UICorner", notificationGlass)
+    glassCorner.CornerRadius = UDim.new(0, 12)
+    
+    -- Glow effect
+    local glow = Instance.new("ImageLabel", Container)
+    glow.Size = UDim2.new(1, 10, 1, 10)
+    glow.Position = UDim2.new(-0.05, 0, -0.05, 0)
+    glow.BackgroundTransparency = 1
+    glow.Image = "rbxassetid://5554236805" -- Soft glow image
+    glow.ImageColor3 = color
+    glow.ImageTransparency = 0.8
+    glow.ScaleType = Enum.ScaleType.Slice
+    glow.SliceCenter = Rect.new(20, 20, 280, 280)
+    glow.ZIndex = -1
+    
+    -- Accent bar with gradient
+    local AccentBar = Instance.new("Frame", Container)
+    AccentBar.Size = UDim2.new(0, 6, 1, -10)
+    AccentBar.Position = UDim2.new(0, 5, 0, 5)
+    AccentBar.BackgroundColor3 = color
+    local barGradient = Instance.new("UIGradient", AccentBar)
+    barGradient.Rotation = 90
+    barGradient.Color = ColorSequence.new({
+        ColorSequenceKeypoint.new(0, color),
+        ColorSequenceKeypoint.new(1, Color3.new(color.R * 0.7, color.G * 0.7, color.B * 0.7))
+    })
+    local barCorner = Instance.new("UICorner", AccentBar)
+    barCorner.CornerRadius = UDim.new(0, 3)
+    
+    local TitleLabel = Instance.new("TextLabel", Container)
+    TitleLabel.Size = UDim2.new(1, -30, 0.45, 0)
+    TitleLabel.Position = UDim2.new(0, 20, 0, 8)
+    TitleLabel.BackgroundTransparency = 1
+    TitleLabel.Text = title
+    TitleLabel.Font = FONT
+    TitleLabel.TextColor3 = TEXT_MAIN
+    TitleLabel.TextSize = 15
+    TitleLabel.TextXAlignment = Enum.TextXAlignment.Left
+    TitleLabel.TextStrokeTransparency = 0.8
+    
+    local MessageLabel = Instance.new("TextLabel", Container)
+    MessageLabel.Size = UDim2.new(1, -20, 0.45, 0)
+    MessageLabel.Position = UDim2.new(0, 20, 0.5, 0)
+    MessageLabel.BackgroundTransparency = 1
+    MessageLabel.Text = message
+    MessageLabel.Font = FONT
+    MessageLabel.TextColor3 = TEXT_SECONDARY
+    MessageLabel.TextSize = 13
+    MessageLabel.TextXAlignment = Enum.TextXAlignment.Left
+    MessageLabel.TextStrokeTransparency = 0.8
+    
+    -- Notification icon
+    local iconType = if string.find(title, "FROST") then "rbxassetid://3926305904"
+        elseif string.find(title, "ACCEPT") then "rbxassetid://3926307971"
+        else "rbxassetid://3926307967" -- Default info icon
+    
+    local Icon = Instance.new("ImageLabel", Container)
+    Icon.Size = UDim2.new(0, 24, 0, 24)
+    Icon.Position = UDim2.new(1, -32, 0.5, -12)
+    Icon.BackgroundTransparency = 1
+    Icon.Image = iconType
+    Icon.ImageColor3 = color
+    
+    -- Animation
+    Container.ClipsDescendants = true
+    local slideIn = TweenService:Create(Container, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {
+        Position = UDim2.new(0, 0, 0, 0)
+    })
+    slideIn:Play()
+    
+    -- Remove after duration
+    task.delay(3.5, function()
+        if Container and Container.Parent then
+            local slideOut = TweenService:Create(Container, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {
+                Position = UDim2.new(0, 0, 0, -70)
+            })
+            slideOut:Play()
+            slideOut.Completed:Wait()
+            Container:Destroy()
+        end
+    end)
+end
+
+-- ========== Protection Functions ==========
+local frostShieldEnabled = false
+local acceptSentinelEnabled = false
+local frostShieldDuration = 300
+local acceptSentinelDuration = 300
+local currentSetting = ""
+local frostEndTime = 0
+local acceptEndTime = 0
+local pulseTween = nil
+
+-- Update status labels
+local function updateStatusLabels()
+    -- Frost Shield status
+    if frostShieldEnabled then
+        local remaining = math.ceil(frostEndTime - tick())
+        if remaining > 0 then
+            FrostStatus.Text = remaining.."s"
+            FrostStatus.TextColor3 = ACCENT_BLUE
+        else
+            frostShieldEnabled = false
+            FrostStatus.Text = "INACTIVE"
+            FrostStatus.TextColor3 = TEXT_SECONDARY
+        end
+    else
+        FrostStatus.Text = "INACTIVE"
+        FrostStatus.TextColor3 = TEXT_SECONDARY
+    end
+    
+    -- Accept Sentinel status
+    if acceptSentinelEnabled then
+        local remaining = math.ceil(acceptEndTime - tick())
+        if remaining > 0 then
+            AcceptStatus.Text = remaining.."s"
+            AcceptStatus.TextColor3 = ACCENT_GREEN
+        else
+            acceptSentinelEnabled = false
+            AcceptStatus.Text = "INACTIVE"
+            AcceptStatus.TextColor3 = TEXT_SECONDARY
+        end
+    else
+        AcceptStatus.Text = "INACTIVE"
+        AcceptStatus.TextColor3 = TEXT_SECONDARY
+    end
+    
+    -- Global status
+    if frostShieldEnabled or acceptSentinelEnabled then
+        GlobalStatus.Text = "GUARDIAN ACTIVE"
+        GlobalStatus.TextColor3 = TEXT_MAIN
+    else
+        GlobalStatus.Text = "GUARDIAN INACTIVE"
+        GlobalStatus.TextColor3 = TEXT_SECONDARY
+    end
+end
+
+-- Toggle animations
+local function toggleSwitch(button, frame, state)
+    if state then
+        TweenService:Create(button, TweenInfo.new(0.2), {
+            Position = UDim2.new(0, 22, 0.5, -10),
+            BackgroundColor3 = TEXT_MAIN
+        }):Play()
+        TweenService:Create(frame, TweenInfo.new(0.2), {
+            BackgroundColor3 = TOGGLE_ON
+        }):Play()
+    else
+        TweenService:Create(button, TweenInfo.new(0.2), {
+            Position = UDim2.new(0, 2, 0.5, -10),
+            BackgroundColor3 = TEXT_MAIN
+        }):Play()
+        TweenService:Create(frame, TweenInfo.new(0.2), {
+            BackgroundColor3 = TOGGLE_OFF
+        }):Play()
+    end
+end
+
+-- Frost Shield protection
+local function startFrostShield()
+    frostShieldEnabled = true
+    frostEndTime = tick() + frostShieldDuration
+    toggleSwitch(FrostToggleButton, FrostToggleButton.Parent, true)
+    showNotification("FROST SHIELD", "Active for "..frostShieldDuration.."s", ACCENT_BLUE)
+    
+    -- Simulate protection
+    while tick() < frostEndTime and frostShieldEnabled do
+        updateStatusLabels()
+        updateLiveStatus()
+        task.wait(1)
+    end
+    
+    if frostShieldEnabled then
+        frostShieldEnabled = false
+        toggleSwitch(FrostToggleButton, FrostToggleButton.Parent, false)
+        showNotification("FROST SHIELD", "Protection expired", TEXT_SECONDARY)
+    end
+    updateStatusLabels()
+    updateLiveStatus()
+end
+
+-- Accept Sentinel protection
+local function startAcceptSentinel()
+    acceptSentinelEnabled = true
+    acceptEndTime = tick() + acceptSentinelDuration
+    toggleSwitch(AcceptToggleButton, AcceptToggleButton.Parent, true)
+    showNotification("ACCEPT SENTINEL", "Active for "..acceptSentinelDuration.."s", ACCENT_GREEN)
+    
+    -- Simulate protection
+    while tick() < acceptEndTime and acceptSentinelEnabled do
+        updateStatusLabels()
+        updateLiveStatus()
+        task.wait(1)
+    end
+    
+    if acceptSentinelEnabled then
+        acceptSentinelEnabled = false
+        toggleSwitch(AcceptToggleButton, AcceptToggleButton.Parent, false)
+        showNotification("ACCEPT SENTINEL", "Protection expired", TEXT_SECONDARY)
+    end
+    updateStatusLabels()
+    updateLiveStatus()
+end
+
+-- Function to update live status
+function updateLiveStatus()
+    if pulseTween then
+        pulseTween:Cancel()
+        pulseTween = nil
+    end
+    
+    if frostShieldEnabled or acceptSentinelEnabled then
+        LiveIndicator.BackgroundColor3 = ACCENT_GREEN
+        LiveText.Text = "LIVE"
+        LiveText.TextColor3 = ACCENT_GREEN
+        
+        -- Add pulse animation when active
+        pulseTween = TweenService:Create(LiveIndicator, TweenInfo.new(0.8, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {
+            BackgroundTransparency = 0.5
+        })
+        pulseTween:Play()
+    else
+        LiveIndicator.BackgroundColor3 = ACCENT_RED
+        LiveText.Text = "OFFLINE"
+        LiveText.TextColor3 = TEXT_SECONDARY
+        LiveIndicator.BackgroundTransparency = 0
+    end
+end
+
+-- ========== Kick Risk Assessment ==========
+local function calculateKickRisk(severity)
+    -- Base risk based on severity
+    local baseRisk = severity * 70
+    
+    -- Add randomness
+    local randomFactor = math.random(-15, 25)
+    
+    -- Calculate final risk (clamped between 10-99%)
+    local risk = math.clamp(baseRisk + randomFactor, 10, 99)
+    
+    return risk
+end
+
+-- ========== Kick Simulation ==========
+local function simulateKick()
+    -- Create kick message GUI
+    local KickGui = Instance.new("ScreenGui", PlayerGui)
+    KickGui.Name = "KickGui"
+    KickGui.DisplayOrder = 100
+    KickGui.IgnoreGuiInset = true
+    
+    local KickFrame = Instance.new("Frame", KickGui)
+    KickFrame.Size = UDim2.new(1, 0, 1, 0)
+    KickFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
+    
+    local KickMessage = Instance.new("TextLabel", KickFrame)
+    KickMessage.Size = UDim2.new(1, 0, 0.5, 0)
+    KickMessage.Position = UDim2.new(0, 0, 0.25, 0)
+    KickMessage.BackgroundTransparency = 1
+    KickMessage.Text = "You have been kicked from the game"
+    KickMessage.Font = FONT
+    KickMessage.TextColor3 = TEXT_MAIN
+    KickMessage.TextSize = 24
+    
+    local ReasonMessage = Instance.new("TextLabel", KickFrame)
+    ReasonMessage.Size = UDim2.new(1, 0, 0.2, 0)
+    ReasonMessage.Position = UDim2.new(0, 0, 0.4, 0)
+    ReasonMessage.BackgroundTransparency = 1
+    ReasonMessage.Text = "Reason: Trade exploit detected by Frost Shield"
+    ReasonMessage.Font = FONT
+    ReasonMessage.TextColor3 = TEXT_SECONDARY
+    ReasonMessage.TextSize = 18
+    
+    local ReconnectButton = Instance.new("TextButton", KickFrame)
+    ReconnectButton.Size = UDim2.new(0.3, 0, 0.1, 0)
+    ReconnectButton.Position = UDim2.new(0.35, 0, 0.65, 0)
+    ReconnectButton.BackgroundColor3 = ACCENT_BLUE
+    ReconnectButton.Text = "RECONNECT"
+    ReconnectButton.Font = FONT
+    ReconnectButton.TextColor3 = TEXT_MAIN
+    ReconnectButton.TextSize = 18
+    local buttonCorner = Instance.new("UICorner", ReconnectButton)
+    buttonCorner.CornerRadius = UDim.new(0, 8)
+    
+    -- Disable other GUIs
+    ScreenGui.Enabled = false
+    NotificationGui.Enabled = false
+    
+    -- Reconnect button functionality
+    ReconnectButton.MouseButton1Click:Connect(function()
+        TeleportService:Teleport(game.PlaceId, LocalPlayer)
+    end)
+end
+
+-- ========== Trade Protection Logic ==========
+local function startTradeProtection()
+    if frostShieldEnabled or acceptSentinelEnabled then
+        showNotification("TRADE SCAN", "Initializing security protocols...", ACCENT_BLUE)
+        
+        -- Simulate scanning process
+        for i = 1, 3 do
+            task.wait(0.5)
+            showNotification("TRADE SCAN", "Analyzing trade partner... ("..i.."/3)", ACCENT_BLUE)
+        end
+        
+        -- Randomly detect threats
+        local freezeDetected = false
+        local acceptDetected = false
+        local kickRisk = 0
+        
+        if frostShieldEnabled and math.random() > 0.7 then
+            freezeDetected = true
+            local severity = math.random(8, 10)/10
+            kickRisk = calculateKickRisk(severity)
+            showNotification("FROST SHIELD", "Freeze exploit detected! Kick risk: "..kickRisk.."%", ACCENT_RED)
+        end
+        
+        if acceptSentinelEnabled and math.random() > 0.7 then
+            acceptDetected = true
+            showNotification("ACCEPT SENTINEL", "Auto-accept pattern detected!", ACCENT_RED)
+        end
+        
+        if freezeDetected and math.random() < (kickRisk/100) then
+            -- Simulate being kicked
+            task.wait(1)
+            showNotification("TRADE FAILED", "You were kicked by the exploiter!", ACCENT_RED)
+            task.wait(1.5)
+            simulateKick()
+            return
+        end
+        
+        if not freezeDetected and not acceptDetected then
+            showNotification("TRADE SECURE", "No threats detected", ACCENT_GREEN)
+        else
+            showNotification("GUARDIAN ACTIVE", "Trade secured", ACCENT_YELLOW)
+        end
+        
+        -- Simulate trade completion
+        task.wait(3)
+        showNotification("TRADE COMPLETE", "Items successfully exchanged", ACCENT_GREEN)
+    else
+        -- Calculate random kick risk when protection is off
+        local risk = calculateKickRisk(math.random(6, 10)/10)
+        showNotification("TRADE WARNING", "Guardian inactive - Kick risk: "..risk.."%", ACCENT_RED)
+        
+        -- Simulate being kicked with risk probability
+        if math.random() < (risk/100) then
+            task.wait(1)
+            showNotification("TRADE FAILED", "You were kicked by the exploiter!", ACCENT_RED)
+            task.wait(1.5)
+            simulateKick()
+            return
+        end
+        
+        -- Simulate trade completion
+        task.wait(3)
+        showNotification("TRADE COMPLETE", "Items successfully exchanged", ACCENT_GREEN)
+    end
+end
+
+-- ========== Trading Ticket Usage Detection ==========
+local function detectTradingTicketUsage()
+    local backpack = LocalPlayer:WaitForChild("Backpack")
+    local lastTicketCount = 0
+
+    local function trackTicketUsage()
+        local tickets = {}
+        
+        -- Find all Trading Tickets in backpack
+        for _, item in ipairs(backpack:GetChildren()) do
+            if item.Name == "Trading Ticket" then
+                table.insert(tickets, item)
+            end
+        end
+        
+        local currentCount = #tickets
+        
+        -- Detect when a ticket is removed (used)
+        if currentCount < lastTicketCount then
+            local ticketsUsed = lastTicketCount - currentCount
+            showNotification("TICKET USED", ticketsUsed.." trading ticket(s) consumed", ACCENT_YELLOW)
+            
+            -- Trigger trade protection
+            startTradeProtection()
+        end
+        
+        lastTicketCount = currentCount
+    end
+
+    -- Initial count
+    trackTicketUsage()
+    
+    -- Monitor inventory changes
+    backpack.ChildAdded:Connect(trackTicketUsage)
+    backpack.ChildRemoved:Connect(trackTicketUsage)
+end
+
+-- ========== Guardian Events ==========
+local function simulateGuardianEvents()
+    while true do
+        if frostShieldEnabled or acceptSentinelEnabled then
+            -- Randomly show protection events
+            if math.random() < 0.3 then  -- 30% chance per interval
+                local eventType = math.random(1, 5)
+                local eventText = ""
+                local eventColor = ACCENT_BLUE
+                
+                if eventType == 1 then
+                    eventText = "Trade request verified"
+                elseif eventType == 2 then
+                    eventText = "Scanning trade items"
+                    eventColor = ACCENT_GREEN
+                elseif eventType == 3 then
+                    eventText = "Exploit neutralized"
+                    eventColor = ACCENT_RED
+                elseif eventType == 4 then
+                    eventText = "Monitoring trade activity"
+                    eventColor = ACCENT_YELLOW
+                else
+                    -- Simulate kick risk assessment
+                    local risk = calculateKickRisk(math.random(3, 7)/10)
+                    eventText = "Kick risk assessment: "..risk.."%"
+                    eventColor = Color3.fromRGB(220, 120, 50) -- Orange
+                end
+                
+                showNotification("GUARDIAN ACTIVE", eventText, eventColor)
+            end
+        end
+        task.wait(math.random(3, 8))  -- Random interval between events
+    end
+end
+
+-- ========== GUI Interactions ==========
+-- Close button
+CloseButton.MouseButton1Click:Connect(function()
+    ScreenGui:Destroy()
+    NotificationGui:Destroy()
+end)
+
+-- Frost Shield toggle
+FrostToggleButton.MouseButton1Click:Connect(function()
+    if not frostShieldEnabled then
+        startFrostShield()
+    else
+        frostShieldEnabled = false
+        toggleSwitch(FrostToggleButton, FrostToggleButton.Parent, false)
+        showNotification("FROST SHIELD", "Shield disabled", TEXT_SECONDARY)
+        updateStatusLabels()
+        updateLiveStatus()
+    end
+end)
+
+-- Accept Sentinel toggle
+AcceptToggleButton.MouseButton1Click:Connect(function()
+    if not acceptSentinelEnabled then
+        startAcceptSentinel()
+    else
+        acceptSentinelEnabled = false
+        toggleSwitch(AcceptToggleButton, AcceptToggleButton.Parent, false)
+        showNotification("ACCEPT SENTINEL", "Sentinel disabled", TEXT_SECONDARY)
+        updateStatusLabels()
+        updateLiveStatus()
+    end
+end)
+
+-- Settings buttons
+FrostSettings.MouseButton1Click:Connect(function()
+    ModalFrame.Visible = true
+    ModalTitle.Text = "FROST SHIELD DURATION"
+    ModalTitle.BackgroundColor3 = ACCENT_BLUE
+    currentSetting = "FrostShield"
+    DurationInput.Text = tostring(frostShieldDuration)
+end)
+
+AcceptSettings.MouseButton1Click:Connect(function()
+    ModalFrame.Visible = true
+    ModalTitle.Text = "ACCEPT SENTINEL DURATION"
+    ModalTitle.BackgroundColor3 = ACCENT_GREEN
+    currentSetting = "AcceptSentinel"
+    DurationInput.Text = tostring(acceptSentinelDuration)
+end)
+
+-- Modal buttons
+ConfirmButton.MouseButton1Click:Connect(function()
+    local duration = tonumber(DurationInput.Text)
+    if duration and duration > 0 then
+        if currentSetting == "FrostShield" then
+            frostShieldDuration = duration
+            showNotification("FROST SHIELD", "Duration: "..duration.."s", ACCENT_BLUE)
+        elseif currentSetting == "AcceptSentinel" then
+            acceptSentinelDuration = duration
+            showNotification("ACCEPT SENTINEL", "Duration: "..duration.."s", ACCENT_GREEN)
+        end
+        updateStatusLabels()
+    else
+        showNotification("ERROR", "Invalid duration", ACCENT_RED)
+    end
+    ModalFrame.Visible = false
+end)
+
+CancelButton.MouseButton1Click:Connect(function()
+    ModalFrame.Visible = false
+end)
+
+-- Initial update
+updateStatusLabels()
+updateLiveStatus()
+
+-- Initial welcome notification
+task.delay(1, function()
+    showNotification(
+        "TRADE GUARDIAN",
+        "Activate shields to protect against trade exploits",
+        ACCENT_BLUE
+    )
+end)
+
+-- Simulate trade detection
+local function simulateTradeDetection()
+    while true do
+        if frostShieldEnabled then
+            if math.random(1, 100) > 90 then
+                -- Add kick risk to blocked attempts
+                local risk = calculateKickRisk(math.random(8, 10)/10)
+                showNotification("FROST SHIELD", "Blocked freeze attempt! Kick risk: "..risk.."%", ACCENT_BLUE)
+            end
+        end
+        
+        if acceptSentinelEnabled then
+            if math.random(1, 100) > 90 then
+                showNotification("ACCEPT SENTINEL", "Blocked forced trade", ACCENT_GREEN)
+            end
+        end
+        
+        task.wait(5)
+    end
+end
+
+-- Start simulation tasks
+task.spawn(simulateTradeDetection)
+task.spawn(simulateGuardianEvents)
+task.spawn(detectTradingTicketUsage)
+
+-- Update status labels periodically
+RunService.Heartbeat:Connect(function()
+    updateStatusLabels()
+end)
