@@ -55,18 +55,45 @@ local logo = Instance.new("ImageLabel")
 logo.Name = "Logo"
 logo.Size = UDim2.new(1, 0, 1, 0)
 logo.BackgroundTransparency = 1
-logo.Image = "rbxassetid://119919697523670"  -- Generic Roblox logo
+logo.Image = "rbxassetid://119919697523670"  -- Ensure this asset ID is correct
 logo.ScaleType = Enum.ScaleType.Fit
 logo.ZIndex = 99999
 
--- Add black stroke to logo
+-- Add white stroke to logo
 local logoStroke = Instance.new("UIStroke")
-logoStroke.Color = Color3.new(0, 0, 0)  -- Black
-logoStroke.Thickness = 4
-logoStroke.Transparency = 0.2
+logoStroke.Color = Color3.new(1, 1, 1)  -- White
+logoStroke.Thickness = 3
+logoStroke.Transparency = 0.3
 logoStroke.Parent = logo
 
--- Create loading text with font
+-- Add glow effect to logo
+local glow = Instance.new("ImageLabel")
+glow.Name = "Glow"
+glow.Size = UDim2.new(1.2, 0, 1.2, 0)
+glow.Position = UDim2.new(-0.1, 0, -0.1, 0)
+glow.BackgroundTransparency = 1
+glow.Image = "rbxassetid://119919697523670"  -- Same as logo
+glow.ImageColor3 = Color3.fromRGB(100, 150, 255)
+glow.ScaleType = Enum.ScaleType.Fit
+glow.ZIndex = 99998
+glow.ImageTransparency = 0.8
+glow.Parent = logoContainer
+
+-- Add pulsing effect to logo
+local pulseTween
+local function startPulse()
+    pulseTween = TweenService:Create(logo, TweenInfo.new(1.5, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut, -1, true), {
+        Size = UDim2.new(1.1, 0, 1.1, 0)
+    })
+    pulseTween:Play()
+    
+    TweenService:Create(glow, TweenInfo.new(1.5, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut, -1, true), {
+        Size = UDim2.new(1.4, 0, 1.4, 0),
+        ImageTransparency = 0.6
+    }):Play()
+end
+
+-- Create loading text with Comic Neue Angular SemiBold font
 local loadingText = Instance.new("TextLabel")
 loadingText.Name = "LoadingText"
 loadingText.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -77,13 +104,17 @@ loadingText.Text = "Loading: 1/1000"
 loadingText.TextColor3 = Color3.fromRGB(200, 220, 255)
 loadingText.TextSize = 22
 loadingText.ZIndex = 99999
-loadingText.Font = Enum.Font.GothamSemibold
+loadingText.FontFace = Font.new(
+    "rbxasset://fonts/families/ComicNeueAngular.json",
+    Enum.FontWeight.SemiBold,
+    Enum.FontStyle.Normal
+)
 
--- Add black stroke to text
+-- Add white stroke to text
 local textStroke = Instance.new("UIStroke")
-textStroke.Color = Color3.new(0, 0, 0)  -- Black
+textStroke.Color = Color3.new(1, 1, 1)  -- White
 textStroke.Thickness = 2
-textStroke.Transparency = 0.1
+textStroke.Transparency = 0.2
 textStroke.Parent = loadingText
 
 -- Assemble the UI
@@ -154,14 +185,7 @@ local function showLoadingScreen()
     
     -- Start animations
     local blurTween = animateBlur()
-    
-    -- Fade in elements
-    logo.ImageTransparency = 1
-    glow.ImageTransparency = 1
-    loadingText.TextTransparency = 1
-    
-    TweenService:Create(logo, TweenInfo.new(1.5), {ImageTransparency = 0}):Play()
-    TweenService:Create(loadingText, TweenInfo.new(1.5), {TextTransparency = 0}):Play()
+    startPulse()
     
     -- Simulate loading progress with 13s duration
     simulateProgress()
@@ -183,12 +207,26 @@ local function showLoadingScreen()
     })
     
     -- Fade out all elements
-    TweenService:Create(logo, TweenInfo.new(1.5), {ImageTransparency = 1}):Play()
-    TweenService:Create(loadingText, TweenInfo.new(1.5), {TextTransparency = 1}):Play()
+    TweenService:Create(logo, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
+        ImageTransparency = 1
+    }):Play()
+    
+    TweenService:Create(glow, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
+        ImageTransparency = 1
+    }):Play()
+    
+    TweenService:Create(loadingText, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
+        TextTransparency = 1
+    }):Play()
     
     -- Fade out strokes
-    TweenService:Create(logoStroke, TweenInfo.new(1.5), {Transparency = 1}):Play()
-    TweenService:Create(textStroke, TweenInfo.new(1.5), {Transparency = 1}):Play()
+    TweenService:Create(logoStroke, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
+        Transparency = 1
+    }):Play()
+    
+    TweenService:Create(textStroke, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
+        Transparency = 1
+    }):Play()
     
     -- Start fade animations
     fadeOut:Play()
@@ -199,6 +237,7 @@ local function showLoadingScreen()
     blurFade.Completed:Wait()
     
     -- Clean up
+    if pulseTween then pulseTween:Cancel() end
     blurScreen:Destroy()
     blur:Destroy()
 end
