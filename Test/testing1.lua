@@ -10,7 +10,7 @@ local playerGui = player:WaitForChild("PlayerGui")
 -- Create the loading screen GUI
 local blurScreen = Instance.new("ScreenGui")
 blurScreen.Name = "BlurLoadingScreen"
-blurScreen.DisplayOrder = 99999  -- Highest possible z-index
+blurScreen.DisplayOrder = 99999
 blurScreen.IgnoreGuiInset = true
 blurScreen.ResetOnSpawn = false
 
@@ -38,7 +38,7 @@ gradient.Parent = blurContainer
 -- Create the blur effect
 local blur = Instance.new("BlurEffect")
 blur.Name = "LoadingBlur"
-blur.Size = 0  -- Will animate later
+blur.Size = 0
 blur.Parent = Lighting
 
 -- Create the logo container
@@ -50,12 +50,12 @@ logoContainer.Size = UDim2.new(0, 200, 0, 200)
 logoContainer.BackgroundTransparency = 1
 logoContainer.ZIndex = 99999
 
--- Create the logo using your asset ID
+-- Create the logo
 local logo = Instance.new("ImageLabel")
 logo.Name = "Logo"
 logo.Size = UDim2.new(1, 0, 1, 0)
 logo.BackgroundTransparency = 1
-logo.Image = "rbxassetid://119919697523670"  -- Your logo ID
+logo.Image = "rbxassetid://119919697523670"
 logo.ScaleType = Enum.ScaleType.Fit
 logo.ZIndex = 99999
 
@@ -65,7 +65,7 @@ glow.Name = "Glow"
 glow.Size = UDim2.new(1.2, 0, 1.2, 0)
 glow.Position = UDim2.new(-0.1, 0, -0.1, 0)
 glow.BackgroundTransparency = 1
-glow.Image = "rbxassetid://119919697523670"  -- Same as logo
+glow.Image = "rbxassetid://119919697523670"
 glow.ImageColor3 = Color3.fromRGB(100, 150, 255)
 glow.ScaleType = Enum.ScaleType.Fit
 glow.ZIndex = 99998
@@ -80,7 +80,6 @@ local function startPulse()
     })
     pulseTween:Play()
     
-    -- Animate glow
     TweenService:Create(glow, TweenInfo.new(1.5, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut, -1, true), {
         Size = UDim2.new(1.4, 0, 1.4, 0),
         ImageTransparency = 0.6
@@ -183,16 +182,18 @@ local function animateSpinner()
     return connection
 end
 
+-- Smoother blur animation with longer duration
 local function animateBlur()
-    local tween = TweenService:Create(blur, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {
+    local tween = TweenService:Create(blur, TweenInfo.new(2, Enum.EasingStyle.Quad), {
         Size = 24
     })
     tween:Play()
     return tween
 end
 
+-- Progress bar with 13 second duration
 local function simulateProgress()
-    local duration = 4  -- Total loading time
+    local duration = 13  -- Increased from 4 to 13 seconds
     local startTime = os.clock()
     
     while os.clock() - startTime < duration do
@@ -200,12 +201,14 @@ local function simulateProgress()
         progressFill.Size = UDim2.new(progress, 0, 1, 0)
         
         -- Update loading text
-        if progress < 0.3 then
-            loadingText.Text = "Loading Assets..."
-        elseif progress < 0.6 then
-            loadingText.Text = "Initializing Game..."
+        if progress < 0.25 then
+            loadingText.Text = "Loading Core Assets..."
+        elseif progress < 0.5 then
+            loadingText.Text = "Initializing Systems..."
+        elseif progress < 0.75 then
+            loadingText.Text = "Optimizing Experience..."
         else
-            loadingText.Text = "Finalizing Experience..."
+            loadingText.Text = "Finalizing Setup..."
         end
         
         RunService.RenderStepped:Wait()
@@ -222,43 +225,53 @@ local function showLoadingScreen()
     
     -- Start animations
     local spinnerConnection = animateSpinner()
-    local blurTween = animateBlur()
+    local blurTween = animateBlur()  -- Smoother blur animation
     startPulse()
     
-    -- Simulate loading progress
+    -- Simulate loading progress with 13s duration
     simulateProgress()
     
     -- Wait a moment before hiding
     task.wait(1.5)
     
-    -- Fade out animation
-    local fadeOut = TweenService:Create(blurContainer, TweenInfo.new(1, Enum.EasingStyle.Quad), {
+    -- Smoother fade out with blur effect
+    local fadeOut = TweenService:Create(blurContainer, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
         BackgroundTransparency = 1
     })
     
-    -- Fade out text and logo
-    TweenService:Create(logo, TweenInfo.new(1, Enum.EasingStyle.Quad), {
+    -- Fade out blur effect
+    local blurFade = TweenService:Create(blur, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
+        Size = 0
+    })
+    
+    -- Fade out all elements
+    TweenService:Create(logo, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
         ImageTransparency = 1
     }):Play()
     
-    TweenService:Create(glow, TweenInfo.new(1, Enum.EasingStyle.Quad), {
+    TweenService:Create(glow, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
         ImageTransparency = 1
     }):Play()
     
-    TweenService:Create(loadingText, TweenInfo.new(1, Enum.EasingStyle.Quad), {
+    TweenService:Create(loadingText, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
         TextTransparency = 1
     }):Play()
     
-    TweenService:Create(progressBar, TweenInfo.new(1, Enum.EasingStyle.Quad), {
+    TweenService:Create(progressBar, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
         BackgroundTransparency = 1
     }):Play()
     
-    TweenService:Create(progressFill, TweenInfo.new(1, Enum.EasingStyle.Quad), {
+    TweenService:Create(progressFill, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
         BackgroundTransparency = 1
     }):Play()
     
+    -- Start fade animations
     fadeOut:Play()
+    blurFade:Play()
+    
+    -- Wait for completion
     fadeOut.Completed:Wait()
+    blurFade.Completed:Wait()
     
     -- Clean up
     spinnerConnection:Disconnect()
