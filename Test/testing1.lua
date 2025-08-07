@@ -18,7 +18,7 @@ local bgImage = Instance.new("ImageLabel")
 bgImage.Name = "Background"
 bgImage.Parent = screenGui
 bgImage.Size = UDim2.new(0, 250, 0, 135)
-bgImage.Position = UDim2.new(0.5, -125, 0.5, -50)
+bgImage.Position = UDim2.new(0.5, -125, 0.5, -30)
 bgImage.BackgroundTransparency = 1
 bgImage.Image = "rbxassetid://119759831021473"
 
