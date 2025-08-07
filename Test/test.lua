@@ -39,7 +39,7 @@ header.TextScaled = true
 header.TextStrokeTransparency = 0.5
 header.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 
--- Status labels with proper font styling
+-- Status labels with fixed TEXT_COLOR
 local tradeRequestStatus = Instance.new("TextLabel")
 tradeRequestStatus.Name = "TradeRequestStatus"
 tradeRequestStatus.Parent = bgImage
@@ -47,7 +47,7 @@ tradeRequestStatus.Size = UDim2.new(0.9, 0, 0, 20)
 tradeRequestStatus.Position = UDim2.new(0.05, 0, 0, 35)
 tradeRequestStatus.BackgroundTransparency = 1
 tradeRequestStatus.Text = "TRADE REQUEST: NOT DETECTED"
-tradeRequestStatus.TextColor3 = ACCENT_RED
+tradeRequestStatus.TextColor3 = TEXT_COLOR  -- Fixed to use TEXT_COLOR
 tradeRequestStatus.Font = Enum.Font.GothamBlack
 tradeRequestStatus.TextSize = 14
 tradeRequestStatus.TextXAlignment = Enum.TextXAlignment.Left
@@ -61,15 +61,17 @@ confirmationStatus.Size = UDim2.new(0.9, 0, 0, 20)
 confirmationStatus.Position = UDim2.new(0.05, 0, 0, 55)
 confirmationStatus.BackgroundTransparency = 1
 confirmationStatus.Text = "TRANSACTION: PENDING"
-confirmationStatus.TextColor3 = ACCENT_BLUE
+confirmationStatus.TextColor3 = TEXT_COLOR  -- Fixed to use TEXT_COLOR
 confirmationStatus.Font = Enum.Font.GothamBlack
 confirmationStatus.TextSize = 14
 confirmationStatus.TextXAlignment = Enum.TextXAlignment.Left
 confirmationStatus.TextStrokeTransparency = 0.2
 confirmationStatus.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 
--- Toggle creation function
+-- FIXED TOGGLE FUNCTION
 local function createToggle(name, text, yOffset)
+    local toggleObj = {}
+    
     local label = Instance.new("TextLabel")
     label.Name = name .. "Label"
     label.Parent = bgImage
@@ -107,7 +109,9 @@ local function createToggle(name, text, yOffset)
     thumbCorner.Parent = toggleThumb
 
     local state = false
-    local function toggle()
+    
+    -- Proper toggle function
+    function toggleObj.toggle()
         state = not state
         local goalPos = state and UDim2.new(0, 26, 0, 1.5) or UDim2.new(0, 2, 0, 1.5)
         local goalColor = state and ACCENT_GREEN or Color3.fromRGB(60, 60, 60)
@@ -116,22 +120,24 @@ local function createToggle(name, text, yOffset)
         print(name .. " is", state and "ON" or "OFF")
         return state
     end
-
+    
+    function toggleObj.getState()
+        return state
+    end
+    
     toggleTrack.InputBegan:Connect(function(input)
         if input.UserInputType == Enum.UserInputType.MouseButton1 then
-            toggle()
+            toggleObj.toggle()
         end
     end)
     
-    return {
-        toggle = toggle,
-        state = function() return state end,
-        Thumb = toggleThumb,
-        Track = toggleTrack
-    }
+    toggleObj.Thumb = toggleThumb
+    toggleObj.Track = toggleTrack
+    
+    return toggleObj
 end
 
--- Create toggles below status indicators
+-- Create toggles
 local freezeToggle = createToggle("FreezeTrade", "FREEZE TRADE", 75)
 local autoAcceptToggle = createToggle("LockInventory", "AUTO ACCEPT", 115)
 
@@ -139,35 +145,25 @@ local autoAcceptToggle = createToggle("LockInventory", "AUTO ACCEPT", 115)
 local antiFreezeEnabled = false
 local antiAutoAcceptEnabled = false
 
--- Toggle logic with visual feedback
-freezeToggle.toggle()  -- Set initial state to OFF
-freezeToggle.toggle = function()
-    antiFreezeEnabled = not antiFreezeEnabled
-    local goalPos = antiFreezeEnabled and UDim2.new(0, 26, 0, 1.5) or UDim2.new(0, 2, 0, 1.5)
-    local goalColor = antiFreezeEnabled and ACCENT_GREEN or Color3.fromRGB(60, 60, 60)
-    TweenService:Create(freezeToggle.Thumb, TweenInfo.new(0.2), { Position = goalPos }):Play()
-    TweenService:Create(freezeToggle.Track, TweenInfo.new(0.2), { BackgroundColor3 = goalColor }):Play()
-    print("FreezeTrade is", antiFreezeEnabled and "ON" or "OFF")
-    return antiFreezeEnabled
-end
+-- Connect toggle functionality
+freezeToggle.Track.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        antiFreezeEnabled = freezeToggle.toggle()
+    end
+end)
 
-autoAcceptToggle.toggle()  -- Set initial state to OFF
-autoAcceptToggle.toggle = function()
-    antiAutoAcceptEnabled = not antiAutoAcceptEnabled
-    local goalPos = antiAutoAcceptEnabled and UDim2.new(0, 26, 0, 1.5) or UDim2.new(0, 2, 0, 1.5)
-    local goalColor = antiAutoAcceptEnabled and ACCENT_GREEN or Color3.fromRGB(60, 60, 60)
-    TweenService:Create(autoAcceptToggle.Thumb, TweenInfo.new(0.2), { Position = goalPos }):Play()
-    TweenService:Create(autoAcceptToggle.Track, TweenInfo.new(0.2), { BackgroundColor3 = goalColor }):Play()
-    print("AutoAccept is", antiAutoAcceptEnabled and "ON" or "OFF")
-    return antiAutoAcceptEnabled
-end
+autoAcceptToggle.Track.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        antiAutoAcceptEnabled = autoAcceptToggle.toggle()
+    end
+end)
 
 -- Help button
 local helpButton = Instance.new("TextButton")
 helpButton.Name = "HelpButton"
 helpButton.Parent = bgImage
 helpButton.Size = UDim2.new(0, 25, 0, 25)
-helpButton.Position = UDim2.new(0.87, 0, 0, 210)
+helpButton.Position = UDim2.new(0.87, 0, 0, 105)  -- Adjusted position
 helpButton.Text = "?"
 helpButton.Font = Enum.Font.GothamBold
 helpButton.TextScaled = true
@@ -214,7 +210,7 @@ instructionText.Font = Enum.Font.Gotham
 instructionText.TextWrapped = true
 instructionText.TextScaled = true
 instructionText.TextYAlignment = Enum.TextYAlignment.Top
-instructionText.TextColor3 = Color3.fromRGB(255, 255, 255)
+instructionText.TextColor3 = TEXT_COLOR  -- Use TEXT_COLOR here
 instructionText.TextStrokeTransparency = 0.2
 instructionText.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 
@@ -266,24 +262,26 @@ mt.__namecall = newcclosure(function(self, ...)
     -- Trade request detection
     if (tostring(self) == "SendRequest" or tostring(self) == "RespondRequest") and method == "FireServer" then
         tradeRequestStatus.Text = "TRADE REQUEST: DETECTED"
-        tradeRequestStatus.TextColor3 = ACCENT_GREEN
+        tradeRequestStatus.TextColor3 = TEXT_COLOR  -- Keep using TEXT_COLOR
     end
 
     -- Trade decline detection
     if tostring(self) == "Decline" and method == "FireServer" then
         tradeRequestStatus.Text = "TRADE REQUEST: NOT DETECTED"
-        tradeRequestStatus.TextColor3 = ACCENT_RED
+        tradeRequestStatus.TextColor3 = TEXT_COLOR  -- Keep using TEXT_COLOR
         confirmationStatus.Text = "TRANSACTION: PENDING"
-        confirmationStatus.TextColor3 = ACCENT_BLUE
+        confirmationStatus.TextColor3 = TEXT_COLOR  -- Keep using TEXT_COLOR
     end
 
     -- Trade acceptance detection
     if tostring(self) == "Accept" and method == "FireServer" then
         confirmationStatus.Text = "TRANSACTION: ACCEPTED"
-        confirmationStatus.TextColor3 = ACCENT_GREEN
+        confirmationStatus.TextColor3 = TEXT_COLOR  -- Keep using TEXT_COLOR
     end
 
     return oldNamecall(self, ...)
 end)
 
 setreadonly(mt, true)
+
+print("UI loaded successfully! Toggles and status colors fixed.")
