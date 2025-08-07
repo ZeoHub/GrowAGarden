@@ -15,7 +15,7 @@ screenGui.Parent = playerGui
 local bgImage = Instance.new("ImageLabel")
 bgImage.Name = "Background"
 bgImage.Parent = screenGui
-bgImage.Size = UDim2.new(0, 250, 0, 250)  -- Increased size to fit status labels
+bgImage.Size = UDim2.new(0, 250, 0, 250)
 bgImage.Position = UDim2.new(0.5, -125, 0.5, -125)
 bgImage.BackgroundTransparency = 1
 bgImage.Image = "rbxassetid://119759831021473"
@@ -37,12 +37,12 @@ header.TextScaled = true
 header.TextStrokeTransparency = 0.5
 header.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 
--- Add status labels
+-- Status labels positioned above the toggles
 local tradeRequestStatus = Instance.new("TextLabel")
 tradeRequestStatus.Name = "TradeRequestStatus"
 tradeRequestStatus.Parent = bgImage
 tradeRequestStatus.Size = UDim2.new(0.9, 0, 0, 20)
-tradeRequestStatus.Position = UDim2.new(0.05, 0, 0, 35)
+tradeRequestStatus.Position = UDim2.new(0.05, 0, 0, 35)  -- Below header
 tradeRequestStatus.BackgroundTransparency = 1
 tradeRequestStatus.Text = "Trade Request: NOT DETECTED"
 tradeRequestStatus.TextColor3 = ACCENT_RED
@@ -54,7 +54,7 @@ local confirmationStatus = Instance.new("TextLabel")
 confirmationStatus.Name = "ConfirmationStatus"
 confirmationStatus.Parent = bgImage
 confirmationStatus.Size = UDim2.new(0.9, 0, 0, 20)
-confirmationStatus.Position = UDim2.new(0.05, 0, 0, 55)
+confirmationStatus.Position = UDim2.new(0.05, 0, 0, 55)  -- Below trade status
 confirmationStatus.BackgroundTransparency = 1
 confirmationStatus.Text = "Transaction: PENDING"
 confirmationStatus.TextColor3 = ACCENT_BLUE
@@ -62,7 +62,7 @@ confirmationStatus.Font = Enum.Font.Gotham
 confirmationStatus.TextSize = 14
 confirmationStatus.TextXAlignment = Enum.TextXAlignment.Left
 
--- Modified toggle function to include status text
+-- Create toggles below the status indicators
 local function createToggle(name, text, yOffset)
     local label = Instance.new("TextLabel")
     label.Name = name .. "Label"
@@ -108,6 +108,7 @@ local function createToggle(name, text, yOffset)
         TweenService:Create(toggleThumb, TweenInfo.new(0.2), { Position = goalPos }):Play()
         TweenService:Create(toggleTrack, TweenInfo.new(0.2), { BackgroundColor3 = goalColor }):Play()
         print(name .. " is", state and "ON" or "OFF")
+        return state
     end
 
     toggleTrack.InputBegan:Connect(function(input)
@@ -119,11 +120,11 @@ local function createToggle(name, text, yOffset)
     return {toggle = toggle, state = function() return state end}
 end
 
--- Create toggles and get references to them
+-- Create toggles below status indicators (yOffset 75 and 115)
 local freezeToggle = createToggle("FreezeTrade", "FREEZE TRADE", 75)
 local autoAcceptToggle = createToggle("LockInventory", "AUTO ACCEPT", 115)
 
--- Toggle states (always visible)
+-- Toggle states
 local antiFreezeEnabled = false
 local antiAutoAcceptEnabled = false
 
@@ -138,6 +139,7 @@ freezeToggle.toggle = function()
     local goalColor = antiFreezeEnabled and ACCENT_GREEN or Color3.fromRGB(60, 60, 60)
     TweenService:Create(freezeToggle.Thumb, TweenInfo.new(0.2), { Position = goalPos }):Play()
     TweenService:Create(freezeToggle.Track, TweenInfo.new(0.2), { BackgroundColor3 = goalColor }):Play()
+    return antiFreezeEnabled
 end
 
 autoAcceptToggle.toggle()
@@ -150,14 +152,15 @@ autoAcceptToggle.toggle = function()
     local goalColor = antiAutoAcceptEnabled and ACCENT_GREEN or Color3.fromRGB(60, 60, 60)
     TweenService:Create(autoAcceptToggle.Thumb, TweenInfo.new(0.2), { Position = goalPos }):Play()
     TweenService:Create(autoAcceptToggle.Track, TweenInfo.new(0.2), { BackgroundColor3 = goalColor }):Play()
+    return antiAutoAcceptEnabled
 end
 
--- Help button and instructions
+-- Help button positioned below toggles
 local helpButton = Instance.new("TextButton")
 helpButton.Name = "HelpButton"
 helpButton.Parent = bgImage
 helpButton.Size = UDim2.new(0, 25, 0, 25)
-helpButton.Position = UDim2.new(0.87, 0, 0, 210)
+helpButton.Position = UDim2.new(0.87, 0, 0, 210)  -- Bottom right
 helpButton.Text = "?"
 helpButton.Font = Enum.Font.GothamBold
 helpButton.TextScaled = true
@@ -258,8 +261,6 @@ mt.__namecall = newcclosure(function(self, ...)
     if (tostring(self) == "SendRequest" or tostring(self) == "RespondRequest") and method == "FireServer" then
         tradeRequestStatus.Text = "Trade Request: DETECTED"
         tradeRequestStatus.TextColor3 = ACCENT_GREEN
-        
-        -- Toggles remain visible as requested
     end
 
     -- Trade decline detection
