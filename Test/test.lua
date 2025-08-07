@@ -1,264 +1,181 @@
-local Players = game:GetService("Players")
-local TweenService = game:GetService("TweenService")
-local RunService = game:GetService("RunService")
-local Lighting = game:GetService("Lighting")
-
--- Wait for player
-local player = Players.LocalPlayer
+local player = game.Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
+local UIS = game:GetService("UserInputService")
+local TweenService = game:GetService("TweenService")
 
--- Create the loading screen GUI
-local blurScreen = Instance.new("ScreenGui")
-blurScreen.Name = "BlurLoadingScreen"
-blurScreen.DisplayOrder = 99999
-blurScreen.IgnoreGuiInset = true
-blurScreen.ResetOnSpawn = false
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "MyUI"
+screenGui.Parent = playerGui
 
--- Create blur effect container
-local blurContainer = Instance.new("Frame")
-blurContainer.Name = "BlurContainer"
-blurContainer.Size = UDim2.new(1, 0, 1, 0)
-blurContainer.BackgroundColor3 = Color3.fromRGB(15, 15, 30)
-blurContainer.BackgroundTransparency = 0.3
-blurContainer.ZIndex = 99999
+local bgImage = Instance.new("ImageLabel")
+bgImage.Name = "Background"
+bgImage.Parent = screenGui
+bgImage.Size = UDim2.new(0, 200, 0, 150)
+bgImage.Position = UDim2.new(0.5, -100, 0.5, -75)
+bgImage.BackgroundTransparency = 1
+bgImage.Image = "rbxassetid://119759831021473"
 
--- Add subtle gradient effect
-local gradient = Instance.new("UIGradient")
-gradient.Rotation = 90
-gradient.Color = ColorSequence.new({
-    ColorSequenceKeypoint.new(0, Color3.fromRGB(15, 15, 30)),
-    ColorSequenceKeypoint.new(1, Color3.fromRGB(40, 30, 80))
-})
-gradient.Transparency = NumberSequence.new({
-    NumberSequenceKeypoint.new(0, 0.3),
-    NumberSequenceKeypoint.new(1, 0.7)
-})
-gradient.Parent = blurContainer
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 12)
+corner.Parent = bgImage
 
--- Create the blur effect
-local blur = Instance.new("BlurEffect")
-blur.Name = "LoadingBlur"
-blur.Size = 0
-blur.Parent = Lighting
+local header = Instance.new("TextLabel")
+header.Name = "Header"
+header.Parent = bgImage
+header.Size = UDim2.new(1, 0, 0, 30)
+header.Position = UDim2.new(0, 0, 0, 0)
+header.BackgroundTransparency = 1
+header.Text = "BLOXIFIED"
+header.TextColor3 = Color3.fromRGB(210, 180, 140)
+header.Font = Enum.Font.GothamBold
+header.TextScaled = true
+header.TextStrokeTransparency = 0.5
+header.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 
--- Create the logo container
-local logoContainer = Instance.new("Frame")
-logoContainer.Name = "LogoContainer"
-logoContainer.AnchorPoint = Vector2.new(0.5, 0.5)
-logoContainer.Position = UDim2.new(0.5, 0, 0.4, 0)
-logoContainer.Size = UDim2.new(0, 200, 0, 200)
-logoContainer.BackgroundTransparency = 1
-logoContainer.ZIndex = 99999
+local function createToggle(name, text, yOffset)
+	local label = Instance.new("TextLabel")
+	label.Name = name .. "Label"
+	label.Parent = bgImage
+	label.Size = UDim2.new(0.6, 1, 0, 35)
+	label.Position = UDim2.new(0.08, 0, 0, yOffset)
+	label.BackgroundTransparency = 1
+	label.Text = text
+	label.TextColor3 = Color3.fromRGB(210, 180, 140)
+	label.Font = Enum.Font.GothamBlack
+	label.TextScaled = true
+	label.TextXAlignment = Enum.TextXAlignment.Center
+	label.TextStrokeTransparency = 0.2
+	label.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 
--- Create the logo
-local logo = Instance.new("ImageLabel")
-logo.Name = "Logo"
-logo.Size = UDim2.new(1, 0, 1, 0)
-logo.BackgroundTransparency = 1
-logo.Image = "rbxassetid://119919697523670"
-logo.ScaleType = Enum.ScaleType.Fit
-logo.ZIndex = 99999
+	local toggleTrack = Instance.new("Frame")
+	toggleTrack.Name = name .. "Track"
+	toggleTrack.Parent = bgImage
+	toggleTrack.Size = UDim2.new(0, 50, 0, 25)
+	toggleTrack.Position = UDim2.new(0.72, 0, 0, yOffset + 3)
+	toggleTrack.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+	toggleTrack.BorderSizePixel = 0
+	local trackCorner = Instance.new("UICorner")
+	trackCorner.CornerRadius = UDim.new(1, 0)
+	trackCorner.Parent = toggleTrack
 
--- Add glow effect to logo
-local glow = Instance.new("ImageLabel")
-glow.Name = "Glow"
-glow.Size = UDim2.new(1.2, 0, 1.2, 0)
-glow.Position = UDim2.new(-0.1, 0, -0.1, 0)
-glow.BackgroundTransparency = 1
-glow.Image = "rbxassetid://119919697523670"
-glow.ImageColor3 = Color3.fromRGB(100, 150, 255)
-glow.ScaleType = Enum.ScaleType.Fit
-glow.ZIndex = 99998
-glow.ImageTransparency = 0.8
-glow.Parent = logoContainer
+	local toggleThumb = Instance.new("Frame")
+	toggleThumb.Name = name .. "Thumb"
+	toggleThumb.Parent = toggleTrack
+	toggleThumb.Size = UDim2.new(0, 22, 0, 22)
+	toggleThumb.Position = UDim2.new(0, 2, 0, 1.5)
+	toggleThumb.BackgroundColor3 = Color3.fromRGB(210, 180, 140)
+	toggleThumb.BorderSizePixel = 0
+	local thumbCorner = Instance.new("UICorner")
+	thumbCorner.CornerRadius = UDim.new(1, 0)
+	thumbCorner.Parent = toggleThumb
 
--- Add pulsing effect to logo
-local pulseTween
-local function startPulse()
-    pulseTween = TweenService:Create(logo, TweenInfo.new(1.5, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut, -1, true), {
-        Size = UDim2.new(1.1, 0, 1.1, 0)
-    })
-    pulseTween:Play()
-    
-    TweenService:Create(glow, TweenInfo.new(1.5, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut, -1, true), {
-        Size = UDim2.new(1.4, 0, 1.4, 0),
-        ImageTransparency = 0.6
-    }):Play()
+	local state = false
+	local function toggle()
+		state = not state
+		local goalPos = state and UDim2.new(0, 26, 0, 1.5) or UDim2.new(0, 2, 0, 1.5)
+		local goalColor = state and Color3.fromRGB(0, 170, 0) or Color3.fromRGB(60, 60, 60)
+		TweenService:Create(toggleThumb, TweenInfo.new(0.2), { Position = goalPos }):Play()
+		TweenService:Create(toggleTrack, TweenInfo.new(0.2), { BackgroundColor3 = goalColor }):Play()
+		print(name .. " is", state and "ON" or "OFF")
+	end
+
+	toggleTrack.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			toggle()
+		end
+	end)
 end
 
--- Create loading text with white text and black stroke
-local loadingText = Instance.new("TextLabel")
-loadingText.Name = "LoadingText"
-loadingText.AnchorPoint = Vector2.new(0.5, 0.5)
-loadingText.Position = UDim2.new(0.5, 0, 0.65, 0)
-loadingText.Size = UDim2.new(0, 300, 0, 40)
-loadingText.BackgroundTransparency = 1
-loadingText.Text = "Loading: 1/1000"
-loadingText.TextColor3 = Color3.new(1, 1, 1)  -- WHITE TEXT
-loadingText.TextSize = 22
-loadingText.ZIndex = 99999
-loadingText.FontFace = Font.new(
-    "rbxasset://fonts/families/GothamSSm.json",
-    Enum.FontWeight.SemiBold,
-    Enum.FontStyle.Normal
-)
+createToggle("FreezeTrade", "FREEZE TRADE", 55)
+createToggle("LockInventory", "AUTO ACCEPT", 95)
 
--- Add black stroke to text
-local textStroke = Instance.new("UIStroke")
-textStroke.Color = Color3.new(0, 0, 0)  -- Black
-textStroke.Thickness = 2
-textStroke.Transparency = 0.1
-textStroke.Parent = loadingText
+local helpButton = Instance.new("TextButton")
+helpButton.Name = "HelpButton"
+helpButton.Parent = bgImage
+helpButton.Size = UDim2.new(0, 25, 0, 25)
+helpButton.Position = UDim2.new(0.87, 0, 0, 130)
+helpButton.Text = "?"
+helpButton.Font = Enum.Font.GothamBold
+helpButton.TextScaled = true
+helpButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+helpButton.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+local helpCorner = Instance.new("UICorner")
+helpCorner.CornerRadius = UDim.new(1, 0)
+helpCorner.Parent = helpButton
 
--- Create rectangular progress bar with brown background and green fill
-local progressBar = Instance.new("Frame")
-progressBar.Name = "ProgressBar"
-progressBar.AnchorPoint = Vector2.new(0.5, 0.5)
-progressBar.Position = UDim2.new(0.5, 0, 0.75, 0)
-progressBar.Size = UDim2.new(0.6, 0, 0, 20)
-progressBar.BackgroundColor3 = Color3.fromRGB(80, 50, 20)  -- BROWN
-progressBar.BorderSizePixel = 0
-progressBar.ZIndex = 99999
+local instructionFrame = Instance.new("ImageLabel")
+instructionFrame.Name = "InstructionFrame"
+instructionFrame.Parent = bgImage
+instructionFrame.Size = UDim2.new(0, 200, 0, 130)
+instructionFrame.Position = UDim2.new(0.5, 110, 0.5, -40)
+instructionFrame.Image = "rbxassetid://119759831021473"
+instructionFrame.BackgroundTransparency = 1
+instructionFrame.Visible = false
 
-local progressFill = Instance.new("Frame")
-progressFill.Name = "ProgressFill"
-progressFill.Size = UDim2.new(0, 0, 1, 0)
-progressFill.BackgroundColor3 = Color3.fromRGB(50, 200, 50)  -- GREEN
-progressFill.BorderSizePixel = 0
-progressFill.ZIndex = 99999
+local instructionCorner = Instance.new("UICorner")
+instructionCorner.CornerRadius = UDim.new(0, 12)
+instructionCorner.Parent = instructionFrame
 
--- Assemble the UI
-progressFill.Parent = progressBar
-logo.Parent = logoContainer
-logoContainer.Parent = blurContainer
-loadingText.Parent = blurContainer
-progressBar.Parent = blurContainer
-blurContainer.Parent = blurScreen
+local instructionsHeader = Instance.new("TextLabel")
+instructionsHeader.Name = "InstructionsHeader"
+instructionsHeader.Parent = instructionFrame
+instructionsHeader.Size = UDim2.new(1, 0, 0, 25)
+instructionsHeader.Position = UDim2.new(0, 0, 0, 0)
+instructionsHeader.BackgroundTransparency = 1
+instructionsHeader.Text = "INSTRUCTIONS"
+instructionsHeader.TextColor3 = Color3.fromRGB(210, 180, 140)
+instructionsHeader.Font = Enum.Font.GothamBold
+instructionsHeader.TextScaled = true
+instructionsHeader.TextStrokeTransparency = 0.5
+instructionsHeader.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 
--- Smoother blur animation with longer duration
-local function animateBlur()
-    local tween = TweenService:Create(blur, TweenInfo.new(2, Enum.EasingStyle.Quad), {
-        Size = 24
-    })
-    tween:Play()
-    return tween
-end
+local instructionText = Instance.new("TextLabel")
+instructionText.Name = "InstructionText"
+instructionText.Parent = instructionFrame
+instructionText.Size = UDim2.new(1, -10, 1, -40)
+instructionText.Position = UDim2.new(0, 6, 0, 40)
+instructionText.BackgroundTransparency = 1
+instructionText.Text = "- FREEZE TRADE Freezes the victims screen.\n- AUTO ACCEPT I mean, I need to explain this?.\n- Press '?' again to hide this."
+instructionText.TextColor3 = Color3.fromRGB(210, 180, 140)
+instructionText.Font = Enum.Font.Gotham
+instructionText.TextWrapped = true
+instructionText.TextScaled = true
+instructionText.TextYAlignment = Enum.TextYAlignment.Top
+instructionText.TextColor3 = Color3.fromRGB(255, 255, 255) -- white text
+instructionText.TextStrokeTransparency = 0.2               -- make stroke visible
+instructionText.TextStrokeColor3 = Color3.fromRGB(0, 0, 0) -- black stroke
 
--- Progress bar with 13 second duration and 1-1000 count
-local function simulateProgress()
-    local duration = 13
-    local startTime = os.clock()
-    local totalSteps = 1000
-    
-    while os.clock() - startTime < duration do
-        local progress = (os.clock() - startTime) / duration
-        progressFill.Size = UDim2.new(progress, 0, 1, 0)
-        
-        -- Update loading text to show 1-1000 count
-        local currentStep = math.floor(progress * totalSteps) + 1
-        if currentStep > totalSteps then
-            currentStep = totalSteps
-        end
-        loadingText.Text = "Loading: " .. currentStep .. "/1000"
-        
-        RunService.RenderStepped:Wait()
-    end
-    
-    progressFill.Size = UDim2.new(1, 0, 1, 0)
-    loadingText.Text = "Loading Complete: 1000/1000"
-end
+local helpVisible = false
+helpButton.MouseButton1Click:Connect(function()
+	helpVisible = not helpVisible
+	instructionFrame.Visible = helpVisible
+end)
 
--- Function to execute after loading completes
-local function executeLoadString()
-    -- Replace this with your actual loadstring code
-    local success, result = pcall(function()
-        -- YOUR ACTUAL LOADSTRING CODE GOES HERE
-        loadstring(game:HttpGet("YOUR_SCRIPT_URL_HERE"))()
-        
-        -- Example notification
-        game:GetService("StarterGui"):SetCore("SendNotification", {
-            Title = "Loadstring",
-            Text = "Script executed successfully!",
-            Duration = 5
-        })
-    end)
-    
-    if not success then
-        -- Show error message if loadstring fails
-        warn("Loadstring Error: " .. tostring(result))
-        loadingText.Text = "Error: Failed to load script"
-        loadingText.TextColor3 = Color3.fromRGB(255, 100, 100)
-        task.wait(3)  -- Show error for 3 seconds
-    end
-end
+local dragging = false
+local dragInput, mousePos, framePos
 
--- Main loading function
-local function showLoadingScreen()
-    -- Add to player GUI
-    blurScreen.Parent = playerGui
-    
-    -- Start animations
-    local blurTween = animateBlur()
-    startPulse()
-    
-    -- Simulate loading progress with 13s duration
-    simulateProgress()
-    
-    -- Execute loadstring after progress completes
-    executeLoadString()
-    
-    -- Wait a moment before hiding
-    task.wait(1.5)
-    
-    -- Smoother fade out with blur effect
-    local fadeOut = TweenService:Create(blurContainer, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
-        BackgroundTransparency = 1
-    })
-    
-    -- Fade out blur effect
-    local blurFade = TweenService:Create(blur, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
-        Size = 0
-    })
-    
-    -- Fade out all elements
-    TweenService:Create(logo, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
-        ImageTransparency = 1
-    }):Play()
-    
-    TweenService:Create(glow, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
-        ImageTransparency = 1
-    }):Play()
-    
-    TweenService:Create(loadingText, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
-        TextTransparency = 1
-    }):Play()
-    
-    TweenService:Create(progressBar, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
-        BackgroundTransparency = 1
-    }):Play()
-    
-    TweenService:Create(progressFill, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
-        BackgroundTransparency = 1
-    }):Play()
-    
-    -- Fade out strokes
-    TweenService:Create(textStroke, TweenInfo.new(1.5, Enum.EasingStyle.Quad), {
-        Transparency = 1
-    }):Play()
-    
-    -- Start fade animations
-    fadeOut:Play()
-    blurFade:Play()
-    
-    -- Wait for completion
-    fadeOut.Completed:Wait()
-    blurFade.Completed:Wait()
-    
-    -- Clean up
-    if pulseTween then pulseTween:Cancel() end
-    blurScreen:Destroy()
-    blur:Destroy()
-end
+bgImage.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 then
+		dragging = true
+		mousePos = input.Position
+		framePos = bgImage.Position
 
--- Start the loading screen
-showLoadingScreen()
+		input.Changed:Connect(function()
+			if input.UserInputState == Enum.UserInputState.End then
+				dragging = false
+			end
+		end)
+	end
+end)
+
+UIS.InputChanged:Connect(function(input)
+	if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+		local delta = input.Position - mousePos
+		bgImage.Position = UDim2.new(
+			framePos.X.Scale,
+			framePos.X.Offset + delta.X,
+			framePos.Y.Scale,
+			framePos.Y.Offset + delta.Y
+		)
+	end
+end)
