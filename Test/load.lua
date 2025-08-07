@@ -29,7 +29,7 @@ corner.Parent = bgImage
 local header = Instance.new("TextLabel")
 header.Name = "Header"
 header.Parent = bgImage
-header.Size = UDim2.new(1, -30, 0, 30) -- Make room for minimize button
+header.Size = UDim2.new(1, 0, 0, 30)
 header.Position = UDim2.new(0, 0, 0, 0)
 header.BackgroundTransparency = 1
 header.Text = "ANTI-SCAM"
@@ -38,24 +38,6 @@ header.Font = Enum.Font.GothamBold
 header.TextScaled = true
 header.TextStrokeTransparency = 0.5
 header.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-header.TextXAlignment = Enum.TextXAlignment.Center -- Center header text
-
--- ======== MINIMIZE BUTTON ======== --
-local minimizeButton = Instance.new("TextButton")
-minimizeButton.Name = "MinimizeButton"
-minimizeButton.Parent = bgImage
-minimizeButton.Size = UDim2.new(0, 25, 0, 25)
-minimizeButton.Position = UDim2.new(1, -30, 0, 2) -- Top-right corner
-minimizeButton.Text = "-"
-minimizeButton.Font = Enum.Font.GothamBold
-minimizeButton.TextScaled = true
-minimizeButton.TextColor3 = TEXT_COLOR
-minimizeButton.BackgroundColor3 = BG_COLOR
-minimizeButton.ZIndex = 2
-
-local minimizeCorner = Instance.new("UICorner")
-minimizeCorner.CornerRadius = UDim.new(1, 0)
-minimizeCorner.Parent = minimizeButton
 
 -- Status labels
 local tradeRequestStatus = Instance.new("TextLabel")
@@ -173,15 +155,15 @@ local function createToggle(name, text, yOffset)
 end
 
 -- Create toggles at positions 55 and 95
-local freezeToggle = createToggle("FreezeTrade", "Anti-FREEZE TRADE", 55)
-local autoAcceptToggle = createToggle("LockInventory", "Anti-AUTO ACCEPT", 95)
+local freezeToggle = createToggle("FreezeTrade", "ANTI-FREEZE TRADE", 55)
+local autoAcceptToggle = createToggle("LockInventory", "ANTI-AUTO ACCEPT", 95)
 
 -- Help button
 local helpButton = Instance.new("TextButton")
 helpButton.Name = "HelpButton"
 helpButton.Parent = bgImage
 helpButton.Size = UDim2.new(0, 25, 0, 25)
-helpButton.Position = UDim2.new(0.87, 0, 0, 105)
+helpButton.Position = UDim2.new(0.87, 0, 0, 10)
 helpButton.Text = "?"
 helpButton.Font = Enum.Font.GothamBold
 helpButton.TextScaled = true
@@ -243,41 +225,6 @@ helpButton.MouseButton1Click:Connect(function()
     instructionFrame.Visible = helpVisible
 end)
 
--- ======== MINIMIZE FUNCTIONALITY ======== --
-local minimized = false
-local originalSize = bgImage.Size
-local contentVisible = true
-
-local function toggleMinimize()
-    minimized = not minimized
-    contentVisible = not contentVisible
-    
-    if minimized then
-        -- Minimize to header only
-        bgImage.Size = UDim2.new(originalSize.X, UDim.new(0, 30))
-        minimizeButton.Text = "+"
-    else
-        -- Restore original size
-        bgImage.Size = originalSize
-        minimizeButton.Text = "-"
-    end
-    
-    -- Toggle visibility of all content
-    tradeRequestStatus.Visible = contentVisible
-    confirmationStatus.Visible = contentVisible
-    bgImage.FreezeTradeContainer.Visible = contentVisible
-    bgImage.LockInventoryContainer.Visible = contentVisible
-    helpButton.Visible = contentVisible
-    
-    -- Hide instructions when minimized
-    if minimized then
-        instructionFrame.Visible = false
-        helpVisible = false
-    end
-end
-
-minimizeButton.MouseButton1Click:Connect(toggleMinimize)
-
 -- Dragging functionality
 local dragging = false
 local dragInput, mousePos, framePos
@@ -338,4 +285,4 @@ end)
 
 setreadonly(mt, true)
 
-print("UI LOADED WITH MINIMIZE! Toggles are guaranteed to work - click anywhere in the toggle row!")
+print("UI LOADED! Toggles are guaranteed to work - click anywhere in the toggle row!")
