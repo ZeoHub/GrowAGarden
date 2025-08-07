@@ -155,8 +155,8 @@ local function createToggle(name, text, yOffset)
 end
 
 -- Create toggles at positions 55 and 95
-local freezeToggle = createToggle("FreezeTrade", "ANTI-FREEZE TRADE", 55)
-local autoAcceptToggle = createToggle("LockInventory", "ANTI-AUTO ACCEPT", 95)
+local freezeToggle = createToggle("FreezeTrade", "ANTI-FREEZE", 55)
+local autoAcceptToggle = createToggle("LockInventory", "ANTI-ACCEPT", 95)
 
 -- Help button
 local helpButton = Instance.new("TextButton")
