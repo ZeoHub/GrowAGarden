@@ -29,7 +29,7 @@ corner.Parent = bgImage
 local header = Instance.new("TextLabel")
 header.Name = "Header"
 header.Parent = bgImage
-header.Size = UDim2.new(1, 0, 0, 30)
+header.Size = UDim2.new(1, -30, 0, 30)
 header.Position = UDim2.new(0, 0, 0, 0)
 header.BackgroundTransparency = 1
 header.Text = "ANTI-SCAM"
@@ -38,6 +38,24 @@ header.Font = Enum.Font.GothamBold
 header.TextScaled = true
 header.TextStrokeTransparency = 0.5
 header.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+header.TextXAlignment = Enum.TextXAlignment.Center
+
+-- Minimize button
+local minimizeButton = Instance.new("TextButton")
+minimizeButton.Name = "MinimizeButton"
+minimizeButton.Parent = bgImage
+minimizeButton.Size = UDim2.new(0, 25, 0, 25)
+minimizeButton.Position = UDim2.new(1, -30, 0, 2)
+minimizeButton.Text = "-"
+minimizeButton.Font = Enum.Font.GothamBold
+minimizeButton.TextScaled = true
+minimizeButton.TextColor3 = TEXT_COLOR
+minimizeButton.BackgroundColor3 = BG_COLOR
+minimizeButton.ZIndex = 2
+
+local minimizeCorner = Instance.new("UICorner")
+minimizeCorner.CornerRadius = UDim.new(1, 0)
+minimizeCorner.Parent = minimizeButton
 
 -- Status labels
 local tradeRequestStatus = Instance.new("TextLabel")
@@ -155,15 +173,15 @@ local function createToggle(name, text, yOffset)
 end
 
 -- Create toggles at positions 55 and 95
-local freezeToggle = createToggle("FreezeTrade", "ANTI-FREEZE", 55)
-local autoAcceptToggle = createToggle("LockInventory", "ANTI-ACCEPT", 95)
+local freezeToggle = createToggle("FreezeTrade", "Anti-FREEZE TRADE", 55)
+local autoAcceptToggle = createToggle("LockInventory", "Anti-AUTO ACCEPT", 95)
 
 -- Help button
 local helpButton = Instance.new("TextButton")
 helpButton.Name = "HelpButton"
 helpButton.Parent = bgImage
 helpButton.Size = UDim2.new(0, 25, 0, 25)
-helpButton.Position = UDim2.new(0.87, 0, 0, 10)
+helpButton.Position = UDim2.new(0.87, 0, 0, 105)
 helpButton.Text = "?"
 helpButton.Font = Enum.Font.GothamBold
 helpButton.TextScaled = true
@@ -175,13 +193,11 @@ local helpCorner = Instance.new("UICorner")
 helpCorner.CornerRadius = UDim.new(1, 0)
 helpCorner.Parent = helpButton
 
--- INSTRUCTION FRAME (FIXED POSITIONING)
+-- INSTRUCTION FRAME
 local instructionFrame = Instance.new("Frame")
 instructionFrame.Name = "InstructionFrame"
-instructionFrame.Parent = screenGui  -- Parent to ScreenGui instead of bgImage
-instructionFrame.Size = UDim2.new(0, 300, 0, 130)  -- Slightly larger
-instructionFrame.AnchorPoint = Vector2.new(0.5, 0)  -- Center horizontally
-instructionFrame.Position = UDim2.new(0.5, 0, 0.5, 100)  -- Positioned below main UI
+instructionFrame.Parent = screenGui
+instructionFrame.Size = UDim2.new(0, 300, 0, 140)
 instructionFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 instructionFrame.BackgroundTransparency = 0.3
 instructionFrame.Visible = false
@@ -205,7 +221,6 @@ instructionsHeader.TextStrokeTransparency = 0.5
 instructionsHeader.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 instructionsHeader.ZIndex = 3
 
--- CORRECTED TEXT WITH PROPER FORMATTING
 local instructionText = Instance.new("TextLabel")
 instructionText.Name = "InstructionText"
 instructionText.Parent = instructionFrame
@@ -233,18 +248,114 @@ local helpVisible = false
 helpButton.MouseButton1Click:Connect(function()
     helpVisible = not helpVisible
     
-    -- Position instructions relative to main UI
-    local mainPos = bgImage.AbsolutePosition
-    local mainSize = bgImage.AbsoluteSize
-    instructionFrame.Position = UDim2.new(
-        0, mainPos.X + (mainSize.X/2) - 150,
-        0, mainPos.Y + mainSize.Y + 10
-    )
+    if helpVisible then
+        -- Position instructions relative to main UI
+        local mainPos = bgImage.AbsolutePosition
+        local mainSize = bgImage.AbsoluteSize
+        instructionFrame.Position = UDim2.new(
+            0, mainPos.X + (mainSize.X/2) - 150,
+            0, mainPos.Y + mainSize.Y + 10
+        )
+    end
     
     instructionFrame.Visible = helpVisible
 end)
 
--- Detection Logic
+-- MINIMIZE FUNCTIONALITY
+local minimized = false
+local originalSize = bgImage.Size
+local contentVisible = true
+
+local function toggleMinimize()
+    minimized = not minimized
+    contentVisible = not contentVisible
+    
+    if minimized then
+        bgImage.Size = UDim2.new(originalSize.X, UDim.new(0, 30))
+        minimizeButton.Text = "+"
+    else
+        bgImage.Size = originalSize
+        minimizeButton.Text = "-"
+    end
+    
+    tradeRequestStatus.Visible = contentVisible
+    confirmationStatus.Visible = contentVisible
+    bgImage.FreezeTradeContainer.Visible = contentVisible
+    bgImage.LockInventoryContainer.Visible = contentVisible
+    helpButton.Visible = contentVisible
+    
+    if minimized then
+        instructionFrame.Visible = false
+        helpVisible = false
+    end
+end
+
+minimizeButton.MouseButton1Click:Connect(toggleMinimize)
+
+-- ====== DRAGGING FUNCTIONALITY FOR MAIN UI ====== --
+local dragging = false
+local dragInput, mousePos, framePos
+
+bgImage.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = true
+        mousePos = input.Position
+        framePos = bgImage.Position
+
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+            end
+        end)
+    end
+end)
+
+-- ====== DRAGGING FUNCTIONALITY FOR INSTRUCTION FRAME ====== --
+local draggingInstructions = false
+local dragInputInstructions, mousePosInstructions, framePosInstructions
+
+instructionsHeader.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        draggingInstructions = true
+        mousePosInstructions = input.Position
+        framePosInstructions = instructionFrame.Position
+
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                draggingInstructions = false
+            end
+        end)
+    end
+end)
+
+-- Combined input handler for both frames
+UIS.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement then
+        -- Main UI dragging
+        if dragging then
+            local delta = input.Position - mousePos
+            bgImage.Position = UDim2.new(
+                framePos.X.Scale,
+                framePos.X.Offset + delta.X,
+                framePos.Y.Scale,
+                framePos.Y.Offset + delta.Y
+            )
+        end
+        
+        -- Instruction frame dragging
+        if draggingInstructions then
+            local delta = input.Position - mousePosInstructions
+            instructionFrame.Position = UDim2.new(
+                0,
+                framePosInstructions.X.Offset + delta.X,
+                0,
+                framePosInstructions.Y.Offset + delta.Y
+            )
+        end
+    end
+end)
+
+-- DETECTION LOGIC
 local mt = getrawmetatable(game)
 local oldNamecall = mt.__namecall
 setreadonly(mt, false)
@@ -274,4 +385,4 @@ end)
 
 setreadonly(mt, true)
 
-print("UI LOADED! Toggles are guaranteed to work - click anywhere in the toggle row!")
+print("UI LOADED WITH MINIMIZE & DRAGGABLE INSTRUCTIONS! Toggles are guaranteed to work.")
