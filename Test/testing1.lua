@@ -175,13 +175,11 @@ local helpCorner = Instance.new("UICorner")
 helpCorner.CornerRadius = UDim.new(1, 0)
 helpCorner.Parent = helpButton
 
--- INSTRUCTION FRAME (FIXED POSITIONING)
+-- INSTRUCTION FRAME (DRAGGABLE)
 local instructionFrame = Instance.new("Frame")
 instructionFrame.Name = "InstructionFrame"
-instructionFrame.Parent = screenGui  -- Parent to ScreenGui instead of bgImage
-instructionFrame.Size = UDim2.new(0, 300, 0, 130)  -- Slightly larger
-instructionFrame.AnchorPoint = Vector2.new(0.5, 0)  -- Center horizontally
-instructionFrame.Position = UDim2.new(0.5, 0, 0.5, 100)  -- Positioned below main UI
+instructionFrame.Parent = screenGui
+instructionFrame.Size = UDim2.new(0, 300, 0, 130)
 instructionFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 instructionFrame.BackgroundTransparency = 0.3
 instructionFrame.Visible = false
@@ -229,17 +227,56 @@ instructionText.TextStrokeTransparency = 0.2
 instructionText.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 instructionText.ZIndex = 3
 
+-- Make instruction frame draggable
+local dragging = false
+local dragStartPos
+local startFramePos
+
+instructionsHeader.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = true
+        dragStartPos = Vector2.new(input.Position.X, input.Position.Y)
+        startFramePos = instructionFrame.Position
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+            end
+        end)
+    end
+end)
+
+UIS.InputChanged:Connect(function(input)
+    if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+        local currentPos = Vector2.new(input.Position.X, input.Position.Y)
+        local delta = currentPos - dragStartPos
+        instructionFrame.Position = UDim2.new(
+            startFramePos.X.Scale,
+            startFramePos.X.Offset + delta.X,
+            startFramePos.Y.Scale,
+            startFramePos.Y.Offset + delta.Y
+        )
+    end
+end)
+
+UIS.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = false
+    end
+end)
+
 local helpVisible = false
 helpButton.MouseButton1Click:Connect(function()
     helpVisible = not helpVisible
     
-    -- Position instructions relative to main UI
-    local mainPos = bgImage.AbsolutePosition
-    local mainSize = bgImage.AbsoluteSize
-    instructionFrame.Position = UDim2.new(
-        0, mainPos.X + (mainSize.X/2) - 150,
-        0, mainPos.Y + mainSize.Y + 10
-    )
+    -- Position instructions relative to main UI when first shown
+    if helpVisible then
+        local mainPos = bgImage.AbsolutePosition
+        local mainSize = bgImage.AbsoluteSize
+        instructionFrame.Position = UDim2.new(
+            0, mainPos.X + (mainSize.X/2) - 150,
+            0, mainPos.Y + mainSize.Y + 10
+        )
+    end
     
     instructionFrame.Visible = helpVisible
 end)
