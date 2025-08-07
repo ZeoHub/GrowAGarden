@@ -25,7 +25,7 @@ header.Parent = bgImage
 header.Size = UDim2.new(1, 0, 0, 30)
 header.Position = UDim2.new(0, 0, 0, 0)
 header.BackgroundTransparency = 1
-header.Text = "BLOXIFIED"
+header.Text = "ANTI-FREEZER (ANTI-SCAM)"
 header.TextColor3 = Color3.fromRGB(210, 180, 140)
 header.Font = Enum.Font.GothamBold
 header.TextScaled = true
@@ -86,8 +86,8 @@ local function createToggle(name, text, yOffset)
 	end)
 end
 
-createToggle("FreezeTrade", "FREEZE TRADE", 55)
-createToggle("LockInventory", "AUTO ACCEPT", 95)
+createToggle("FreezeTrade", "ANTI-FREEZE TRADE", 55)
+createToggle("LockInventory", "ANTI-AUTO ACCEPT", 95)
 
 local helpButton = Instance.new("TextButton")
 helpButton.Name = "HelpButton"
