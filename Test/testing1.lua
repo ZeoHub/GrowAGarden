@@ -189,7 +189,7 @@ local instructionCorner = Instance.new("UICorner")
 instructionCorner.CornerRadius = UDim.new(0, 12)
 instructionCorner.Parent = instructionFrame
 
-local instructionsHeader = Instance.new("TextLabel")
+local instructionsHeader = Instance.new("TextButton") -- Changed to TextButton for better interaction
 instructionsHeader.Name = "InstructionsHeader"
 instructionsHeader.Parent = instructionFrame
 instructionsHeader.Size = UDim2.new(1, 0, 0, 25)
@@ -202,6 +202,7 @@ instructionsHeader.TextScaled = true
 instructionsHeader.TextStrokeTransparency = 0.5
 instructionsHeader.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 instructionsHeader.ZIndex = 3
+instructionsHeader.AutoButtonColor = false -- Disable automatic color change
 
 -- CORRECTED TEXT WITH PROPER FORMATTING
 local instructionText = Instance.new("TextLabel")
@@ -237,6 +238,8 @@ instructionsHeader.InputBegan:Connect(function(input)
         dragging = true
         dragStartPos = Vector2.new(input.Position.X, input.Position.Y)
         startFramePos = instructionFrame.Position
+        
+        -- Capture mouse movement even if cursor leaves the header
         input.Changed:Connect(function()
             if input.UserInputState == Enum.UserInputState.End then
                 dragging = false
@@ -249,6 +252,8 @@ UIS.InputChanged:Connect(function(input)
     if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
         local currentPos = Vector2.new(input.Position.X, input.Position.Y)
         local delta = currentPos - dragStartPos
+        
+        -- Update frame position
         instructionFrame.Position = UDim2.new(
             startFramePos.X.Scale,
             startFramePos.X.Offset + delta.X,
