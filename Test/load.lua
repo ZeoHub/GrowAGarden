@@ -1,156 +1,247 @@
--- LocalScript (place in StarterPlayerScripts)
-local Players = game:GetService("Players")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local PlayerGui = Players.LocalPlayer:WaitForChild("PlayerGui")
+local player = game.Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+local UIS = game:GetService("UserInputService")
+local TweenService = game:GetService("TweenService")
 
--- Remove old GUIs
-for _, gui in ipairs(PlayerGui:GetChildren()) do
-    if gui.Name == "TradeGuardGui" then
-        gui:Destroy()
+-- Constants for colors
+local ACCENT_GREEN = Color3.fromRGB(0, 170, 0)
+local ACCENT_RED = Color3.fromRGB(170, 0, 0)
+local ACCENT_BLUE = Color3.fromRGB(0, 100, 255)
+local TEXT_COLOR = Color3.fromRGB(210, 180, 140)  -- Beige text color
+local BG_COLOR = Color3.fromRGB(40, 40, 40)
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "MyUI"
+screenGui.Parent = playerGui
+
+local bgImage = Instance.new("ImageLabel")
+bgImage.Name = "Background"
+bgImage.Parent = screenGui
+bgImage.Size = UDim2.new(0, 250, 0, 135)
+bgImage.Position = UDim2.new(0.5, -125, 0.5, -67.5)
+bgImage.BackgroundTransparency = 1
+bgImage.Image = "rbxassetid://119759831021473"
+
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 12)
+corner.Parent = bgImage
+
+local header = Instance.new("TextLabel")
+header.Name = "Header"
+header.Parent = bgImage
+header.Size = UDim2.new(1, 0, 0, 30)
+header.Position = UDim2.new(0, 0, 0, 0)
+header.BackgroundTransparency = 1
+header.Text = "ANTI-SCAM"
+header.TextColor3 = TEXT_COLOR
+header.Font = Enum.Font.GothamBold
+header.TextScaled = true
+header.TextStrokeTransparency = 0.5
+header.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+
+-- Status labels
+local tradeRequestStatus = Instance.new("TextLabel")
+tradeRequestStatus.Name = "TradeRequestStatus"
+tradeRequestStatus.Parent = bgImage
+tradeRequestStatus.Size = UDim2.new(0.9, 0, 0, 20)
+tradeRequestStatus.Position = UDim2.new(0.05, 0, 0, 40)
+tradeRequestStatus.BackgroundTransparency = 1
+tradeRequestStatus.Text = "TRADE REQUEST: NOT DETECTED"
+tradeRequestStatus.TextColor3 = TEXT_COLOR
+tradeRequestStatus.Font = Enum.Font.GothamBlack
+tradeRequestStatus.TextSize = 8
+tradeRequestStatus.TextXAlignment = Enum.TextXAlignment.Left
+tradeRequestStatus.TextStrokeTransparency = 0.2
+tradeRequestStatus.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+
+local confirmationStatus = Instance.new("TextLabel")
+confirmationStatus.Name = "ConfirmationStatus"
+confirmationStatus.Parent = bgImage
+confirmationStatus.Size = UDim2.new(0.9, 0, 0, 20)
+confirmationStatus.Position = UDim2.new(0.05, 0, 0, 45)
+confirmationStatus.BackgroundTransparency = 1
+confirmationStatus.Text = "TRANSACTION: PENDING"
+confirmationStatus.TextColor3 = TEXT_COLOR
+confirmationStatus.Font = Enum.Font.GothamBlack
+confirmationStatus.TextSize = 8
+confirmationStatus.TextXAlignment = Enum.TextXAlignment.Left
+confirmationStatus.TextStrokeTransparency = 0.2
+confirmationStatus.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+
+-- SIMPLIFIED TOGGLE SYSTEM
+local function createToggle(name, text, yOffset)
+    -- Toggle label
+    local label = Instance.new("TextLabel")
+    label.Name = name .. "Label"
+    label.Parent = bgImage
+    label.Size = UDim2.new(0.6, 1, 0, 35)
+    label.Position = UDim2.new(0.08, 0, 0, yOffset)
+    label.BackgroundTransparency = 1
+    label.Text = text
+    label.TextColor3 = TEXT_COLOR
+    label.Font = Enum.Font.GothamBlack
+    label.TextScaled = true
+    label.TextXAlignment = Enum.TextXAlignment.Center
+    label.TextStrokeTransparency = 0.2
+    label.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+
+    -- Toggle track
+    local toggleTrack = Instance.new("Frame")
+    toggleTrack.Name = name .. "Track"
+    toggleTrack.Parent = bgImage
+    toggleTrack.Size = UDim2.new(0, 50, 0, 25)
+    toggleTrack.Position = UDim2.new(0.72, 0, 0, yOffset + 3)
+    toggleTrack.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+    toggleTrack.BorderSizePixel = 0
+    
+    local trackCorner = Instance.new("UICorner")
+    trackCorner.CornerRadius = UDim.new(1, 0)
+    trackCorner.Parent = toggleTrack
+
+    -- Toggle thumb
+    local toggleThumb = Instance.new("Frame")
+    toggleThumb.Name = name .. "Thumb"
+    toggleThumb.Parent = toggleTrack
+    toggleThumb.Size = UDim2.new(0, 22, 0, 22)
+    toggleThumb.Position = UDim2.new(0, 2, 0, 1.5)
+    toggleThumb.BackgroundColor3 = TEXT_COLOR
+    toggleThumb.BorderSizePixel = 0
+    
+    local thumbCorner = Instance.new("UICorner")
+    thumbCorner.CornerRadius = UDim.new(1, 0)
+    thumbCorner.Parent = toggleThumb
+
+    -- Toggle state
+    local state = false
+    
+    -- Toggle function
+    local function toggle()
+        state = not state
+        local goalPos = state and UDim2.new(0, 26, 0, 1.5) or UDim2.new(0, 2, 0, 1.5)
+        local goalColor = state and ACCENT_GREEN or Color3.fromRGB(60, 60, 60)
+        
+        TweenService:Create(toggleThumb, TweenInfo.new(0.2), {Position = goalPos}):Play()
+        TweenService:Create(toggleTrack, TweenInfo.new(0.2), {BackgroundColor3 = goalColor}):Play()
+        
+        print(name .. " is now " .. (state and "ON" or "OFF"))
+        return state
     end
+
+    -- Connect click event
+    toggleTrack.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            toggle()
+        end
+    end)
+    
+    return {
+        toggle = toggle,
+        getState = function() return state end
+    }
 end
 
--- ========== THEME COLORS ==========
-local DARK_BG = Color3.fromRGB(15, 15, 20)
-local CARD_BG = Color3.fromRGB(25, 25, 35)
-local ACCENT_BLUE = Color3.fromRGB(0, 170, 255)
-local ACCENT_RED = Color3.fromRGB(255, 50, 100)
-local ACCENT_GREEN = Color3.fromRGB(50, 255, 150)
-local TEXT_MAIN = Color3.fromRGB(240, 240, 255)
-local FONT = Enum.Font.GothamBold
+-- Create toggles at positions 55 and 95
+createToggle("FreezeTrade", "FREEZE TRADE", 55)
+createToggle("LockInventory", "AUTO ACCEPT", 95)
 
--- ========== CREATE MAIN GUI ==========
-local ScreenGui = Instance.new("ScreenGui", PlayerGui)
-ScreenGui.Name = "TradeGuardGui"
+-- Help button
+local helpButton = Instance.new("TextButton")
+helpButton.Name = "HelpButton"
+helpButton.Parent = bgImage
+helpButton.Size = UDim2.new(0, 25, 0, 25)
+helpButton.Position = UDim2.new(0.87, 0, 0, 105)
+helpButton.Text = "?"
+helpButton.Font = Enum.Font.GothamBold
+helpButton.TextScaled = true
+helpButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+helpButton.BackgroundColor3 = BG_COLOR
+helpButton.ZIndex = 2
 
-local MainFrame = Instance.new("Frame", ScreenGui)
-MainFrame.Name = "MainFrame"
-MainFrame.Size = UDim2.new(0, 360, 0, 300)
-MainFrame.Position = UDim2.new(0.5, -180, 0.5, -150)
-MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
-MainFrame.BackgroundColor3 = DARK_BG
-MainFrame.BackgroundTransparency = 0.1
-MainFrame.Active = true
-MainFrame.Draggable = true
+local helpCorner = Instance.new("UICorner")
+helpCorner.CornerRadius = UDim.new(1, 0)
+helpCorner.Parent = helpButton
 
-local corner = Instance.new("UICorner", MainFrame)
-corner.CornerRadius = UDim.new(0, 12)
+local instructionFrame = Instance.new("Frame")
+instructionFrame.Name = "InstructionFrame"
+instructionFrame.Parent = bgImage
+instructionFrame.Size = UDim2.new(1.2, 0, 0, 120)
+instructionFrame.Position = UDim2.new(0.5, -125, 1.1, 0)
+instructionFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+instructionFrame.BackgroundTransparency = 0.3
+instructionFrame.Visible = false
+instructionFrame.ZIndex = 3
 
-local tradeRequestStatus = Instance.new("TextLabel", MainFrame)
-tradeRequestStatus.Name = "TradeRequestStatus"
-tradeRequestStatus.Size = UDim2.new(1, -20, 0, 30)
-tradeRequestStatus.Position = UDim2.new(0, 10, 0, 10)
-tradeRequestStatus.BackgroundTransparency = 1
-tradeRequestStatus.Text = "Trade Request: NOT DETECTED"
-tradeRequestStatus.Font = FONT
-tradeRequestStatus.TextColor3 = ACCENT_RED
-tradeRequestStatus.TextSize = 14
-tradeRequestStatus.TextXAlignment = Enum.TextXAlignment.Left
+local instructionCorner = Instance.new("UICorner")
+instructionCorner.CornerRadius = UDim.new(0, 12)
+instructionCorner.Parent = instructionFrame
 
-local confirmationStatus = Instance.new("TextLabel", MainFrame)
-confirmationStatus.Name = "ConfirmationStatus"
-confirmationStatus.Size = UDim2.new(1, -20, 0, 30)
-confirmationStatus.Position = UDim2.new(0, 10, 0, 50)
-confirmationStatus.BackgroundTransparency = 1
-confirmationStatus.Text = "Transaction: PENDING"
-confirmationStatus.Font = FONT
-confirmationStatus.TextColor3 = ACCENT_BLUE
-confirmationStatus.TextSize = 14
-confirmationStatus.TextXAlignment = Enum.TextXAlignment.Left
+local instructionsHeader = Instance.new("TextLabel")
+instructionsHeader.Name = "InstructionsHeader"
+instructionsHeader.Parent = instructionFrame
+instructionsHeader.Size = UDim2.new(1, 0, 0, 25)
+instructionsHeader.Position = UDim2.new(0, 0, 0, 0)
+instructionsHeader.BackgroundTransparency = 1
+instructionsHeader.Text = "INSTRUCTIONS"
+instructionsHeader.TextColor3 = TEXT_COLOR
+instructionsHeader.Font = Enum.Font.GothamBold
+instructionsHeader.TextScaled = true
+instructionsHeader.TextStrokeTransparency = 0.5
+instructionsHeader.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+instructionsHeader.ZIndex = 3
 
--- Anti-Freeze Toggle
-local antiFreezeFrame = Instance.new("Frame", MainFrame)
-antiFreezeFrame.Name = "AntiFreezeFrame"
-antiFreezeFrame.Size = UDim2.new(1, -20, 0, 40)
-antiFreezeFrame.Position = UDim2.new(0, 10, 0, 100)
-antiFreezeFrame.BackgroundColor3 = CARD_BG
-antiFreezeFrame.Visible = false
-local antiFreezeCorner = Instance.new("UICorner", antiFreezeFrame)
-antiFreezeCorner.CornerRadius = UDim.new(0, 8)
+local instructionText = Instance.new("TextLabel")
+instructionText.Name = "InstructionText"
+instructionText.Parent = instructionFrame
+instructionText.Size = UDim2.new(1, -10, 1, -30)
+instructionText.Position = UDim2.new(0, 5, 0, 25)
+instructionText.BackgroundTransparency = 1
+instructionText.Text = "- FREEZE TRADE: Freezes the victim's screen\n- AUTO ACCEPT: Automatically accepts trades\n- Status indicators show trade activity"
+instructionText.Font = Enum.Font.Gotham
+instructionText.TextWrapped = true
+instructionText.TextSize = 14
+instructionText.TextYAlignment = Enum.TextYAlignment.Top
+instructionText.TextColor3 = TEXT_COLOR
+instructionText.TextStrokeTransparency = 0.2
+instructionText.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+instructionText.ZIndex = 3
 
-local antiFreezeLabel = Instance.new("TextLabel", antiFreezeFrame)
-antiFreezeLabel.Name = "AntiFreezeLabel"
-antiFreezeLabel.Size = UDim2.new(0.7, 0, 1, 0)
-antiFreezeLabel.Position = UDim2.new(0, 10, 0, 0)
-antiFreezeLabel.BackgroundTransparency = 1
-antiFreezeLabel.Text = "Anti-Freeze"
-antiFreezeLabel.Font = FONT
-antiFreezeLabel.TextColor3 = TEXT_MAIN
-antiFreezeLabel.TextSize = 14
-antiFreezeLabel.TextXAlignment = Enum.TextXAlignment.Left
+local helpVisible = false
+helpButton.MouseButton1Click:Connect(function()
+    helpVisible = not helpVisible
+    instructionFrame.Visible = helpVisible
+end)
 
-local antiFreezeToggle = Instance.new("TextButton", antiFreezeFrame)
-antiFreezeToggle.Name = "AntiFreezeToggle"
-antiFreezeToggle.Size = UDim2.new(0.2, 0, 0.6, 0)
-antiFreezeToggle.Position = UDim2.new(0.75, 0, 0.2, 0)
-antiFreezeToggle.BackgroundColor3 = ACCENT_RED
-antiFreezeToggle.Text = "OFF"
-antiFreezeToggle.Font = FONT
-antiFreezeToggle.TextColor3 = TEXT_MAIN
-antiFreezeToggle.TextSize = 14
-local antiFreezeToggleCorner = Instance.new("UICorner", antiFreezeToggle)
-antiFreezeToggleCorner.CornerRadius = UDim.new(0, 8)
+-- Dragging functionality
+local dragging = false
+local dragInput, mousePos, framePos
 
--- Anti-AutoAccept Toggle
-local antiAutoAcceptFrame = Instance.new("Frame", MainFrame)
-antiAutoAcceptFrame.Name = "AntiAutoAcceptFrame"
-antiAutoAcceptFrame.Size = UDim2.new(1, -20, 0, 40)
-antiAutoAcceptFrame.Position = UDim2.new(0, 10, 0, 150)
-antiAutoAcceptFrame.BackgroundColor3 = CARD_BG
-antiAutoAcceptFrame.Visible = false
-local antiAutoAcceptCorner = Instance.new("UICorner", antiAutoAcceptFrame)
-antiAutoAcceptCorner.CornerRadius = UDim.new(0, 8)
+bgImage.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = true
+        mousePos = input.Position
+        framePos = bgImage.Position
 
-local antiAutoAcceptLabel = Instance.new("TextLabel", antiAutoAcceptFrame)
-antiAutoAcceptLabel.Name = "AntiAutoAcceptLabel"
-antiAutoAcceptLabel.Size = UDim2.new(0.7, 0, 1, 0)
-antiAutoAcceptLabel.Position = UDim2.new(0, 10, 0, 0)
-antiAutoAcceptLabel.BackgroundTransparency = 1
-antiAutoAcceptLabel.Text = "Anti-AutoAccept"
-antiAutoAcceptLabel.Font = FONT
-antiAutoAcceptLabel.TextColor3 = TEXT_MAIN
-antiAutoAcceptLabel.TextSize = 14
-antiAutoAcceptLabel.TextXAlignment = Enum.TextXAlignment.Left
-
-local antiAutoAcceptToggle = Instance.new("TextButton", antiAutoAcceptFrame)
-antiAutoAcceptToggle.Name = "AntiAutoAcceptToggle"
-antiAutoAcceptToggle.Size = UDim2.new(0.2, 0, 0.6, 0)
-antiAutoAcceptToggle.Position = UDim2.new(0.75, 0, 0.2, 0)
-antiAutoAcceptToggle.BackgroundColor3 = ACCENT_RED
-antiAutoAcceptToggle.Text = "OFF"
-antiAutoAcceptToggle.Font = FONT
-antiAutoAcceptToggle.TextColor3 = TEXT_MAIN
-antiAutoAcceptToggle.TextSize = 14
-local antiAutoAcceptToggleCorner = Instance.new("UICorner", antiAutoAcceptToggle)
-antiAutoAcceptToggleCorner.CornerRadius = UDim.new(0, 8)
-
--- Toggle Logic
-local antiFreezeEnabled = false
-local antiAutoAcceptEnabled = false
-
-antiFreezeToggle.MouseButton1Click:Connect(function()
-    antiFreezeEnabled = not antiFreezeEnabled
-    if antiFreezeEnabled then
-        antiFreezeToggle.Text = "ON"
-        antiFreezeToggle.BackgroundColor3 = ACCENT_GREEN
-    else
-        antiFreezeToggle.Text = "OFF"
-        antiFreezeToggle.BackgroundColor3 = ACCENT_RED
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+            end
+        end)
     end
 end)
 
-antiAutoAcceptToggle.MouseButton1Click:Connect(function()
-    antiAutoAcceptEnabled = not antiAutoAcceptEnabled
-    if antiAutoAcceptEnabled then
-        antiAutoAcceptToggle.Text = "ON"
-        antiAutoAcceptToggle.BackgroundColor3 = ACCENT_GREEN
-    else
-        antiAutoAcceptToggle.Text = "OFF"
-        antiAutoAcceptToggle.BackgroundColor3 = ACCENT_RED
+UIS.InputChanged:Connect(function(input)
+    if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+        local delta = input.Position - mousePos
+        bgImage.Position = UDim2.new(
+            framePos.X.Scale,
+            framePos.X.Offset + delta.X,
+            framePos.Y.Scale,
+            framePos.Y.Offset + delta.Y
+        )
     end
 end)
 
--- ========== DETECTION LOGIC ==========
+-- Detection Logic
 local mt = getrawmetatable(game)
 local oldNamecall = mt.__namecall
 setreadonly(mt, false)
@@ -159,36 +250,25 @@ mt.__namecall = newcclosure(function(self, ...)
     local method = getnamecallmethod()
     local args = {...}
 
-    -- Check if the RemoteEvent is "SendRequest" or "RespondRequest" and the method is "FireServer"
+    -- Trade request detection
     if (tostring(self) == "SendRequest" or tostring(self) == "RespondRequest") and method == "FireServer" then
-        -- Update the GUI to show that a trade transaction was detected
-        tradeRequestStatus.Text = "Trade Request: DETECTED"
-        tradeRequestStatus.TextColor3 = ACCENT_GREEN
-
-        -- Show the toggles
-        antiFreezeFrame.Visible = true
-        antiAutoAcceptFrame.Visible = true
+        tradeRequestStatus.Text = "TRADE REQUEST: DETECTED"
     end
 
-    -- Check if the RemoteEvent is "Decline" and the method is "FireServer"
+    -- Trade decline detection
     if tostring(self) == "Decline" and method == "FireServer" then
-        -- Reset the trade request and hide toggles
-        tradeRequestStatus.Text = "Trade Request: NOT DETECTED"
-        tradeRequestStatus.TextColor3 = ACCENT_RED
-        confirmationStatus.Text = "Transaction: PENDING"
-        confirmationStatus.TextColor3 = ACCENT_BLUE
-        antiFreezeFrame.Visible = false
-        antiAutoAcceptFrame.Visible = false
+        tradeRequestStatus.Text = "TRADE REQUEST: NOT DETECTED"
+        confirmationStatus.Text = "TRANSACTION: PENDING"
     end
 
-    -- Check if the RemoteEvent is "Accept" and the method is "FireServer"
+    -- Trade acceptance detection
     if tostring(self) == "Accept" and method == "FireServer" then
-        -- Show confirmation in the GUI
-        confirmationStatus.Text = "Transaction: ACCEPTED"
-        confirmationStatus.TextColor3 = ACCENT_GREEN
+        confirmationStatus.Text = "TRANSACTION: ACCEPTED"
     end
 
     return oldNamecall(self, ...)
 end)
 
 setreadonly(mt, true)
+
+print("UI loaded with toggles at positions 55 and 95!")
