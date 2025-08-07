@@ -17,8 +17,8 @@ screenGui.Parent = playerGui
 local bgImage = Instance.new("ImageLabel")
 bgImage.Name = "Background"
 bgImage.Parent = screenGui
-bgImage.Size = UDim2.new(0, 250, 0, 150)
-bgImage.Position = UDim2.new(0.5, -125, 0.5, -75)
+bgImage.Size = UDim2.new(0, 250, 0, 135)
+bgImage.Position = UDim2.new(0.5, -125, 0.5, -67.5)
 bgImage.BackgroundTransparency = 1
 bgImage.Image = "rbxassetid://119759831021473"
 
@@ -68,7 +68,7 @@ confirmationStatus.TextXAlignment = Enum.TextXAlignment.Left
 confirmationStatus.TextStrokeTransparency = 0.2
 confirmationStatus.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 
--- SIMPLIFIED TOGGLE SYSTEM THAT WORKS
+-- SIMPLIFIED TOGGLE SYSTEM
 local function createToggle(name, text, yOffset)
     -- Toggle label
     local label = Instance.new("TextLabel")
@@ -140,16 +140,16 @@ local function createToggle(name, text, yOffset)
     }
 end
 
--- Create toggles
-local freezeToggle = createToggle("FreezeTrade", "FREEZE TRADE", 75)
-local autoAcceptToggle = createToggle("LockInventory", "AUTO ACCEPT", 115)
+-- Create toggles at positions 55 and 95
+createToggle("FreezeTrade", "FREEZE TRADE", 55)
+createToggle("LockInventory", "AUTO ACCEPT", 95)
 
 -- Help button
 local helpButton = Instance.new("TextButton")
 helpButton.Name = "HelpButton"
 helpButton.Parent = bgImage
 helpButton.Size = UDim2.new(0, 25, 0, 25)
-helpButton.Position = UDim2.new(0.87, 0, 0, 125)
+helpButton.Position = UDim2.new(0.87, 0, 0, 105)
 helpButton.Text = "?"
 helpButton.Font = Enum.Font.GothamBold
 helpButton.TextScaled = true
@@ -271,4 +271,4 @@ end)
 
 setreadonly(mt, true)
 
-print("UI loaded successfully! Toggles are now fixed and working.")
+print("UI loaded with toggles at positions 55 and 95!")
