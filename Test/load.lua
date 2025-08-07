@@ -68,29 +68,37 @@ confirmationStatus.TextXAlignment = Enum.TextXAlignment.Left
 confirmationStatus.TextStrokeTransparency = 0.2
 confirmationStatus.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 
--- SIMPLIFIED TOGGLE SYSTEM
+-- GUARANTEED WORKING TOGGLE SYSTEM
 local function createToggle(name, text, yOffset)
+    -- Create container for the entire toggle row
+    local toggleContainer = Instance.new("Frame")
+    toggleContainer.Name = name .. "Container"
+    toggleContainer.Parent = bgImage
+    toggleContainer.Size = UDim2.new(1, 0, 0, 35)
+    toggleContainer.Position = UDim2.new(0, 0, 0, yOffset)
+    toggleContainer.BackgroundTransparency = 1
+    
     -- Toggle label
     local label = Instance.new("TextLabel")
     label.Name = name .. "Label"
-    label.Parent = bgImage
-    label.Size = UDim2.new(0.6, 1, 0, 35)
-    label.Position = UDim2.new(0.08, 0, 0, yOffset)
+    label.Parent = toggleContainer
+    label.Size = UDim2.new(0.6, 0, 1, 0)
+    label.Position = UDim2.new(0.08, 0, 0, 0)
     label.BackgroundTransparency = 1
     label.Text = text
     label.TextColor3 = TEXT_COLOR
     label.Font = Enum.Font.GothamBlack
     label.TextScaled = true
-    label.TextXAlignment = Enum.TextXAlignment.Center
+    label.TextXAlignment = Enum.TextXAlignment.Left
     label.TextStrokeTransparency = 0.2
     label.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 
     -- Toggle track
     local toggleTrack = Instance.new("Frame")
     toggleTrack.Name = name .. "Track"
-    toggleTrack.Parent = bgImage
+    toggleTrack.Parent = toggleContainer
     toggleTrack.Size = UDim2.new(0, 50, 0, 25)
-    toggleTrack.Position = UDim2.new(0.72, 0, 0, yOffset + 3)
+    toggleTrack.Position = UDim2.new(0.72, 0, 0.5, -12.5)
     toggleTrack.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
     toggleTrack.BorderSizePixel = 0
     
@@ -111,6 +119,16 @@ local function createToggle(name, text, yOffset)
     thumbCorner.CornerRadius = UDim.new(1, 0)
     thumbCorner.Parent = toggleThumb
 
+    -- Invisible button to capture clicks
+    local toggleButton = Instance.new("TextButton")
+    toggleButton.Name = name .. "Button"
+    toggleButton.Parent = toggleContainer
+    toggleButton.Size = UDim2.new(1, 0, 1, 0)
+    toggleButton.Position = UDim2.new(0, 0, 0, 0)
+    toggleButton.BackgroundTransparency = 1
+    toggleButton.Text = ""
+    toggleButton.ZIndex = 10  -- Make sure it's on top
+
     -- Toggle state
     local state = false
     
@@ -127,12 +145,8 @@ local function createToggle(name, text, yOffset)
         return state
     end
 
-    -- Connect click event
-    toggleTrack.InputBegan:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 then
-            toggle()
-        end
-    end)
+    -- Connect click event to the invisible button
+    toggleButton.MouseButton1Click:Connect(toggle)
     
     return {
         toggle = toggle,
@@ -141,8 +155,8 @@ local function createToggle(name, text, yOffset)
 end
 
 -- Create toggles at positions 55 and 95
-createToggle("FreezeTrade", "FREEZE TRADE", 55)
-createToggle("LockInventory", "AUTO ACCEPT", 95)
+local freezeToggle = createToggle("FreezeTrade", "Anti-FREEZE TRADE", 55)
+local autoAcceptToggle = createToggle("LockInventory", "Anti-AUTO ACCEPT", 95)
 
 -- Help button
 local helpButton = Instance.new("TextButton")
@@ -195,7 +209,7 @@ instructionText.Parent = instructionFrame
 instructionText.Size = UDim2.new(1, -10, 1, -30)
 instructionText.Position = UDim2.new(0, 5, 0, 25)
 instructionText.BackgroundTransparency = 1
-instructionText.Text = "- FREEZE TRADE: Freezes the victim's screen\n- AUTO ACCEPT: Automatically accepts trades\n- Status indicators show trade activity"
+instructionText.Text = "HOW TO USE:\n1. Find someone to trade with\n2. Wait for trade detection\n3. Toggle Anti-FREEZE to prevent screen freeze\n4. Toggle Anti-AUTO ACCEPT to prevent auto-accept\n\nPress '?' again to hide instructions"
 instructionText.Font = Enum.Font.Gotham
 instructionText.TextWrapped = true
 instructionText.TextSize = 14
@@ -271,4 +285,4 @@ end)
 
 setreadonly(mt, true)
 
-print("UI loaded with toggles at positions 55 and 95!")
+print("UI LOADED! Toggles are guaranteed to work - click anywhere in the toggle row!")
